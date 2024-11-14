@@ -5,8 +5,9 @@ import lombok.Getter;
 @Getter
 public enum TypeOperation {
 
-    DEBIT("DEBIT"),
-    CREDIT("CREDIT");
+    INPUT("INPUT"),
+    OUTPUT("OUTPUT"),
+    YIELD("YIELD");
 
     private final String value;
 
