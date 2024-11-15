@@ -1,0 +1,19 @@
+services:
+
+  resources-config:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  accounting_database_config:
+    extends:
+      service: resources-config
+    image: postgres:16.0
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+
+

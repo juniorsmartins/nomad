@@ -1,0 +1,69 @@
+name: nomad
+
+services:
+  accounting:
+    container_name: accounting
+    image: juniorsmartins/accounting:v0.0.1
+    build:
+      context: ../../accounting/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "accounting"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "Gerencia livro-caixa e registros de entrada e saída."
+    ports:
+      - "9201:9201"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    restart: always
+    networks:
+      - general_communication
+      - accounting_database_communication
+    environment:
+      DB_HOST: accounting_database
+      DB_PORT: 5432
+      DB_NAME: accounting
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    depends_on:
+      - accounting_database
+
+  accounting_database:
+    container_name: accounting_database
+    ports:
+      - "5501:5432"
+    restart: always
+    networks:
+      - accounting_database_communication
+    environment:
+      - POSTGRES_DB=accounting
+    extends:
+      file: common-config.yml
+      service: accounting_database_config
+    volumes:
+      - accounting_database_data:/var/lib/postgresql/data
+
+# --------------------------------------------------------------------
+# --------------------------- VOLUMES
+# --------------------------------------------------------------------
+volumes:
+  accounting_database_data:
+    name: accounting_database_data
+
+
+# --------------------------------------------------------------------
+# --------------------------- NETWORKS
+# --------------------------------------------------------------------
+networks:
+  general_communication:
+    name: general_communication
+    driver: bridge
+
+  accounting_database_communication:
+    name: accounting_database_communication
+    driver: bridge
+
+

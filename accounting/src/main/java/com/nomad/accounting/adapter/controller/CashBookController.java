@@ -8,19 +8,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping(path = {"/api/v1/accounting/cash-book"})
+@RequestMapping(path = {CashBookController.URI_CASHBOOK})
 @RequiredArgsConstructor
 public class CashBookController {
+
+    protected static final String URI_CASHBOOK = "/api/v1/accounting/cash-book/";
 
     @PostMapping
     public ResponseEntity<CashBookDtoResponse> create(@RequestBody @Valid CashBookCreateDtoRequest cashBookCreateDtoRequest) {
 
         return ResponseEntity
-                .created(null)
+                .created(URI.create(URI_CASHBOOK + 1))
                 .body(null);
     }
 
