@@ -1,15 +1,14 @@
 package com.nomad.accounting.adapter.controller;
 
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
-import com.nomad.accounting.adapter.dto.in.CashBookFilter;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -18,16 +17,19 @@ import org.springframework.data.domain.Pageable;
 public class CashBookController {
 
     @PostMapping
-    public ResponseEntity<CashBookDtoResponse> create(@Valid @RequestBody CashBookCreateDtoRequest cashBookCreateDtoRequest) {
+    public ResponseEntity<CashBookDtoResponse> create(@RequestBody @Valid CashBookCreateDtoRequest cashBookCreateDtoRequest) {
 
         return ResponseEntity
-                .created()
-                .body();
+                .created(null)
+                .body(null);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<CashBookDtoResponse>> search(final CashBookFilter cashBookFilter, final Pageable pagination) {
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<CashBookDtoResponse> find(@PathVariable(name = "id") final UUID id) {
 
+        return ResponseEntity
+                .ok()
+                .body(null);
     }
 }
 
