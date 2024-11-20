@@ -17,14 +17,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CashBookController {
 
-    protected static final String URI_CASHBOOK = "/api/v1/accounting/cash-book/";
+    protected static final String URI_CASHBOOK = "/api/v1/accounting/cash-book";
 
     @PostMapping
     public ResponseEntity<CashBookDtoResponse> create(@RequestBody @Valid CashBookCreateDtoRequest cashBookCreateDtoRequest) {
 
         return ResponseEntity
-                .created(URI.create(URI_CASHBOOK + 1))
-                .body(null);
+                .created(URI.create(URI_CASHBOOK + "/" + 1))
+                .body(CashBookDtoResponse.builder().build());
     }
 
     @GetMapping(path = "/{id}")
@@ -32,7 +32,7 @@ public class CashBookController {
 
         return ResponseEntity
                 .ok()
-                .body(null);
+                .body(CashBookDtoResponse.builder().build());
     }
 }
 
