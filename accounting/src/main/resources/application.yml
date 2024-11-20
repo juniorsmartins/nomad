@@ -41,4 +41,12 @@ spring:
     generate-ddl: true
     show-sql: true
 
+management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name} # Faz o micrometer organizar as métricas unificadas por nome de microsserviço
 

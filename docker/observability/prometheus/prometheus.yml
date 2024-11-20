@@ -1,0 +1,12 @@
+global: # Configurações globais
+  scrape_interval: 5s # Determina o tempo/periodicidade em que o Prometheus deve pegar as métricas do Micrometer/Actuator. Pode ser em minutos (1m) ou segundos (5s)
+  evaluation_interval: 5s # Determina o tempo/periodicidade em que o Prometheus deve mostrar as métricas nos painéis
+
+scrape_configs:
+  - job_name: 'accounting'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'accounting:9201' ]
+
+
+

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.Year;
 import java.util.UUID;
 
 @Slf4j
@@ -22,17 +23,27 @@ public class CashBookController {
     @PostMapping
     public ResponseEntity<CashBookDtoResponse> create(@RequestBody @Valid CashBookCreateDtoRequest cashBookCreateDtoRequest) {
 
+        var response = CashBookDtoResponse.builder()
+                .document("65439940022")
+                .yearReference(Year.of(1988))
+                .build();
+
         return ResponseEntity
                 .created(URI.create(URI_CASHBOOK + "/" + 1))
-                .body(CashBookDtoResponse.builder().build());
+                .body(response);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<CashBookDtoResponse> find(@PathVariable(name = "id") final UUID id) {
 
+        var response = CashBookDtoResponse.builder()
+                .document("65439940022")
+                .yearReference(Year.of(1988))
+                .build();
+
         return ResponseEntity
                 .ok()
-                .body(CashBookDtoResponse.builder().build());
+                .body(response);
     }
 }
 
