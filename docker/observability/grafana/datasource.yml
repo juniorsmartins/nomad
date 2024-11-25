@@ -1,17 +1,17 @@
 apiVersion: 1
 
-deleteDatasources:
+deleteDatasources: # Deleta todas as fontes de dados com possíveis nomes Prometheus e Loki
   - name: Prometheus
   - name: Loki
 
-datasources:
+datasources: # Cria fontes de dados com os nomes Prometheus e Loki
   - name: Prometheus
     type: prometheus
-    uid: prometheus
-    url: http://prometheus:9090
+    uid: prometheus # Identificador dessa fonte de dados
+    url: http://prometheus:9090 # URL onde será iniciado - mesma porta usada no docker-compose.yml
     access: proxy
     orgId: 1
-    basicAuth: false
+    basicAuth: false # Desativar autenticação
     isDefault: false
     version: 1
     editable: true
