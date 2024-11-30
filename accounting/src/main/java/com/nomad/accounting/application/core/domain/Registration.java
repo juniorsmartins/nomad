@@ -15,11 +15,17 @@ import java.util.UUID;
 public class Registration {
 
     private UUID registrationId;
+
     private UUID cashBookId;
+
     private String description;
+
     private BigDecimal amount;
+
     private TypeOperation typeOperation;
+
     private CostCenter costCenter;
+
     private String supplier;
 }
 

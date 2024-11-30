@@ -27,7 +27,7 @@ public final class CashBookEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "cash_book_id", columnDefinition = "uuid", updatable = false, nullable = false)
+    @Column(name = "cashbook_id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID cashBookId;
 
     @Column(name = "year_reference", nullable = false)

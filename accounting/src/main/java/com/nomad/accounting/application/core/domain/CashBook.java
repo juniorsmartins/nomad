@@ -13,7 +13,9 @@ import java.util.UUID;
 public class CashBook {
 
     private UUID cashBookId;
+
     private Year yearReference;
+
     private String document;
 }
 
