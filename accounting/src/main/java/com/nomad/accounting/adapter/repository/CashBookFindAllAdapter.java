@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Repository
@@ -15,6 +16,7 @@ public class CashBookFindAllAdapter implements CashBookFindAllOutputPort {
 
     private final CashBookRepository cashBookRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public Page<CashBookEntity> findAll(Pageable pagination) {
 

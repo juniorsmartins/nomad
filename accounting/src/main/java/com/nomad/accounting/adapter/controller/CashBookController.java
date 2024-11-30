@@ -1,10 +1,12 @@
 package com.nomad.accounting.adapter.controller;
 
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
+import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
 import com.nomad.accounting.adapter.mapper.in.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
 import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
+import com.nomad.accounting.application.port.input.CashBookUpdateInputPort;
 import com.nomad.accounting.application.port.output.CashBookFindAllOutputPort;
 import com.nomad.accounting.application.port.input.CashBookFindByIdInputPort;
 import jakarta.validation.Valid;
@@ -32,6 +34,8 @@ public class CashBookController {
 
     private final CashBookCreateInputPort cashBookCreateInputPort;
 
+    private final CashBookUpdateInputPort cashBookUpdateInputPort;
+
     private final CashBookFindAllOutputPort cashBookFindAllOutputPort;
 
     private final CashBookFindByIdInputPort cashBookFindByIdInputPort;
@@ -58,9 +62,27 @@ public class CashBookController {
                 .body(response);
     }
 
+    @PutMapping
+    public ResponseEntity<CashBookDtoResponse> update(@RequestBody @Valid CashBookUpdateDtoRequest cashBookUpdateDtoRequest) {
+
+        log.info("Controller Update iniciado: {}", cashBookUpdateDtoRequest);
+
+        var response = Optional.ofNullable(cashBookUpdateDtoRequest)
+                .map(cashBookMapperIn::toCashBook)
+                .map(cashBookUpdateInputPort::update)
+                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .orElseThrow();
+
+        log.info("Controller Update concluído: {}", response);
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
     @GetMapping
     public ResponseEntity<Page<CashBookDtoResponse>> findAll(
-        @PageableDefault(sort = "cashBookId", direction = Sort.Direction.DESC, size = 2) final Pageable pagination) {
+        @PageableDefault(sort = "cashBookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
 
         log.info("Controller FindAll acionado com paginação: {}", pagination);
 
