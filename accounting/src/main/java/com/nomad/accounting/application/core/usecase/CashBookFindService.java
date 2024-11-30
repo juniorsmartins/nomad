@@ -19,11 +19,11 @@ public class CashBookFindService implements CashBookFindInputPort {
     private final CashBookFindOutputPort cashBookFindOutputPort;
 
     @Override
-    public CashBook findById(@NotNull final UUID id) {
+    public CashBook findById(@NotNull final UUID cashBookId) {
 
-        log.info("Serviço iniciado: {}", id);
+        log.info("Serviço iniciado: {}", cashBookId);
 
-        var cashBookFinded = Optional.of(id)
+        var cashBookFinded = Optional.of(cashBookId)
                     .map(cashBookFindOutputPort::findById)
                     .orElseThrow();
 

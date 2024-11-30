@@ -4,6 +4,7 @@ import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
 import com.nomad.accounting.adapter.mapper.in.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
+import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
 import com.nomad.accounting.application.port.input.CashBookFindInputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +28,8 @@ public class CashBookController {
     private final CashBookCreateInputPort cashBookCreateInputPort;
 
     private final CashBookFindInputPort cashBookFindInputPort;
+
+    private final CashBookDeleteInputPort cashBookDeleteInputPort;
 
     private final CashBookMapperIn cashBookMapperIn;
 
@@ -62,6 +66,23 @@ public class CashBookController {
         return ResponseEntity
                 .ok()
                 .body(response);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final UUID id) {
+
+        log.info("Controller acionado: {}", id);
+
+        Optional.ofNullable(id)
+                .ifPresentOrElse(cashBookDeleteInputPort::delete,
+                        () -> {throw new NoSuchElementException();}
+                );
+
+        log.info("Controller concluído: {}", id);
+
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
 

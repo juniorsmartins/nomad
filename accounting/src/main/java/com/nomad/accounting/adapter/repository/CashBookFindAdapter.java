@@ -20,11 +20,11 @@ public class CashBookFindAdapter implements CashBookFindOutputPort {
     private final CashBookMapperOut cashBookMapperOut;
 
     @Override
-    public CashBook findById(@NotNull final UUID id) {
+    public CashBook findById(@NotNull final UUID cashBookId) {
 
-        log.info("Adaptador iniciado: {}", id);
+        log.info("Adaptador iniciado: {}", cashBookId);
 
-        var cashBookFinded = cashBookRepository.findById(id)
+        var cashBookFinded = cashBookRepository.findById(cashBookId)
                 .map(cashBookMapperOut::toCashBook)
                 .orElseThrow();
 

@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface CashBookFindOutputPort {
 
-    CashBook findById(UUID id);
+    CashBook findById(UUID cashBookId);
 }
 
