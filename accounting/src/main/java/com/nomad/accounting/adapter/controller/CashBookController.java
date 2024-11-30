@@ -8,7 +8,7 @@ import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
 import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
 import com.nomad.accounting.application.port.input.CashBookUpdateInputPort;
 import com.nomad.accounting.application.port.output.CashBookFindAllOutputPort;
-import com.nomad.accounting.application.port.input.CashBookFindByIdInputPort;
+import com.nomad.accounting.application.port.output.CashBookFindByIdOutputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class CashBookController {
 
     private final CashBookFindAllOutputPort cashBookFindAllOutputPort;
 
-    private final CashBookFindByIdInputPort cashBookFindByIdInputPort;
+    private final CashBookFindByIdOutputPort cashBookFindByIdOutputPort;
 
     private final CashBookDeleteInputPort cashBookDeleteInputPort;
 
@@ -102,7 +102,7 @@ public class CashBookController {
         log.info("Controller FindById acionado: {}", id);
 
         var response = Optional.of(id)
-                .map(cashBookFindByIdInputPort::findById)
+                .map(cashBookFindByIdOutputPort::findById)
                 .map(cashBookMapperIn::toCashBookDtoResponse)
                 .orElseThrow();
 
