@@ -3,7 +3,7 @@ package com.nomad.accounting.adapter.controller;
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
-import com.nomad.accounting.adapter.mapper.in.CashBookMapperIn;
+import com.nomad.accounting.adapter.mapper.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
 import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
 import com.nomad.accounting.application.port.input.CashBookUpdateInputPort;

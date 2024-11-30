@@ -1,6 +1,6 @@
 package com.nomad.accounting.adapter.repository;
 
-import com.nomad.accounting.adapter.mapper.out.CashBookMapperOut;
+import com.nomad.accounting.adapter.mapper.CashBookMapperOut;
 import com.nomad.accounting.application.core.domain.CashBook;
 import com.nomad.accounting.application.port.output.CashBookCreateOutputPort;
 import lombok.NonNull;
@@ -26,9 +26,9 @@ public class CashBookCreateAdapter implements CashBookCreateOutputPort {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     @Modifying
     @Override
-    public CashBook save(@NonNull final CashBook cashBook) {
+    public CashBook create(@NonNull final CashBook cashBook) {
 
-        log.info("Adaptador iniciado: {}", cashBook);
+        log.info("Adaptador Create iniciado: {}", cashBook);
 
         var cashBookSaved = Optional.of(cashBook)
                 .map(cashBookMapperOut::toCashBookEntity)
@@ -36,7 +36,7 @@ public class CashBookCreateAdapter implements CashBookCreateOutputPort {
                 .map(cashBookMapperOut::toCashBook)
                 .orElseThrow();
 
-        log.info("Adaptador concluído: {}", cashBookSaved);
+        log.info("Adaptador Create concluído: {}", cashBookSaved);
 
         return cashBookSaved;
     }

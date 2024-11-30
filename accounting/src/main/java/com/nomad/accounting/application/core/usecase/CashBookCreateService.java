@@ -20,13 +20,13 @@ public class CashBookCreateService implements CashBookCreateInputPort {
     @Override
     public CashBook create(@NonNull CashBook cashBook) {
 
-        log.info("Serviço iniciado: {}", cashBook);
+        log.info("Serviço Create iniciado: {}", cashBook);
 
         var cashBookCreated = Optional.of(cashBook)
-                .map(cashBookCreateOutputPort::save)
+                .map(cashBookCreateOutputPort::create)
                 .orElseThrow();
 
-        log.info("Serviço concluído: {}", cashBookCreated);
+        log.info("Serviço Create concluído: {}", cashBookCreated);
 
         return cashBookCreated;
     }

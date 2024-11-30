@@ -20,11 +20,11 @@ public class CashBookFindAllAdapter implements CashBookFindAllOutputPort {
     @Override
     public Page<CashBookEntity> findAll(Pageable pagination) {
 
-        log.info("Adapter iniciado com paginação: {}", pagination);
+        log.info("Adapter FindAll iniciado com paginação: {}", pagination);
 
         var cashBookAll = cashBookRepository.findAll(pagination);
 
-        log.info("Adapter concluído: {}", pagination);
+        log.info("Adapter FindAll concluído: {}", pagination);
 
         return cashBookAll;
     }

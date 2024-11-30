@@ -25,10 +25,14 @@ public class CashBookDeleteAdapter implements CashBookDeleteOutputPort {
     @Override
     public void delete(@NonNull final UUID cashBookId) {
 
+        log.info("Adapter Delete iniciado: {}", cashBookId);
+
         cashBookRepository.findById(cashBookId)
                 .ifPresentOrElse(cashBookRepository::delete,
                         () -> {throw new CashBookNotFoundException(cashBookId);}
                 );
+
+        log.info("Adapter Delete concluído: {}", cashBookId);
     }
 }
 

@@ -20,13 +20,13 @@ public class CashBookUpdateService implements CashBookUpdateInputPort {
     @Override
     public CashBook update(@NonNull CashBook cashBook) {
 
-        log.info("Serviço iniciado: {}", cashBook);
+        log.info("Serviço Update iniciado: {}", cashBook);
 
         var cashBookUpdated = Optional.of(cashBook)
                 .map(cashBookUpdadeOutputPort::update)
                 .orElseThrow();
 
-        log.info("Serviço concluído: {}", cashBookUpdated);
+        log.info("Serviço Update concluído: {}", cashBookUpdated);
 
         return cashBookUpdated;
     }

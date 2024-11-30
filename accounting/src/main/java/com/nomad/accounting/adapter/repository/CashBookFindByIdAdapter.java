@@ -1,6 +1,6 @@
 package com.nomad.accounting.adapter.repository;
 
-import com.nomad.accounting.adapter.mapper.out.CashBookMapperOut;
+import com.nomad.accounting.adapter.mapper.CashBookMapperOut;
 import com.nomad.accounting.application.core.domain.CashBook;
 import com.nomad.accounting.application.port.output.CashBookFindByIdOutputPort;
 import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
@@ -25,13 +25,13 @@ public class CashBookFindByIdAdapter implements CashBookFindByIdOutputPort {
     @Override
     public CashBook findById(@NotNull final UUID cashBookId) {
 
-        log.info("Adaptador iniciado: {}", cashBookId);
+        log.info("Adaptador FindById iniciado: {}", cashBookId);
 
         var cashBookFinded = cashBookRepository.findById(cashBookId)
                 .map(cashBookMapperOut::toCashBook)
                 .orElseThrow(() -> new CashBookNotFoundException(cashBookId));
 
-        log.info("Adaptador concluído: {}", cashBookFinded);
+        log.info("Adaptador FindById concluído: {}", cashBookFinded);
 
         return cashBookFinded;
     }

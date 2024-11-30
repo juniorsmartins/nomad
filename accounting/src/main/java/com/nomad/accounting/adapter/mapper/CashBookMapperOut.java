@@ -1,4 +1,4 @@
-package com.nomad.accounting.adapter.mapper.out;
+package com.nomad.accounting.adapter.mapper;
 
 import com.nomad.accounting.adapter.entity.CashBookEntity;
 import com.nomad.accounting.application.core.domain.CashBook;

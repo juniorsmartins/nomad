@@ -20,14 +20,14 @@ public class CashBookDeleteService implements CashBookDeleteInputPort {
     @Override
     public void delete(final UUID cashBookId) {
 
-        log.info("Serviço iniciado: {}", cashBookId);
+        log.info("Serviço Delete iniciado: {}", cashBookId);
 
         Optional.ofNullable(cashBookId)
                 .ifPresentOrElse(cashBookDeleteOutputPort::delete,
                         () -> {throw new NoSuchElementException();}
                 );
 
-        log.info("Serviço concluído: {}", cashBookId);
+        log.info("Serviço Delete concluído: {}", cashBookId);
     }
 }
 

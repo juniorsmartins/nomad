@@ -1,4 +1,4 @@
-package com.nomad.accounting.adapter.mapper.in;
+package com.nomad.accounting.adapter.mapper;
 
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
