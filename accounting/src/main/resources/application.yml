@@ -13,7 +13,7 @@ spring:
     password: ${DB_PASSWORD:postgres}
     hikari: # Configurações do HikariCP, o pool de conexões padrão do Spring Boot.
       pool-name: poll_accounting # Nome do pool, útil para logs e diagnósticos.
-      maxLifetime: 1800000 # Tempo máximo de vida de uma conexão no pool.
+      maxLifetime: 600000 # Tempo máximo de vida de uma conexão no pool.
       connection-timeout: 60000 # Tempo máximo para obter uma conexão antes de gerar erro.
       idle-timeout: 600000 # Tempo de inatividade antes de uma conexão ser removida.
       minimum-idle: 2 # Número mínimo de conexões inativas que o pool deve manter.
@@ -22,7 +22,7 @@ spring:
   jpa: # Configura o JPA/Hibernate.
     database: POSTGRESQL # Especifica o banco usado.
     hibernate:
-      ddl-auto: createDrop # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
+      ddl-auto: create-drop # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estratégia de nomeação de tabelas/colunas.
     properties:
@@ -42,7 +42,7 @@ spring:
             type: pgsql_enum # Personalização para usar enums
         jdbc:
           log:
-            non_contextual_creation: true # Ajuda a rastrear conexões criadas fora do contexto transacional.
+            non_contextual_creation: true # Ajuda a rastrear conexões criadas fora do contexto transacional (pode desligar em produção).
     open-in-view: false #  Define se o Hibernate deve manter a sessão aberta durante a renderização da view. O false é recomendado para evitar problemas de performance e lazy loading.
     generate-ddl: true
     show-sql: true
@@ -50,7 +50,7 @@ spring:
   logging: # Configura o nível de log para queries SQL.
     level:
       org.hibernate.SQL: DEBUG # Loga queries executadas (usar INFO em produção).
-      org.hibernate.type.descriptor.sql: TRACE  # Loga parâmetros das queries para depuração.
+      org.hibernate.type.descriptor.sql: TRACE  # Loga parâmetros das queries para depuração (usar WARN em produção).
 
 management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
   endpoints:

@@ -11,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "cashbooks",
     uniqueConstraints = {
-        @UniqueConstraint(name = "unique_cashbook_year_document", columnNames = {"yearReference", "document"})
+        @UniqueConstraint(name = "unique_cashbook_year_document", columnNames = {"year_reference", "document"})
     }
 )
 @Builder
@@ -33,7 +33,7 @@ public final class CashBookEntity implements Serializable {
     @Column(name = "year_reference", nullable = false)
     private Year yearReference;
 
-    @Column(name = "document", nullable = false)
+    @Column(name = "document", length = 14, nullable = false)
     private String document;
 }
 
