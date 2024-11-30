@@ -11,6 +11,6 @@ public record CashBookCreateDtoRequest(
         Year yearReference,
 
         @NotBlank
-        String document)
-{ }
+        String document
+) { }
 

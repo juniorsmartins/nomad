@@ -1,45 +1,57 @@
-server:
+server: # Define a porta em que o servidor embutido (por padrão, o Tomcat) irá escutar.
   port: ${SERVER_PORT:9201}
 
 spring:
 
-  application:
+  application: # Define o nome da aplicação. Útil para identificação em logs e sistemas de monitoramento.
     name: accounting
 
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:accounting}?serverTimezone=UTC
+  datasource: # Configura o datasource do banco de dados.
+    driver-class-name: org.postgresql.Driver # Especifica o driver JDBC (neste caso, para Postgres).
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:accounting} # Define a URL de conexão ao banco.
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
-    sql-script-encoding: UTF-8
-    characterEncoding: UTF-8
-    hikari:
-      pool-name: poll_accounting
-      maxLifetime: 1800000
-      connection-timeout: 40000
-      #      idle-timeout: 300000 # Nao possui efetividade quando usado com maximum-pool-size fixo.
-      maximum-pool-size: 2
+    hikari: # Configurações do HikariCP, o pool de conexões padrão do Spring Boot.
+      pool-name: poll_accounting # Nome do pool, útil para logs e diagnósticos.
+      maxLifetime: 1800000 # Tempo máximo de vida de uma conexão no pool.
+      connection-timeout: 60000 # Tempo máximo para obter uma conexão antes de gerar erro.
+      idle-timeout: 600000 # Tempo de inatividade antes de uma conexão ser removida.
+      minimum-idle: 2 # Número mínimo de conexões inativas que o pool deve manter.
+      maximum-pool-size: 4 # Número máximo de conexões simultâneas.
 
-  jpa:
-    database: POSTGRESQL
+  jpa: # Configura o JPA/Hibernate.
+    database: POSTGRESQL # Especifica o banco usado.
     hibernate:
-      ddl-auto: none
+      ddl-auto: update # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estratégia de nomeação de tabelas/colunas.
     properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
+      hibernate: # Configurações avançadas do Hibernate.
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
+        format_sql: true # Formata as queries SQL para facilitar leitura.
+        use_sql_comments: true # Adiciona comentários nas queries geradas.
+        connection: # Define o nível de isolamento de transação.
+          isolation: 2 # 2 é READ_COMMITTED
+        cache:
+          use_second_level_cache: false # Habilita cache de segundo nível
+          use_query_cache: false # Habilita cache de query.
         type:
           enumType:
-            type: pgsql_enum
+            type: pgsql_enum # Personalização para usar enums
         jdbc:
           log:
-            non_contextual_creation: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    open-in-view: false
+            non_contextual_creation: true # Ajuda a rastrear conexões criadas fora do contexto transacional.
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect # Define o dialeto SQL usado pelo Hibernate.
+    open-in-view: false #  Define se o Hibernate deve manter a sessão aberta durante a renderização da view. O false é recomendado para evitar problemas de performance e lazy loading.
     generate-ddl: true
     show-sql: true
+
+  logging: # Configura o nível de log para queries SQL.
+    level:
+      org.hibernate.SQL: DEBUG # Loga queries executadas (usar INFO em produção).
+      org.hibernate.type.descriptor.sql: TRACE  # Loga parâmetros das queries para depuração.
 
 management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
   endpoints:
