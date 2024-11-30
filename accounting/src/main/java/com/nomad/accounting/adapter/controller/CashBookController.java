@@ -4,6 +4,7 @@ import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
 import com.nomad.accounting.adapter.mapper.in.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
+import com.nomad.accounting.application.port.input.CashBookFindInputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.Year;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +24,8 @@ public class CashBookController {
     protected static final String URI_CASHBOOK = "/api/v1/accounting/cash-book/";
 
     private final CashBookCreateInputPort cashBookCreateInputPort;
+
+    private final CashBookFindInputPort cashBookFindInputPort;
 
     private final CashBookMapperIn cashBookMapperIn;
 
@@ -48,10 +50,14 @@ public class CashBookController {
     @GetMapping(path = "{id}")
     public ResponseEntity<CashBookDtoResponse> find(@PathVariable(name = "id") final UUID id) {
 
-        var response = CashBookDtoResponse.builder()
-                .document("65439940022")
-                .yearReference(Year.of(1988))
-                .build();
+        log.info("Controller acionado: {}", id);
+
+        var response = Optional.of(id)
+                .map(cashBookFindInputPort::findById)
+                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .orElseThrow();
+
+        log.info("Controller concluído: {}", response);
 
         return ResponseEntity
                 .ok()
