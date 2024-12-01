@@ -1,6 +1,7 @@
 package com.nomad.accounting.config.exception;
 
 import com.nomad.accounting.config.exception.http404.ResourceNotFoundException;
+import com.nomad.accounting.config.exception.http409.ResourceConflictRulesException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
-public final class GlobalHandlerException extends ResponseEntityExceptionHandler {
+public final class GlobalHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
@@ -70,6 +71,24 @@ public final class GlobalHandlerException extends ResponseEntityExceptionHandler
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(problemDetail);
+    }
+
+    // ---------- 409 Conflict ---------- //
+    @ExceptionHandler(ResourceConflictRulesException.class)
+    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceConflictRulesException ex, WebRequest webRequest) {
+
+        // ProblemDetail RFC 7807
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problemDetail.setType(URI.create("https://nomad.com/errors/resource-conflict-rules"));
+
+        var message = messageSource
+                .getMessage(ex.getMessageKey(), new Object[]{ex.getId()}, LocaleContextHolder.getLocale());
+
+        problemDetail.setTitle(message);
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .body(problemDetail);
     }
 }
