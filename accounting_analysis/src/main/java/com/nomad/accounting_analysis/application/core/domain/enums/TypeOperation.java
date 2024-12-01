@@ -1,4 +1,4 @@
-package com.nomad.accounting.application.core.domain.enums;
+package com.nomad.accounting_analysis.application.core.domain.enums;
 
 import lombok.Getter;
 

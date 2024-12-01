@@ -30,7 +30,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CashBookController {
 
-    protected static final String URI_CASHBOOK = "/api/v1/accounting/cash-book";
+    protected static final String URI_CASHBOOK = "/api/v1/accounting/cashbook";
 
     private final CashBookCreateInputPort cashBookCreateInputPort;
 
