@@ -1,6 +1,30 @@
 name: nomad
 
 services:
+
+  accounting_analysis:
+    container_name: accounting_analysis
+    image: juniorsmartins/accounting_analysis:v0.0.1
+    build:
+      context: ../../accounting_analysis/
+      dockerfile: Dockerfile
+      args:
+        APP_NAME: "accounting_analysis"
+        APP_VERSION: "v0.0.1"
+        APP_DESCRIPTION: "Desenvolve análises de dados do livro-caixa."
+    ports:
+      - "9202:9202"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    restart: always
+    networks:
+      - general_communication
+    depends_on:
+      - accounting
+
   accounting:
     container_name: accounting
     image: juniorsmartins/accounting:v0.0.1
