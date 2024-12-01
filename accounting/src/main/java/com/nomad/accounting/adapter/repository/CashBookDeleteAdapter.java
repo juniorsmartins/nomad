@@ -1,7 +1,6 @@
 package com.nomad.accounting.adapter.repository;
 
 import com.nomad.accounting.application.port.output.CashBookDeleteOutputPort;
-import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +26,7 @@ public class CashBookDeleteAdapter implements CashBookDeleteOutputPort {
 
         log.info("Adapter Delete iniciado: {}", cashBookId);
 
-        cashBookRepository.findById(cashBookId)
-                .ifPresentOrElse(cashBookRepository::delete,
-                        () -> {throw new CashBookNotFoundException(cashBookId);}
-                );
+        cashBookRepository.deleteById(cashBookId);
 
         log.info("Adapter Delete concluído: {}", cashBookId);
     }
