@@ -7,7 +7,7 @@ public enum TypeOperation {
 
     INPUT("INPUT"),
     OUTPUT("OUTPUT"),
-    YIELD("YIELD");
+        YIELD("YIELD");
 
     private final String value;
 
