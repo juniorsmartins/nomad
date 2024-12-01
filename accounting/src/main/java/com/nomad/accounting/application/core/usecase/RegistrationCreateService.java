@@ -19,7 +19,7 @@ public class RegistrationCreateService implements RegistrationCreateInputPort {
     private final RegistrationCreateOutputPort registrationCreateOutputPort;
 
     @Override
-    public CashBook create(@NonNull UUID cashBookId, @NonNull Registration registration) {
+    public CashBook create(@NonNull final UUID cashBookId, @NonNull Registration registration) {
 
         log.info("Serviço Create iniciado para cashBookId: {} {}", cashBookId, registration);
 
