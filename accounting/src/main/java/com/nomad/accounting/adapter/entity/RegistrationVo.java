@@ -7,6 +7,8 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Lob;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,11 +17,15 @@ import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_SUPPL
 
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"description", "amount", "typeOperation", "dateOperation", "costCenter", "supplier"})
 @Embeddable
-public final class RegistrationVo {
+public final class RegistrationVo implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Lob
     @Column(name = "description", length = MAX_CARACTER_DESCRIPTION, nullable = false)
