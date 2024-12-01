@@ -7,6 +7,9 @@ import org.hibernate.validator.constraints.Length;
 import java.time.Year;
 import java.util.UUID;
 
+import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DOCUMENT;
+import static com.nomad.accounting.config.AccountingConstants.MIN_CARACTER_DOCUMENT;
+
 public record CashBookUpdateDtoRequest(
 
         @NotNull
@@ -16,7 +19,7 @@ public record CashBookUpdateDtoRequest(
         Year yearReference,
 
         @NotBlank
-        @Length(min = 11, max = 14)
+        @Length(min = MIN_CARACTER_DOCUMENT, max = MAX_CARACTER_DOCUMENT)
         String document
 ) { }
 

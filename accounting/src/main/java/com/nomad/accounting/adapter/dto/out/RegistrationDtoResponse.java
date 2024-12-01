@@ -1,14 +1,14 @@
 package com.nomad.accounting.adapter.dto.out;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nomad.accounting.application.core.domain.enums.CostCenter;
 import com.nomad.accounting.application.core.domain.enums.TypeOperation;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record RegistrationDtoResponse(
-
-        UUID cashBookId,
 
         String description,
 
@@ -16,8 +16,10 @@ public record RegistrationDtoResponse(
 
         TypeOperation typeOperation,
 
+        LocalDate dateOperation,
+
         CostCenter costCenter,
 
-        String supplier)
-{ }
+        String supplier
+) { }
 

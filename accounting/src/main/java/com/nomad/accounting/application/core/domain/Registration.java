@@ -5,24 +5,22 @@ import com.nomad.accounting.application.core.domain.enums.TypeOperation;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.time.LocalDate;
 
 @Builder
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"registrationId"})
+@EqualsAndHashCode(of = {"description", "amount", "typeOperation", "dateOperation", "costCenter", "supplier"})
 public class Registration {
-
-    private UUID registrationId;
-
-    private UUID cashBookId;
 
     private String description;
 
     private BigDecimal amount;
 
     private TypeOperation typeOperation;
+
+    private LocalDate dateOperation;
 
     private CostCenter costCenter;
 

@@ -6,7 +6,10 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Year;
+import java.util.List;
 import java.util.UUID;
+
+import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DOCUMENT;
 
 @Entity
 @Table(name = "cashbooks",
@@ -33,7 +36,11 @@ public final class CashBookEntity implements Serializable {
     @Column(name = "year_reference", nullable = false)
     private Year yearReference;
 
-    @Column(name = "document", length = 14, nullable = false)
+    @Column(name = "document", length = MAX_CARACTER_DOCUMENT, nullable = false)
     private String document;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "cashbook_registrations", joinColumns = @JoinColumn(name = "cashbook_id"))
+    private List<RegistrationVo> registrations;
 }
 
