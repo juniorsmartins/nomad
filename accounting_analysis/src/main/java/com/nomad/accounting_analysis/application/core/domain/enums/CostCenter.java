@@ -21,6 +21,7 @@ public enum CostCenter {
     TELEPHONY("TELEPHONY"),
     TRANSPORT("TRANSPORT"),
     CLOTHING("CLOTHING"),
+    BARBERSHOP("BARBERSHOP"),
     OTHER("OTHER");
 
     private final String value;
