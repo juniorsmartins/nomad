@@ -27,6 +27,9 @@ dependencies {
 	// Spring Web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	// Spring Webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -35,9 +38,6 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
-	// RestTemplate
-	implementation 'org.apache.httpcomponents.client5:httpclient5:5.4'
 
 	// Tests
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.UUID;
 
@@ -15,17 +15,18 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BalanceCashBookClient implements BalanceCashBookOutputPort {
 
-    private static final String URI_ACCOUNTING_CASHBOOK = "http://localhost:9201/api/v1/accounting/cashbook";
-
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
     @Override
     public CashBookDtoResponse findById(@NonNull final UUID id) {
 
         log.info("Client FindById iniciado: {}", id);
 
-        var responseEntity = restTemplate.getForEntity(URI_ACCOUNTING_CASHBOOK + "/" + id, CashBookDtoResponse.class);
-        var dtoResponse = responseEntity.getBody();
+        var dtoResponse = webClient.get()
+                .uri("/{id}", id)
+                .retrieve()
+                .bodyToMono(CashBookDtoResponse.class)
+                .block();
 
         log.info("Client FindById concluído: {}", dtoResponse);
 
