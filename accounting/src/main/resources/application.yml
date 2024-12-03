@@ -22,7 +22,7 @@ spring:
   jpa: # Configura o JPA/Hibernate.
     database: POSTGRESQL # Especifica o banco usado.
     hibernate:
-      ddl-auto: create-drop # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
+      ddl-auto: update # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estratégia de nomeação de tabelas/colunas.
     properties:
