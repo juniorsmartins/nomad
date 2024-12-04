@@ -2,9 +2,7 @@ package com.nomad.accounting.adapter.entity;
 
 import com.nomad.accounting.application.core.domain.enums.CostCenter;
 import com.nomad.accounting.application.core.domain.enums.TypeOperation;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
@@ -35,12 +33,14 @@ public final class RegistrationVo implements Serializable {
     private BigDecimal amount;
 
     @Column(name = "type_operation", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TypeOperation typeOperation;
 
     @Column(name = "date_operation", nullable = false)
     private LocalDate dateOperation;
 
     @Column(name = "cost_center", nullable = false)
+    @Enumerated(EnumType.STRING)
     private CostCenter costCenter;
 
     @Column(name = "supplier", length = MAX_CARACTER_SUPPLIER, nullable = false)
