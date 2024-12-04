@@ -41,6 +41,9 @@ public class BalanceCashBookAnnualService implements BalanceCashBookInputPort {
                 .annualSumCredits(cashBook.annualSumCredits())
                 .annualSumDebts(cashBook.annualSumDebits())
                 .annualBalance(cashBook.annualBalance())
+                .monthlySumCredits(cashBook.monthlySumCredits())
+                .monthlySumDebits(cashBook.monthlySumDebits())
+                .monthlyBalance(cashBook.monthlyBalance())
                 .build();
     }
 }

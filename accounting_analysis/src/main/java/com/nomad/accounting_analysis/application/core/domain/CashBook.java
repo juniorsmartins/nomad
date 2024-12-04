@@ -1,15 +1,12 @@
 package com.nomad.accounting_analysis.application.core.domain;
 
 import com.nomad.accounting_analysis.application.core.domain.enums.TypeOperation;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.Month;
 import java.time.Year;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,15 +23,16 @@ public final class CashBook {
     private List<Registration> registrations;
 
     public BigDecimal annualSumCredits() {
-        return this.registrations.stream()
-                .filter(registration -> TypeOperation.INPUT.equals(registration.getTypeOperation()))
-                .map(Registration::getAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return calculateAnnualSum(TypeOperation.INPUT);
     }
 
     public BigDecimal annualSumDebits() {
+        return calculateAnnualSum(TypeOperation.OUTPUT);
+    }
+
+    public BigDecimal calculateAnnualSum(@NonNull TypeOperation typeOperation) {
         return this.registrations.stream()
-                .filter(registration -> TypeOperation.OUTPUT.equals(registration.getTypeOperation()))
+                .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
                 .map(Registration::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
@@ -43,6 +41,41 @@ public final class CashBook {
         var credits = this.annualSumCredits();
         var debits = this.annualSumDebits();
         return credits.subtract(debits);
+    }
+
+    public Map<Month, BigDecimal> monthlySumCredits() {
+        return calculateMonthlySum(TypeOperation.INPUT);
+    }
+
+    public Map<Month, BigDecimal> monthlySumDebits() {
+        return calculateMonthlySum(TypeOperation.OUTPUT);
+    }
+
+    private Map<Month, BigDecimal> calculateMonthlySum(@NonNull TypeOperation typeOperation) {
+        Map<Month, BigDecimal> monthlySum = new EnumMap<>(Month.class);
+
+        for (Month month : Month.values()) {
+            var sum = this.registrations.parallelStream()
+                    .filter(registration -> month.equals(registration.getDateOperation().getMonth()))
+                    .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
+                    .map(Registration::getAmount)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            monthlySum.put(month, sum);
+        }
+        return monthlySum;
+    }
+
+    public Map<Month, BigDecimal> monthlyBalance() {
+        Map<Month, BigDecimal> monthlySumCredits = monthlySumCredits();
+        Map<Month, BigDecimal> monthlySumDebits = monthlySumDebits();
+
+        Map<Month, BigDecimal> monthBalance = new EnumMap<>(Month.class);
+
+        for (Month month : Month.values()) {
+            monthBalance.put(month, monthlySumCredits.getOrDefault(month, BigDecimal.ZERO)
+                    .subtract(monthlySumDebits.getOrDefault(month, BigDecimal.ZERO)));
+        }
+        return monthBalance;
     }
 }
 
