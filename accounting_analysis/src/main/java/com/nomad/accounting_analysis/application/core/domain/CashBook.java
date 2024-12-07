@@ -1,5 +1,6 @@
 package com.nomad.accounting_analysis.application.core.domain;
 
+import com.nomad.accounting_analysis.application.core.domain.enums.CostCenter;
 import com.nomad.accounting_analysis.application.core.domain.enums.TypeOperation;
 import lombok.*;
 
@@ -39,6 +40,29 @@ public final class CashBook {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    public Map<CostCenter, BigDecimal> annualSumCreditsByCostCenter() {
+        return calculateAnnualSumByCostCenter(TypeOperation.INPUT);
+    }
+
+    public Map<CostCenter, BigDecimal> annualSumDebitsByCostCenter() {
+        return calculateAnnualSumByCostCenter(TypeOperation.OUTPUT);
+    }
+
+    private Map<CostCenter, BigDecimal> calculateAnnualSumByCostCenter(@NonNull final TypeOperation typeOperation) {
+
+        Map<CostCenter, BigDecimal> annualSumByCostCenter = new EnumMap<>(CostCenter.class);
+
+        for (CostCenter costCenter : CostCenter.values()) {
+            var sum = this.registrations.parallelStream()
+                    .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
+                    .filter(registration -> costCenter.equals(registration.getCostCenter()))
+                    .map(Registration::getAmount)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            annualSumByCostCenter.put(costCenter, sum);
+        }
+        return annualSumByCostCenter;
+    }
+
     public BigDecimal annualBalance() {
         var credits = this.annualSumCredits();
         var debits = this.annualSumDebits();
@@ -62,7 +86,7 @@ public final class CashBook {
         return debitLessTurn;
     }
 
-    private Map<Month, BigDecimal> calculateMonthlySum(@NonNull TypeOperation typeOperation) {
+    private Map<Month, BigDecimal> calculateMonthlySum(@NonNull final TypeOperation typeOperation) {
         Map<Month, BigDecimal> monthlySum = new EnumMap<>(Month.class);
 
         for (Month month : Month.values()) {
