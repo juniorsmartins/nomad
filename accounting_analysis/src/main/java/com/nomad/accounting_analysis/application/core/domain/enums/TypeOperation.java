@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum TypeOperation {
 
     INPUT("INPUT"),
-    OUTPUT("OUTPUT");
+    OUTPUT("OUTPUT"),
+    CHARGEBACK("CHARGEBACK");
 
     private final String value;
 

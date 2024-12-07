@@ -27,10 +27,12 @@ public final class CashBook {
     }
 
     public BigDecimal annualSumDebits() {
-        return calculateAnnualSum(TypeOperation.OUTPUT);
+        var annualSumDebits = calculateAnnualSum(TypeOperation.OUTPUT);
+        var annualChargeback = calculateAnnualSum(TypeOperation.CHARGEBACK);
+        return annualSumDebits.subtract(annualChargeback);
     }
 
-    public BigDecimal calculateAnnualSum(@NonNull TypeOperation typeOperation) {
+    private BigDecimal calculateAnnualSum(@NonNull TypeOperation typeOperation) {
         return this.registrations.stream()
                 .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
                 .map(Registration::getAmount)
@@ -48,7 +50,16 @@ public final class CashBook {
     }
 
     public Map<Month, BigDecimal> monthlySumDebits() {
-        return calculateMonthlySum(TypeOperation.OUTPUT);
+        var monthlySumDebits = calculateMonthlySum(TypeOperation.OUTPUT);
+        var monthlyChargeback = calculateMonthlySum(TypeOperation.CHARGEBACK);
+
+        Map<Month, BigDecimal> debitLessTurn = new EnumMap<>(Month.class);
+
+        for (Month month : Month.values()) {
+           debitLessTurn.put(month, monthlySumDebits.getOrDefault(month, BigDecimal.ZERO)
+                    .subtract(monthlyChargeback.getOrDefault(month, BigDecimal.ZERO)));
+        }
+        return debitLessTurn;
     }
 
     private Map<Month, BigDecimal> calculateMonthlySum(@NonNull TypeOperation typeOperation) {
