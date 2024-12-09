@@ -2,7 +2,7 @@ package com.nomad.accounting.adapter.repository;
 
 import com.nomad.accounting.adapter.dto.filter.CashBookFilter;
 import com.nomad.accounting.adapter.entity.CashBookEntity;
-import com.nomad.accounting.adapter.repository.specs.CashBookSpec;
+import com.nomad.accounting.adapter.repository.specs.CashBookFactorySpec;
 import com.nomad.accounting.application.port.output.CashBookSearchOutputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +27,11 @@ public class CashBookSearchAdapter implements CashBookSearchOutputPort {
         log.info("Adapter Search iniciado: {}", cashBookFilter);
 
         var cashbookSearch = Optional.ofNullable(cashBookFilter)
-            .map(filters -> this.cashBookRepository.findAll(CashBookSpec.dynamicQuery(filters), pagination))
+            .map(filters -> this.cashBookRepository
+                    .findAll(CashBookFactorySpec.dynamicQuery(filters), pagination))
             .orElseThrow();
 
-        log.info("Adapter Search concluído: {}", cashbookSearch);
+        log.info("Adapter Search concluído: {}", cashbookSearch.getTotalElements());
 
         return cashbookSearch;
     }
