@@ -1,10 +1,8 @@
 package com.nomad.accounting.application.core.usecase;
 
-import com.nomad.accounting.application.core.domain.CashBook;
-import com.nomad.accounting.application.core.domain.Registration;
 import com.nomad.accounting.application.port.input.RegistrationDeleteInputPort;
-import com.nomad.accounting.application.port.output.CashBookCreateOutputPort;
-import com.nomad.accounting.application.port.output.CashBookFindByIdOutputPort;
+import com.nomad.accounting.application.port.output.RegistrationDeleteOutputPort;
+import com.nomad.accounting.application.port.output.RegistrationFindByIdOutputPort;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,23 +15,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationDeleteService implements RegistrationDeleteInputPort {
 
-    private final CashBookFindByIdOutputPort cashBookFindByIdOutputPort;
+    private RegistrationFindByIdOutputPort registrationFindByIdOutputPort;
 
-    private final CashBookCreateOutputPort cashBookCreateOutputPort;
+    private RegistrationDeleteOutputPort registrationDeleteOutputPort;
 
     @Override
-    public CashBook delete(@NonNull final UUID cashBookId, @NonNull Registration registration) {
+    public void delete(@NonNull final UUID registrationId) {
 
-        log.info("Serviço Delete iniciado com id: {} {}", cashBookId, registration);
+        log.info("Serviço Delete iniciado com id: {}", registrationId);
 
-        var cashBook = cashBookFindByIdOutputPort.findById(cashBookId);
-        cashBook.getRegistrations()
-                .removeIf(registered -> registered.equals(registration));
-        cashBookCreateOutputPort.create(cashBook);
+        registrationFindByIdOutputPort.findById(registrationId);
+        registrationDeleteOutputPort.delete(registrationId);
 
-        log.info("Serviço Delete concluído: {}", cashBook);
-
-        return cashBook;
+        log.info("Serviço Delete concluído: {}", registrationId);
     }
 }
 

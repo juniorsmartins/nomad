@@ -9,21 +9,32 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DESCRIPTION;
 import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_SUPPLIER;
 
+@Entity
+@Table(name = "registrations")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"description", "amount", "typeOperation", "dateOperation", "costCenter", "supplier"})
-@Embeddable
-public final class RegistrationVo implements Serializable {
+@EqualsAndHashCode(of = {"registrationId"})
+public final class RegistrationEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "registrationId", columnDefinition = "uuid", updatable = false, nullable = false)
+    private UUID registrationId;
+
+    @ManyToOne
+    @JoinColumn(name = "cashbook_id")
+    private CashBookEntity cashbook;
 
     @Lob
     @Column(name = "description", length = MAX_CARACTER_DESCRIPTION, nullable = false)

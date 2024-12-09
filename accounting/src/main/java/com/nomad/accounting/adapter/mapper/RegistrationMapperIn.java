@@ -1,19 +1,18 @@
 package com.nomad.accounting.adapter.mapper;
 
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
-import com.nomad.accounting.adapter.dto.in.RegistrationUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
-import com.nomad.accounting.adapter.entity.RegistrationVo;
 import com.nomad.accounting.application.core.domain.Registration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RegistrationMapperIn {
 
+    @Mapping(target = "registrationId", ignore = true)
+    @Mapping(target = "cashbook", ignore = true)
     Registration toRegistration(RegistrationCreateDtoRequest registrationCreateDtoRequest);
 
-    Registration toRegistration(RegistrationUpdateDtoRequest registrationUpdateDtoRequest);
-
-    RegistrationDtoResponse toRegistrationDtoResponse(RegistrationVo registrationVo);
+    RegistrationDtoResponse toRegistrationDtoResponse(Registration registration);
 }
 

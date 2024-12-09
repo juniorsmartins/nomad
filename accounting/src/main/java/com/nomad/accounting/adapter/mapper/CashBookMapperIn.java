@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CashBookMapperIn {
 
-    @Mapping(target = "cashBookId", ignore = true)
+    @Mapping(target = "cashbookId", ignore = true)
     @Mapping(target = "registrations", ignore = true)
     CashBook toCashBook(CashBookCreateDtoRequest cashBookCreateDtoRequest);
 

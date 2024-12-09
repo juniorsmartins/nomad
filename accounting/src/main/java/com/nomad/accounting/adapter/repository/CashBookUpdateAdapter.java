@@ -30,11 +30,11 @@ public class CashBookUpdateAdapter implements CashBookUpdadeOutputPort {
 
         log.info("Adaptador Update iniciado: {}", cashBook);
 
-        var cashBookId = cashBook.getCashBookId();
+        var cashBookId = cashBook.getCashbookId();
 
         var cashBookUpdated = cashBookRepository.findById(cashBookId)
                 .map(entity -> {
-                    BeanUtils.copyProperties(cashBook, entity, "cashBookId");
+                    BeanUtils.copyProperties(cashBook, entity, "cashbookId");
                     return entity;
                 })
                 .map(cashBookMapperOut::toCashBook)

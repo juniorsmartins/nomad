@@ -4,13 +4,11 @@ import com.nomad.accounting.adapter.dto.filter.CashBookFilter;
 import com.nomad.accounting.adapter.entity.CashBookEntity;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 
-@Slf4j
 @RequiredArgsConstructor
 public class CashBookFactorySpec {
 
@@ -20,40 +18,38 @@ public class CashBookFactorySpec {
 
             var parameters = new ArrayList<Predicate>();
 
-            if(!ObjectUtils.isEmpty(filter.cashBookId())) {
-                parameters.add(criteriaBuilder.equal(root.get("cashBookId"), filter.cashBookId()));
+            if (!ObjectUtils.isEmpty(filter.cashBookId())) {
+                parameters.add(criteriaBuilder.equal(root.get("cashbookId"), filter.cashBookId()));
             }
 
-            if(!ObjectUtils.isEmpty(filter.yearReference())) {
+            if (!ObjectUtils.isEmpty(filter.yearReference())) {
                 parameters.add(criteriaBuilder.equal(root.get("yearReference"), filter.yearReference()));
             }
 
-            if(!ObjectUtils.isEmpty(filter.document())) {
+            if (!ObjectUtils.isEmpty(filter.document())) {
                 parameters.add(criteriaBuilder.equal(root.get("document"), filter.document()));
             }
 
-            if(!ObjectUtils.isEmpty(filter.registration())) {
+            if (!ObjectUtils.isEmpty(filter.registration())) {
 
-                var registerFilter = filter.registration();
-
-                if(!ObjectUtils.isEmpty(registerFilter.dateStart())) {
+                if (!ObjectUtils.isEmpty(filter.registration().dateStart())) {
                     parameters.add(criteriaBuilder
-                            .greaterThanOrEqualTo(root.get("registrations").get("dateOperation"), registerFilter.convertDateStart()));
+                            .greaterThanOrEqualTo(root.get("registrations").get("dateOperation"), filter.registration().convertDateStart()));
                 }
 
-                if(!ObjectUtils.isEmpty(registerFilter.dateEnd())) {
+                if (!ObjectUtils.isEmpty(filter.registration().dateEnd())) {
                     parameters.add(criteriaBuilder
-                            .lessThanOrEqualTo(root.get("registrations").get("dateOperation"), registerFilter.convertDateEnd()));
+                            .lessThanOrEqualTo(root.get("registrations").get("dateOperation"), filter.registration().convertDateEnd()));
                 }
 
-                if(!ObjectUtils.isEmpty(registerFilter.typeOperation())) {
+                if (!ObjectUtils.isEmpty(filter.registration().typeOperation())) {
                     parameters.add(criteriaBuilder
-                            .equal(root.get("registrations").get("typeOperation"), registerFilter.typeOperation()));
+                            .equal(root.get("registrations").get("typeOperation"), filter.registration().typeOperation()));
                 }
 
-                if(!ObjectUtils.isEmpty(registerFilter.costCenter())) {
+                if (!ObjectUtils.isEmpty(filter.registration().costCenter())) {
                     parameters.add(criteriaBuilder
-                            .equal(root.get("registrations").get("costCenter"), registerFilter.costCenter()));
+                            .equal(root.get("registrations").get("costCenter"), filter.registration().costCenter()));
                 }
             }
 

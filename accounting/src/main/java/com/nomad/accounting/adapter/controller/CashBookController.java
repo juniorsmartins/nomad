@@ -63,7 +63,7 @@ public class CashBookController {
         log.info("Controller Create concluído: {}", response);
 
         return ResponseEntity
-                .created(URI.create(URI_CASHBOOK + "/" + response.cashBookId()))
+                .created(URI.create(URI_CASHBOOK + "/" + response.cashbookId()))
                 .body(response);
     }
 
@@ -87,7 +87,7 @@ public class CashBookController {
 
     @GetMapping
     public ResponseEntity<Page<CashBookDtoResponse>> findAll(
-        @PageableDefault(sort = "cashBookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
+        @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
 
         log.info("Controller FindAll acionado com paginação: {}", pagination);
 
@@ -120,7 +120,7 @@ public class CashBookController {
 
     @GetMapping(path = "/search")
     public ResponseEntity<Page<CashBookDtoResponse>> search(@Valid final CashBookFilter cashBookFilter,
-        @PageableDefault(sort = "cashBookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
+        @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
           final Pageable pagination) {
 
         log.info("Controller Search acionado: {}", cashBookFilter);

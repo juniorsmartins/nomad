@@ -10,10 +10,10 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"cashBookId"})
+@EqualsAndHashCode(of = {"cashbookId"})
 public class CashBook {
 
-    private UUID cashBookId;
+    private UUID cashbookId;
 
     private Year yearReference;
 

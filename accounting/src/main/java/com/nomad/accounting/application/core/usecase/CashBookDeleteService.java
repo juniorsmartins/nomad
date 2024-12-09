@@ -34,7 +34,7 @@ public class CashBookDeleteService implements CashBookDeleteInputPort {
 
     private void validateDeletionRules(CashBook cashBook) {
         if (!cashBook.getRegistrations().isEmpty()) {
-            throw new CashBookConflictRulesException(cashBook.getCashBookId());
+            throw new CashBookConflictRulesException(cashBook.getCashbookId());
         }
     }
 }

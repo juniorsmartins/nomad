@@ -22,7 +22,7 @@ import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DOCUM
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"cashBookId"})
+@EqualsAndHashCode(of = {"cashbookId"})
 public final class CashBookEntity implements Serializable {
 
     @Serial
@@ -31,7 +31,7 @@ public final class CashBookEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "cashbook_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    private UUID cashBookId;
+    private UUID cashbookId;
 
     @Column(name = "year_reference", nullable = false)
     private Year yearReference;
@@ -39,8 +39,7 @@ public final class CashBookEntity implements Serializable {
     @Column(name = "document", length = MAX_CARACTER_DOCUMENT, nullable = false)
     private String document;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "cashbook_registrations", joinColumns = @JoinColumn(name = "cashbook_id"))
-    private List<RegistrationVo> registrations;
+    @OneToMany(mappedBy = "cashbook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<RegistrationEntity> registrations;
 }
 
