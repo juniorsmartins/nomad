@@ -1,7 +1,6 @@
 package com.nomad.accounting.adapter.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nomad.accounting.adapter.entity.CashBookEntity;
 import com.nomad.accounting.application.core.domain.enums.CostCenter;
 import com.nomad.accounting.application.core.domain.enums.TypeOperation;
 
@@ -14,7 +13,7 @@ public record RegistrationDtoResponse(
 
         UUID registrationId,
 
-        CashBookEntity cashbook,
+        UUID cashbookId,
 
         String description,
 
