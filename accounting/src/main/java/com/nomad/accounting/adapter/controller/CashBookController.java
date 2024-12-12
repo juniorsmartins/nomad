@@ -3,10 +3,7 @@ package com.nomad.accounting.adapter.controller;
 import com.nomad.accounting.adapter.dto.filter.CashBookFilter;
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
-import com.nomad.accounting.adapter.dto.out.CashBookCreateDtoResponse;
-import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
-import com.nomad.accounting.adapter.dto.out.CashBookFindDtoResponse;
-import com.nomad.accounting.adapter.dto.out.CashBookUpdateDtoResponse;
+import com.nomad.accounting.adapter.dto.out.*;
 import com.nomad.accounting.adapter.mapper.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
 import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
@@ -122,14 +119,14 @@ public class CashBookController {
     }
 
     @GetMapping(path = "/search")
-    public ResponseEntity<Page<CashBookDtoResponse>> search(@Valid final CashBookFilter cashBookFilter,
-        @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
+    public ResponseEntity<Page<CashBookSearchDtoResponse>> search(@Valid final CashBookFilter cashBookFilter,
+          @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
           final Pageable pagination) {
 
         log.info("Controller Search acionado: {}", cashBookFilter);
 
         var response = cashBookSearchOutputPort.search(cashBookFilter, pagination)
-            .map(cashBookMapperIn::toCashBookDtoResponse);
+            .map(cashBookMapperIn::toCashBookSearchDtoResponse);
 
         log.info("Controller Search concluído: {}", response);
 
