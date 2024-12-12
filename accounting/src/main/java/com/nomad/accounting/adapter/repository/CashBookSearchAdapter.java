@@ -31,7 +31,7 @@ public class CashBookSearchAdapter implements CashBookSearchOutputPort {
                     .findAll(CashBookFactorySpec.dynamicQuery(filters), pagination))
             .orElseThrow();
 
-        log.info("Adapter Search concluído: {}", cashbookSearch.getTotalElements());
+        log.info("Adapter Search concluído: {}", cashbookSearch);
 
         return cashbookSearch;
     }

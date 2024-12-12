@@ -2,6 +2,7 @@ package com.nomad.accounting.adapter.repository;
 
 import com.nomad.accounting.adapter.entity.CashBookEntity;
 import com.nomad.accounting.application.port.output.CashBookFindAllOutputPort;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public class CashBookFindAllAdapter implements CashBookFindAllOutputPort {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<CashBookEntity> findAll(Pageable pagination) {
+    public Page<CashBookEntity> findAll(@NonNull final Pageable pagination) {
 
         log.info("Adapter FindAll iniciado com paginação: {}", pagination);
 

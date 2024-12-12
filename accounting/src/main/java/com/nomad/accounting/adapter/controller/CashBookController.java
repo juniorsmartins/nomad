@@ -5,6 +5,8 @@ import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashBookCreateDtoResponse;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashBookFindDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashBookUpdateDtoResponse;
 import com.nomad.accounting.adapter.mapper.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
 import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
@@ -69,14 +71,14 @@ public class CashBookController {
     }
 
     @PutMapping
-    public ResponseEntity<CashBookDtoResponse> update(@RequestBody @Valid CashBookUpdateDtoRequest cashBookUpdateDtoRequest) {
+    public ResponseEntity<CashBookUpdateDtoResponse> update(@RequestBody @Valid CashBookUpdateDtoRequest cashBookUpdateDtoRequest) {
 
         log.info("Controller Update iniciado: {}", cashBookUpdateDtoRequest);
 
         var response = Optional.ofNullable(cashBookUpdateDtoRequest)
                 .map(cashBookMapperIn::toCashBook)
                 .map(cashBookUpdateInputPort::update)
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(cashBookMapperIn::toCashBookUpdateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Update concluído: {}", response);
@@ -87,13 +89,13 @@ public class CashBookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CashBookDtoResponse>> findAll(
+    public ResponseEntity<Page<CashBookFindDtoResponse>> findAll(
         @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
 
         log.info("Controller FindAll acionado com paginação: {}", pagination);
 
         var response = cashBookFindAllOutputPort.findAll(pagination)
-                .map(cashBookMapperIn::toCashBookDtoResponse);
+                .map(cashBookMapperIn::toCashBookFindDtoResponse);
 
         log.info("Controller FindAll concluído: {}", response);
 
@@ -103,13 +105,13 @@ public class CashBookController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CashBookDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
+    public ResponseEntity<CashBookFindDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
 
         log.info("Controller FindById acionado: {}", id);
 
         var response = Optional.of(id)
                 .map(cashBookFindByIdOutputPort::findById)
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(cashBookMapperIn::toCashBookFindDtoResponse)
                 .orElseThrow();
 
         log.info("Controller FindById concluído: {}", response);
