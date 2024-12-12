@@ -3,6 +3,7 @@ package com.nomad.accounting.adapter.controller;
 import com.nomad.accounting.adapter.dto.filter.CashBookFilter;
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
+import com.nomad.accounting.adapter.dto.out.CashBookCreateDtoResponse;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
 import com.nomad.accounting.adapter.mapper.CashBookMapperIn;
 import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
@@ -50,14 +51,14 @@ public class CashBookController {
     private final CashBookMapperIn cashBookMapperIn;
 
     @PostMapping
-    public ResponseEntity<CashBookDtoResponse> create(@RequestBody @Valid CashBookCreateDtoRequest cashBookCreateDtoRequest) {
+    public ResponseEntity<CashBookCreateDtoResponse> create(@RequestBody @Valid CashBookCreateDtoRequest cashBookCreateDtoRequest) {
 
         log.info("Controller Create iniciado: {}", cashBookCreateDtoRequest);
 
         var response = Optional.ofNullable(cashBookCreateDtoRequest)
                 .map(cashBookMapperIn::toCashBook)
                 .map(cashBookCreateInputPort::create)
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(cashBookMapperIn::toCashBookCreateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Create concluído: {}", response);

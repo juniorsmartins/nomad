@@ -2,6 +2,7 @@ package com.nomad.accounting.adapter.mapper;
 
 import com.nomad.accounting.adapter.dto.in.CashBookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashBookUpdateDtoRequest;
+import com.nomad.accounting.adapter.dto.out.CashBookCreateDtoResponse;
 import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
 import com.nomad.accounting.adapter.entity.CashBookEntity;
 import com.nomad.accounting.application.core.domain.CashBook;
@@ -21,5 +22,7 @@ public interface CashBookMapperIn {
     CashBookDtoResponse toCashBookDtoResponse(CashBook cashBook);
 
     CashBookDtoResponse toCashBookDtoResponse(CashBookEntity cashBookEntity);
+
+    CashBookCreateDtoResponse toCashBookCreateDtoResponse(CashBook cashBook);
 }
 

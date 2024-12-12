@@ -18,7 +18,7 @@ public class CashBookCreateService implements CashBookCreateInputPort {
     private final CashBookCreateOutputPort cashBookCreateOutputPort;
 
     @Override
-    public CashBook create(@NonNull CashBook cashBook) {
+    public CashBook create(@NonNull final CashBook cashBook) {
 
         log.info("Serviço Create iniciado: {}", cashBook);
 
