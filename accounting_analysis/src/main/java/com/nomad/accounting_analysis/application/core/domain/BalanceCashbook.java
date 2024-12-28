@@ -12,7 +12,7 @@ import java.util.Map;
 @Builder
 @Getter
 @Setter
-public final class BalanceCashBook {
+public final class BalanceCashbook {
 
     // Total crédito anual
     private BigDecimal annualSumCredits;

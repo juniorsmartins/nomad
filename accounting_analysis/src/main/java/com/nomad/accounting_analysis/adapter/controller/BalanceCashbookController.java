@@ -1,8 +1,8 @@
 package com.nomad.accounting_analysis.adapter.controller;
 
-import com.nomad.accounting_analysis.adapter.dto.response.BalanceCashBookDtoResponse;
-import com.nomad.accounting_analysis.adapter.mapper.CashBookMapper;
-import com.nomad.accounting_analysis.application.port.input.BalanceCashBookInputPort;
+import com.nomad.accounting_analysis.adapter.dto.response.BalanceCashbookDtoResponse;
+import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
+import com.nomad.accounting_analysis.application.port.input.BalanceCashbookInputPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,24 +16,24 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping(path = {BalanceCashBookController.URI_BALANCE_CASHBOOK})
+@RequestMapping(path = {BalanceCashbookController.URI_BALANCE_CASHBOOK})
 @RequiredArgsConstructor
-public class BalanceCashBookController {
+public class BalanceCashbookController {
 
     protected static final String URI_BALANCE_CASHBOOK = "/api/v1/accounting-analysis/cashbook";
 
-    private final BalanceCashBookInputPort balanceCashBookInputPort;
+    private final BalanceCashbookInputPort balanceCashbookInputPort;
 
-    private final CashBookMapper cashBookMapper;
+    private final CashbookMapper cashbookMapper;
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<BalanceCashBookDtoResponse> annual(@PathVariable(name = "id") final UUID cashBookId) {
+    public ResponseEntity<BalanceCashbookDtoResponse> annual(@PathVariable(name = "id") final UUID cashBookId) {
 
         log.info("Controller Annual iniciado: {}", cashBookId);
 
         var response = Optional.of(cashBookId)
-                .map(balanceCashBookInputPort::annual)
-                .map(cashBookMapper::toBalanceCashBookDtoResponse)
+                .map(balanceCashbookInputPort::annual)
+                .map(cashbookMapper::toBalanceCashbookDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Annual concluído: {}", response);

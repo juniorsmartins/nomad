@@ -4,7 +4,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.UUID;
 
-public record CashBookDtoResponse(
+public record CashbookDtoResponse(
 
         UUID cashBookId,
 

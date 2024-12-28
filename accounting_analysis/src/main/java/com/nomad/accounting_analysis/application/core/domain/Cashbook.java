@@ -13,9 +13,9 @@ import java.util.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public final class CashBook {
+public final class Cashbook {
 
-    private UUID cashBookId;
+    private UUID cashbookId;
 
     private Year yearReference;
 

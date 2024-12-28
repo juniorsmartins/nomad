@@ -8,7 +8,7 @@ import java.time.Month;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record BalanceCashBookDtoResponse(
+public record BalanceCashbookDtoResponse(
 
     BigDecimal annualSumCredits,
 
