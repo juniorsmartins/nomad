@@ -31,18 +31,15 @@ public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
         log.info("Adapter Delete iniciado: {}", registrationId);
 
         registrationRepositoy.findById(registrationId)
-            .map(this::deleteFromCashbook)
-            .map(registration -> {
-                registrationRepositoy.delete(registration);
-                return true;
-            })
+            .map(this::removeAndDelete)
             .orElseThrow(() -> new RegistrationNotFoundException(registrationId));
 
         log.info("Adapter Delete concluído: {}", registrationId);
     }
 
-    private RegistrationEntity deleteFromCashbook(RegistrationEntity registrationEntity) {
+    private RegistrationEntity removeAndDelete(RegistrationEntity registrationEntity) {
         registrationEntity.setCashbook(null);
+        registrationRepositoy.delete(registrationEntity);
         return registrationEntity;
     }
 }
