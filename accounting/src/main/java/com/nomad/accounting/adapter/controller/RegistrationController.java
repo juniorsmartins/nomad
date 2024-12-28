@@ -3,9 +3,11 @@ package com.nomad.accounting.adapter.controller;
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
+import com.nomad.accounting.adapter.dto.out.RegistrationFindDtoResponse;
 import com.nomad.accounting.adapter.mapper.RegistrationMapperIn;
 import com.nomad.accounting.application.port.input.RegistrationCreateInputPort;
 import com.nomad.accounting.application.port.input.RegistrationDeleteInputPort;
+import com.nomad.accounting.application.port.output.RegistrationFindByIdOutputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,8 @@ public class RegistrationController {
 
     private final RegistrationCreateInputPort registrationCreateInputPort;
 
+    private final RegistrationFindByIdOutputPort registrationFindByIdOutputPort;
+
     private final RegistrationDeleteInputPort registrationDeleteInputPort;
 
     private final RegistrationMapperIn registrationMapperIn;
@@ -47,6 +51,23 @@ public class RegistrationController {
 
         return ResponseEntity
                 .created(URI.create(URI_REGISTRATION + "/" + cashBookId))
+                .body(response);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<RegistrationFindDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
+
+        log.info("Controller FindById iniciado: {}", id);
+
+        var response = Optional.of(id)
+                .map(registrationFindByIdOutputPort::findById)
+                .map(registrationMapperIn::toRegistrationFindDtoResponse)
+                .orElseThrow();
+
+        log.info("Controller FindById concluído: {}", response);
+
+        return ResponseEntity
+                .ok()
                 .body(response);
     }
 
