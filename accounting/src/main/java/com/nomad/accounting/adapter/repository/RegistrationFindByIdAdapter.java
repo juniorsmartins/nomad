@@ -16,7 +16,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationFindByIdAdapter implements RegistrationFindByIdOutputPort {
 
-    private final RegistrationRepositoy registrationRepositoy;
+    private final RegistrationRepository registrationRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -24,7 +24,7 @@ public class RegistrationFindByIdAdapter implements RegistrationFindByIdOutputPo
 
         log.info("Adaptador FindById iniciado: {}", registrationId);
 
-        var registrationFind = registrationRepositoy.findById(registrationId)
+        var registrationFind = registrationRepository.findById(registrationId)
                 .orElseThrow(() -> new RegistrationNotFoundException(registrationId));
 
         log.info("Adaptador FindById concluído: {}", registrationFind);

@@ -24,7 +24,7 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
 
     private final CashbookRepository cashBookRepository;
 
-    private final RegistrationRepositoy registrationRepositoy;
+    private final RegistrationRepository registrationRepository;
 
     private final RegistrationMapperOut registrationMapperOut;
 
@@ -37,7 +37,7 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
 
         var registrationCreated = Optional.of(registration)
                 .map(registrationMapperOut::toRegistrationEntity)
-                .map(entity -> registrationRepositoy.save(verifyCashBook(cashbookId, entity)))
+                .map(entity -> registrationRepository.save(verifyCashBook(cashbookId, entity)))
                 .map(registrationMapperOut::toRegistration)
                 .orElseThrow();
 

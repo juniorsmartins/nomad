@@ -19,9 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
 
-    private final CashbookRepository cashbookRepository;
-
-    private final RegistrationRepositoy registrationRepositoy;
+    private final RegistrationRepository registrationRepository;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     @Modifying
@@ -30,17 +28,16 @@ public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
 
         log.info("Adapter Delete iniciado: {}", registrationId);
 
-        registrationRepositoy.findById(registrationId)
-            .map(this::removeAndDelete)
-            .orElseThrow(() -> new RegistrationNotFoundException(registrationId));
+        var cashbookEntity = registrationRepository.findById(registrationId)
+                .map(RegistrationEntity::getCashbook)
+                .orElseThrow(() -> new RegistrationNotFoundException(registrationId));
+
+        cashbookEntity.getRegistrations()
+                .removeIf(registration -> registration.getRegistrationId().equals(registrationId));
+
+        registrationRepository.deleteById(registrationId);
 
         log.info("Adapter Delete concluído: {}", registrationId);
-    }
-
-    private RegistrationEntity removeAndDelete(RegistrationEntity registrationEntity) {
-        registrationEntity.setCashbook(null);
-        registrationRepositoy.delete(registrationEntity);
-        return registrationEntity;
     }
 }
 
