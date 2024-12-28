@@ -1,6 +1,8 @@
 package com.nomad.accounting.adapter.repository;
 
+import com.nomad.accounting.adapter.entity.RegistrationEntity;
 import com.nomad.accounting.application.port.output.RegistrationDeleteOutputPort;
+import com.nomad.accounting.config.exception.http404.RegistrationNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
 
+    private final CashbookRepository cashbookRepository;
+
     private final RegistrationRepositoy registrationRepositoy;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
@@ -26,9 +30,20 @@ public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
 
         log.info("Adapter Delete iniciado: {}", registrationId);
 
-        registrationRepositoy.deleteById(registrationId);
+        registrationRepositoy.findById(registrationId)
+            .map(this::deleteFromCashbook)
+            .map(registration -> {
+                registrationRepositoy.delete(registration);
+                return true;
+            })
+            .orElseThrow(() -> new RegistrationNotFoundException(registrationId));
 
         log.info("Adapter Delete concluído: {}", registrationId);
+    }
+
+    private RegistrationEntity deleteFromCashbook(RegistrationEntity registrationEntity) {
+        registrationEntity.setCashbook(null);
+        return registrationEntity;
     }
 }
 

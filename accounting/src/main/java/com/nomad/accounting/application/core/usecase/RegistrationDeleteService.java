@@ -15,8 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationDeleteService implements RegistrationDeleteInputPort {
 
-    private final RegistrationFindByIdOutputPort registrationFindByIdOutputPort;
-
     private final RegistrationDeleteOutputPort registrationDeleteOutputPort;
 
     @Override
@@ -24,7 +22,6 @@ public class RegistrationDeleteService implements RegistrationDeleteInputPort {
 
         log.info("Serviço Delete iniciado com id: {}", registrationId);
 
-        registrationFindByIdOutputPort.findById(registrationId);
         registrationDeleteOutputPort.delete(registrationId);
 
         log.info("Serviço Delete concluído: {}", registrationId);

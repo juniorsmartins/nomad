@@ -34,7 +34,7 @@ public final class RegistrationEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cashbook_id")
-    private CashBookEntity cashbook;
+    private CashbookEntity cashbook;
 
     @Lob
     @Column(name = "description", length = MAX_CARACTER_DESCRIPTION, nullable = false)

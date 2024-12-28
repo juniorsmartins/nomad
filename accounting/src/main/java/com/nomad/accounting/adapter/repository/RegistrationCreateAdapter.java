@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
 
-    private final CashBookRepository cashBookRepository;
+    private final CashbookRepository cashBookRepository;
 
     private final RegistrationRepositoy registrationRepositoy;
 

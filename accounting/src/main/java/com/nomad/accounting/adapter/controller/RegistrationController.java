@@ -1,7 +1,7 @@
 package com.nomad.accounting.adapter.controller;
 
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
-import com.nomad.accounting.adapter.dto.out.CashBookDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
 import com.nomad.accounting.adapter.mapper.RegistrationMapperIn;
 import com.nomad.accounting.application.port.input.RegistrationCreateInputPort;
@@ -51,7 +51,7 @@ public class RegistrationController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<CashBookDtoResponse> delete(@PathVariable(name = "id") final UUID registrationId) {
+    public ResponseEntity<CashbookDtoResponse> delete(@PathVariable(name = "id") final UUID registrationId) {
 
         log.info("Controller Update iniciado para cashbookId: {}", registrationId);
 

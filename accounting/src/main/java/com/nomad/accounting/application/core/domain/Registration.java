@@ -1,6 +1,6 @@
 package com.nomad.accounting.application.core.domain;
 
-import com.nomad.accounting.adapter.entity.CashBookEntity;
+import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.application.core.domain.enums.CostCenter;
 import com.nomad.accounting.application.core.domain.enums.TypeOperation;
 import lombok.*;
@@ -18,7 +18,7 @@ public class Registration {
 
     private UUID registrationId;
 
-    private CashBookEntity cashbook;
+    private CashbookEntity cashbook;
 
     private String description;
 
