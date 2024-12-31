@@ -13,7 +13,7 @@ import static com.nomad.accounting.config.AccountingConstants.MIN_CARACTER_DOCUM
 public record CashbookUpdateDtoRequest(
 
         @NotNull
-        UUID cashbookId,
+        UUID cashBookId,
 
         @NotNull
         Year yearReference,

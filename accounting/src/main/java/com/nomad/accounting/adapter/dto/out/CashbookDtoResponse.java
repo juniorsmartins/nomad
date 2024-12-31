@@ -11,7 +11,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record CashbookDtoResponse(
 
-        UUID cashbookId,
+        UUID cashBookId,
 
         Year yearReference,
 

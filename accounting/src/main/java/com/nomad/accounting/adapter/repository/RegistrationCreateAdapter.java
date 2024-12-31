@@ -1,7 +1,9 @@
 package com.nomad.accounting.adapter.repository;
 
-import com.nomad.accounting.adapter.entity.RegistrationEntity;
+import com.nomad.accounting.adapter.entity.CashbookEntity;
+import com.nomad.accounting.adapter.mapper.CashBookMapperOut;
 import com.nomad.accounting.adapter.mapper.RegistrationMapperOut;
+import com.nomad.accounting.application.core.domain.CashBook;
 import com.nomad.accounting.application.core.domain.Registration;
 import com.nomad.accounting.application.port.output.RegistrationCreateOutputPort;
 import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
@@ -14,7 +16,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -22,37 +23,33 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
 
-    private final CashbookRepository cashBookRepository;
-
-    private final RegistrationRepository registrationRepository;
+    private final CashBookRepository cashBookRepository;
 
     private final RegistrationMapperOut registrationMapperOut;
+
+    private final CashBookMapperOut cashBookMapperOut;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     @Modifying
     @Override
-    public Registration create(@NonNull final UUID cashbookId, @NonNull final Registration registration) {
+    public CashBook create(@NonNull UUID cashBookId, @NonNull final Registration registration) {
 
-        log.info("Adaptador Create iniciado para cashbookId: {} {}", cashbookId, registration);
+        log.info("Adaptador Create iniciado para cashBookId: {} {}", cashBookId, registration);
 
-        var registrationCreated = Optional.of(registration)
-                .map(registrationMapperOut::toRegistrationEntity)
-                .map(entity -> registrationRepository.save(verifyCashBook(cashbookId, entity)))
-                .map(registrationMapperOut::toRegistration)
-                .orElseThrow();
+        var registrationCreated = cashBookRepository.findById(cashBookId)
+                .map(cashBookEntity -> addRegistrationInCashBook(registration, cashBookEntity))
+                .map(cashBookMapperOut::toCashBook)
+                .orElseThrow(() -> new CashBookNotFoundException(cashBookId));
 
         log.info("Adaptador Create concluído: {}", registrationCreated);
 
         return registrationCreated;
     }
 
-    private RegistrationEntity verifyCashBook(UUID cashbookId, RegistrationEntity registrationEntity) {
-        return cashBookRepository.findById(cashbookId)
-                .map(cashBookEntity -> {
-                    registrationEntity.setCashbook(cashBookEntity);
-                    return registrationEntity;
-                })
-            .orElseThrow(() -> new CashBookNotFoundException(cashbookId));
+    private CashbookEntity addRegistrationInCashBook(Registration registration, CashbookEntity cashBookEntity) {
+        var registrationVo = registrationMapperOut.toRegistrationVo(registration);
+        cashBookEntity.getRegistrations().add(registrationVo);
+        return cashBookEntity;
     }
 }
 
