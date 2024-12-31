@@ -1,9 +1,0 @@
-server: # Define a porta em que o servidor embutido (por padrão, o Tomcat) irá escutar.
-  port: ${SERVER_PORT:9202}
-
-spring:
-
-  application: # Define o nome da aplicação. Útil para identificação em logs e sistemas de monitoramento.
-    name: accounting_analysis
-
-

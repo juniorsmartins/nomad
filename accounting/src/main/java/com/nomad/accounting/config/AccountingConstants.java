@@ -9,7 +9,5 @@ public class AccountingConstants {
     public static final int MAX_CARACTER_DESCRIPTION = 500;
 
     public static final int MAX_CARACTER_SUPPLIER = 100;
-
-    public static final int PAGE_SIZE = 12;
 }
 

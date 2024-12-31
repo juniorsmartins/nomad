@@ -5,27 +5,23 @@ import lombok.Getter;
 @Getter
 public enum CostCenter {
 
-    BANKING("BANKING"),
-    BARBERSHOP("BARBERSHOP"),
-    CLOTHING("CLOTHING"),
+    FOOD("FOOD"),
+    RENT("RENT"),
     EDUCATION("EDUCATION"),
     ELETRONIC("ELETRONIC"),
-    ENTERTAINMENT("ENTERTAINMENT"),
-    FGTS("FGTS"),
-    FOOD("FOOD"),
-    HEALTH("HEALTH"),
-    HOUSE("HOUSE"),
-    IRPF("IRPF"),
-    OTHER("OTHER"),
-    PENSION("PENSION"),
-    PET("PET"),
-    RENT("RENT"),
-    SERVICES("SERVICES"),
     SPORT("SPORT"),
+    HOUSE("HOUSE"),
+    ENTERTAINMENT("ENTERTAINMENT"),
+    PET("PET"),
+    PENSION("PENSION"),
+    WAGE("WAGE"),
+    HEALTH("HEALTH"),
+    SERVICES("SERVICES"),
     SUPPLEMENTATION("SUPPLEMENTATION"),
     TELEPHONY("TELEPHONY"),
     TRANSPORT("TRANSPORT"),
-    WAGE("WAGE");
+    CLOTHING("CLOTHING"),
+    OTHER("OTHER");
 
     private final String value;
 

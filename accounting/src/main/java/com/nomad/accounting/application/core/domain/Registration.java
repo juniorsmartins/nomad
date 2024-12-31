@@ -1,24 +1,18 @@
 package com.nomad.accounting.application.core.domain;
 
-import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.application.core.domain.enums.CostCenter;
 import com.nomad.accounting.application.core.domain.enums.TypeOperation;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Builder
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(of = {"registrationId"})
+@EqualsAndHashCode(of = {"description", "amount", "typeOperation", "dateOperation", "costCenter", "supplier"})
 public class Registration {
-
-    private UUID registrationId;
-
-    private CashbookEntity cashbook;
 
     private String description;
 
