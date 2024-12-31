@@ -29,7 +29,7 @@ public final class RegistrationEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "registrationId", columnDefinition = "uuid", updatable = false, nullable = false)
+    @Column(name = "registration_id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID registrationId;
 
     @ManyToOne

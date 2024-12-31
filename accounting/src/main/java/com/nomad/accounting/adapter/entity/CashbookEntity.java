@@ -14,7 +14,7 @@ import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DOCUM
 @Entity
 @Table(name = "cashbooks",
     uniqueConstraints = {
-        @UniqueConstraint(name = "unique_cashbook_year_document", columnNames = {"year_reference", "document"})
+        @UniqueConstraint(name = "uk_cashbooks_year_document", columnNames = {"year_reference", "document"})
     }
 )
 @Builder
