@@ -2,9 +2,12 @@ package com.nomad.accounting.adapter.controller;
 
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
-import com.nomad.accounting.adapter.mapper.CashBookMapperIn;
+import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
+import com.nomad.accounting.adapter.dto.out.RegistrationFindDtoResponse;
 import com.nomad.accounting.adapter.mapper.RegistrationMapperIn;
 import com.nomad.accounting.application.port.input.RegistrationCreateInputPort;
+import com.nomad.accounting.application.port.input.RegistrationDeleteInputPort;
+import com.nomad.accounting.application.port.output.RegistrationFindByIdOutputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,20 +29,22 @@ public class RegistrationController {
 
     private final RegistrationCreateInputPort registrationCreateInputPort;
 
+    private final RegistrationFindByIdOutputPort registrationFindByIdOutputPort;
+
+    private final RegistrationDeleteInputPort registrationDeleteInputPort;
+
     private final RegistrationMapperIn registrationMapperIn;
 
-    private final CashBookMapperIn cashBookMapperIn;
-
     @PostMapping(path = "/{id}")
-    public ResponseEntity<CashbookDtoResponse> create(
-        @PathVariable(name = "id") final UUID cashBookId, @RequestBody @Valid RegistrationCreateDtoRequest registrationCreateDtoRequest) {
+    public ResponseEntity<RegistrationDtoResponse> create(@PathVariable(name = "id") final UUID cashBookId,
+                                      @RequestBody @Valid RegistrationCreateDtoRequest registrationCreateDtoRequest) {
 
-        log.info("Controller Create iniciado para cashBookId: {} {}", cashBookId, registrationCreateDtoRequest);
+        log.info("Controller Create iniciado para cashbookId: {} {}", cashBookId, registrationCreateDtoRequest);
 
         var response = Optional.ofNullable(registrationCreateDtoRequest)
                 .map(registrationMapperIn::toRegistration)
                 .map(registration -> registrationCreateInputPort.create(cashBookId, registration))
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(registrationMapperIn::toRegistrationDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Create concluído: {}", response);
@@ -46,6 +52,40 @@ public class RegistrationController {
         return ResponseEntity
                 .created(URI.create(URI_REGISTRATION + "/" + cashBookId))
                 .body(response);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<RegistrationFindDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
+
+        log.info("Controller FindById iniciado: {}", id);
+
+        var response = Optional.of(id)
+                .map(registrationFindByIdOutputPort::findById)
+                .map(registrationMapperIn::toRegistrationFindDtoResponse)
+                .orElseThrow();
+
+        log.info("Controller FindById concluído: {}", response);
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<CashbookDtoResponse> delete(@PathVariable(name = "id") final UUID registrationId) {
+
+        log.info("Controller Update iniciado para cashbookId: {}", registrationId);
+
+        Optional.ofNullable(registrationId)
+                .ifPresentOrElse(registrationDeleteInputPort::delete,
+                    () -> {throw new NoSuchElementException();}
+                );
+
+        log.info("Controller Update concluído: {}", registrationId);
+
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
 

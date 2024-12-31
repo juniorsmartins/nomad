@@ -14,7 +14,7 @@ import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DOCUM
 @Entity
 @Table(name = "cashbooks",
     uniqueConstraints = {
-        @UniqueConstraint(name = "unique_cashbook_year_document", columnNames = {"year_reference", "document"})
+        @UniqueConstraint(name = "uk_cashbooks_year_document", columnNames = {"year_reference", "document"})
     }
 )
 @Builder
@@ -39,8 +39,7 @@ public final class CashbookEntity implements Serializable {
     @Column(name = "document", length = MAX_CARACTER_DOCUMENT, nullable = false)
     private String document;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "cashbook_registrations", joinColumns = @JoinColumn(name = "cashbook_id"))
-    private List<RegistrationVo> registrations;
+    @OneToMany(mappedBy = "cashbook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<RegistrationEntity> registrations;
 }
 

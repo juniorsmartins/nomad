@@ -1,23 +1,26 @@
 package com.nomad.accounting.adapter.controller;
 
+import com.nomad.accounting.adapter.dto.filter.CashbookFilter;
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
-import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
-import com.nomad.accounting.adapter.mapper.CashBookMapperIn;
-import com.nomad.accounting.application.port.input.CashBookCreateInputPort;
-import com.nomad.accounting.application.port.input.CashBookDeleteInputPort;
-import com.nomad.accounting.application.port.input.CashBookUpdateInputPort;
-import com.nomad.accounting.application.port.output.CashBookFindAllOutputPort;
-import com.nomad.accounting.application.port.output.CashBookFindByIdOutputPort;
+import com.nomad.accounting.adapter.dto.out.*;
+import com.nomad.accounting.adapter.mapper.CashbookMapperIn;
+import com.nomad.accounting.application.port.input.CashbookCreateInputPort;
+import com.nomad.accounting.application.port.input.CashbookDeleteInputPort;
+import com.nomad.accounting.application.port.input.CashbookUpdateInputPort;
+import com.nomad.accounting.application.port.output.CashbookFindAllOutputPort;
+import com.nomad.accounting.application.port.output.CashbookFindByIdOutputPort;
+import com.nomad.accounting.application.port.output.CashbookSearchOutputPort;
+import com.nomad.accounting.config.AccountingConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.web.PageableDefault;
 
 import java.net.URI;
 import java.util.NoSuchElementException;
@@ -30,47 +33,49 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CashbookController {
 
-    protected static final String URI_CASHBOOK = "/api/v1/accounting/cash-book";
+    protected static final String URI_CASHBOOK = "/api/v1/accounting/cashbook";
 
-    private final CashBookCreateInputPort cashBookCreateInputPort;
+    private final CashbookCreateInputPort cashBookCreateInputPort;
 
-    private final CashBookUpdateInputPort cashBookUpdateInputPort;
+    private final CashbookUpdateInputPort cashBookUpdateInputPort;
 
-    private final CashBookFindAllOutputPort cashBookFindAllOutputPort;
+    private final CashbookFindAllOutputPort cashBookFindAllOutputPort;
 
-    private final CashBookFindByIdOutputPort cashBookFindByIdOutputPort;
+    private final CashbookFindByIdOutputPort cashBookFindByIdOutputPort;
 
-    private final CashBookDeleteInputPort cashBookDeleteInputPort;
+    private final CashbookSearchOutputPort cashBookSearchOutputPort;
 
-    private final CashBookMapperIn cashBookMapperIn;
+    private final CashbookDeleteInputPort cashBookDeleteInputPort;
+
+    private final CashbookMapperIn cashBookMapperIn;
 
     @PostMapping
-    public ResponseEntity<CashbookDtoResponse> create(@RequestBody @Valid CashbookCreateDtoRequest cashBookCreateDtoRequest) {
+    public ResponseEntity<CashbookCreateDtoResponse> create(@RequestBody @Valid CashbookCreateDtoRequest cashBookCreateDtoRequest) {
 
         log.info("Controller Create iniciado: {}", cashBookCreateDtoRequest);
 
         var response = Optional.ofNullable(cashBookCreateDtoRequest)
                 .map(cashBookMapperIn::toCashBook)
                 .map(cashBookCreateInputPort::create)
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(cashBookMapperIn::toCashBookCreateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Create concluído: {}", response);
 
         return ResponseEntity
-                .created(URI.create(URI_CASHBOOK + "/" + response.cashBookId()))
+                .created(URI.create(URI_CASHBOOK + "/" + response.cashbookId()))
                 .body(response);
     }
 
     @PutMapping
-    public ResponseEntity<CashbookDtoResponse> update(@RequestBody @Valid CashbookUpdateDtoRequest cashBookUpdateDtoRequest) {
+    public ResponseEntity<CashbookUpdateDtoResponse> update(@RequestBody @Valid CashbookUpdateDtoRequest cashBookUpdateDtoRequest) {
 
         log.info("Controller Update iniciado: {}", cashBookUpdateDtoRequest);
 
         var response = Optional.ofNullable(cashBookUpdateDtoRequest)
                 .map(cashBookMapperIn::toCashBook)
                 .map(cashBookUpdateInputPort::update)
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(cashBookMapperIn::toCashBookUpdateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Update concluído: {}", response);
@@ -81,13 +86,13 @@ public class CashbookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CashbookDtoResponse>> findAll(
-        @PageableDefault(sort = "cashBookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
+    public ResponseEntity<Page<CashbookFindDtoResponse>> findAll(
+        @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
 
         log.info("Controller FindAll acionado com paginação: {}", pagination);
 
         var response = cashBookFindAllOutputPort.findAll(pagination)
-                .map(cashBookMapperIn::toCashBookDtoResponse);
+                .map(cashBookMapperIn::toCashBookFindDtoResponse);
 
         log.info("Controller FindAll concluído: {}", response);
 
@@ -97,16 +102,33 @@ public class CashbookController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<CashbookDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
+    public ResponseEntity<CashbookFindDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
 
         log.info("Controller FindById acionado: {}", id);
 
         var response = Optional.of(id)
                 .map(cashBookFindByIdOutputPort::findById)
-                .map(cashBookMapperIn::toCashBookDtoResponse)
+                .map(cashBookMapperIn::toCashBookFindDtoResponse)
                 .orElseThrow();
 
         log.info("Controller FindById concluído: {}", response);
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @GetMapping(path = "/search")
+    public ResponseEntity<Page<CashbookSearchDtoResponse>> search(@Valid final CashbookFilter cashBookFilter,
+                                                                  @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
+          final Pageable pagination) {
+
+        log.info("Controller Search acionado: {}", cashBookFilter);
+
+        var response = cashBookSearchOutputPort.search(cashBookFilter, pagination)
+            .map(cashBookMapperIn::toCashBookSearchDtoResponse);
+
+        log.info("Controller Search concluído: {}", response);
 
         return ResponseEntity
                 .ok()

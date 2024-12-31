@@ -19,10 +19,14 @@ spring:
       minimum-idle: 2 # Número mínimo de conexões inativas que o pool deve manter.
       maximum-pool-size: 4 # Número máximo de conexões simultâneas.
 
+  flyway: # Opcional
+    enabled: true
+    locations: classpath:db/migration
+
   jpa: # Configura o JPA/Hibernate.
     database: POSTGRESQL # Especifica o banco usado.
     hibernate:
-      ddl-auto: create-drop # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
+#      ddl-auto: create-drop # Define como o Hibernate gerencia o esquema do banco (usar none em produção).
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Define a estratégia de nomeação de tabelas/colunas.
     properties:
@@ -44,7 +48,7 @@ spring:
           log:
             non_contextual_creation: true # Ajuda a rastrear conexões criadas fora do contexto transacional (pode desligar em produção).
     open-in-view: false #  Define se o Hibernate deve manter a sessão aberta durante a renderização da view. O false é recomendado para evitar problemas de performance e lazy loading.
-    generate-ddl: true
+#    generate-ddl: true
     show-sql: true
 
   logging: # Configura o nível de log para queries SQL.
