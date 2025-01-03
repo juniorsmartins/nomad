@@ -1,0 +1,6 @@
+spring:
+
+  flyway: # Opcional
+    enabled: true
+    locations: classpath:db/migration
+

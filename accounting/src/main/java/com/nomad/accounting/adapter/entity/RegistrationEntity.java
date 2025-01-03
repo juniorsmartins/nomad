@@ -36,7 +36,6 @@ public final class RegistrationEntity implements Serializable {
     @JoinColumn(name = "cashbook_id")
     private CashbookEntity cashbook;
 
-    @Lob
     @Column(name = "description", length = MAX_CARACTER_DESCRIPTION, nullable = false)
     private String description;
 

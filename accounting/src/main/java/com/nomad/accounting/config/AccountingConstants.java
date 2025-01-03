@@ -6,7 +6,7 @@ public class AccountingConstants {
 
     public static final int MAX_CARACTER_DOCUMENT = 14;
 
-    public static final int MAX_CARACTER_DESCRIPTION = 500;
+    public static final int MAX_CARACTER_DESCRIPTION = 250;
 
     public static final int MAX_CARACTER_SUPPLIER = 100;
 
