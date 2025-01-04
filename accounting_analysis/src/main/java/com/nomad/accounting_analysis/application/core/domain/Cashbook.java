@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.Month;
 import java.time.Year;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +31,22 @@ public final class Cashbook {
     public BigDecimal annualSumDebits() {
         var annualSumDebits = calculateAnnualSum(TypeOperation.OUTPUT);
         var annualChargeback = calculateAnnualSum(TypeOperation.CHARGEBACK);
+
         return annualSumDebits.subtract(annualChargeback);
+    }
+
+    public BigDecimal annualBalance() {
+        var credits = this.annualSumCredits();
+        var debits = this.annualSumDebits();
+
+        return credits.subtract(debits);
+    }
+
+    public BigDecimal annualSumInvestment() {
+        var annualSumInvestment = calculateAnnualSum(TypeOperation.INVESTMENT);
+        var annualSumDisinvestment = calculateAnnualSum(TypeOperation.DISINVESTMENT);
+
+        return annualSumInvestment.subtract(annualSumDisinvestment);
     }
 
     private BigDecimal calculateAnnualSum(@NonNull TypeOperation typeOperation) {
@@ -40,12 +56,29 @@ public final class Cashbook {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+
     public Map<CostCenter, BigDecimal> annualSumCreditsByCostCenter() {
-        return calculateAnnualSumByCostCenter(TypeOperation.INPUT);
+        var result = calculateAnnualSumByCostCenter(TypeOperation.INPUT);
+
+        return filterZeroValues(result);
     }
 
     public Map<CostCenter, BigDecimal> annualSumDebitsByCostCenter() {
-        return calculateAnnualSumByCostCenter(TypeOperation.OUTPUT);
+        var annualSumOutputByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.OUTPUT);
+        var annualSumChargebackByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.CHARGEBACK);
+
+        var result = subtractCostCenterMaps(annualSumOutputByCostCenter, annualSumChargebackByCostCenter);
+
+        return filterZeroValues(result);
+    }
+
+    public Map<CostCenter, BigDecimal> annualSumInvestmentByCostCenter() {
+        var annualInvestmentByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.INVESTMENT);
+        var annualDisinvestmentByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.DISINVESTMENT);
+
+        var result = subtractCostCenterMaps(annualInvestmentByCostCenter, annualDisinvestmentByCostCenter);
+
+        return filterZeroValues(result);
     }
 
     private Map<CostCenter, BigDecimal> calculateAnnualSumByCostCenter(@NonNull final TypeOperation typeOperation) {
@@ -63,11 +96,18 @@ public final class Cashbook {
         return annualSumByCostCenter;
     }
 
-    public BigDecimal annualBalance() {
-        var credits = this.annualSumCredits();
-        var debits = this.annualSumDebits();
-        return credits.subtract(debits);
+    private Map<CostCenter, BigDecimal> subtractCostCenterMaps(Map<CostCenter, BigDecimal> positiveMap, Map<CostCenter, BigDecimal> negativeMap) {
+        Map<CostCenter, BigDecimal> result = new EnumMap<>(CostCenter.class);
+
+        for (CostCenter costCenter : CostCenter.values()) {
+            var value1 = positiveMap.getOrDefault(costCenter, BigDecimal.ZERO);
+            var value2 = negativeMap.getOrDefault(costCenter, BigDecimal.ZERO);
+
+            result.put(costCenter, value1.subtract(value2));
+        }
+        return result;
     }
+
 
     public Map<Month, BigDecimal> monthlySumCredits() {
         return calculateMonthlySum(TypeOperation.INPUT);
@@ -77,13 +117,7 @@ public final class Cashbook {
         var monthlySumDebits = calculateMonthlySum(TypeOperation.OUTPUT);
         var monthlyChargeback = calculateMonthlySum(TypeOperation.CHARGEBACK);
 
-        Map<Month, BigDecimal> debitLessTurn = new EnumMap<>(Month.class);
-
-        for (Month month : Month.values()) {
-           debitLessTurn.put(month, monthlySumDebits.getOrDefault(month, BigDecimal.ZERO)
-                    .subtract(monthlyChargeback.getOrDefault(month, BigDecimal.ZERO)));
-        }
-        return debitLessTurn;
+        return subtractMonthlyMaps(monthlySumDebits, monthlyChargeback);
     }
 
     private Map<Month, BigDecimal> calculateMonthlySum(@NonNull final TypeOperation typeOperation) {
@@ -104,13 +138,33 @@ public final class Cashbook {
         Map<Month, BigDecimal> monthlySumCredits = monthlySumCredits();
         Map<Month, BigDecimal> monthlySumDebits = monthlySumDebits();
 
-        Map<Month, BigDecimal> monthBalance = new EnumMap<>(Month.class);
+        return subtractMonthlyMaps(monthlySumCredits, monthlySumDebits);
+    }
+
+    public Map<Month, BigDecimal> monthlyInvestment() {
+        var monthlyInvestment = calculateMonthlySum(TypeOperation.INVESTMENT);
+        var monthlyDisinvestment = calculateMonthlySum(TypeOperation.DISINVESTMENT);
+
+        return subtractMonthlyMaps(monthlyInvestment, monthlyDisinvestment);
+    }
+
+    private Map<Month, BigDecimal> subtractMonthlyMaps(Map<Month, BigDecimal> positiveMap, Map<Month, BigDecimal> negativeMap) {
+        Map<Month, BigDecimal> result = new EnumMap<>(Month.class);
 
         for (Month month : Month.values()) {
-            monthBalance.put(month, monthlySumCredits.getOrDefault(month, BigDecimal.ZERO)
-                    .subtract(monthlySumDebits.getOrDefault(month, BigDecimal.ZERO)));
+            var value1 = positiveMap.getOrDefault(month, BigDecimal.ZERO);
+            var value2 = negativeMap.getOrDefault(month, BigDecimal.ZERO);
+
+            result.put(month, value1.subtract(value2));
         }
-        return monthBalance;
+        return result;
+    }
+
+    private <K> Map<K, BigDecimal> filterZeroValues(Map<K, BigDecimal> inputMap) {
+        return inputMap.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().compareTo(BigDecimal.ZERO) != 0)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }
 

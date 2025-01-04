@@ -23,11 +23,19 @@ public final class BalanceCashbook {
     // Total saldo anual
     private BigDecimal annualBalance;
 
+    // Total investido
+    private BigDecimal annualInvestment;
+
+
     // Total anual de créditos por CostCenter
     private Map<CostCenter, BigDecimal> annualSumCreditsByCostCenter;
 
     // Total anual de débitos por CostCenter
     private Map<CostCenter, BigDecimal> annualSumDebitsByCostCenter;
+
+    // Total anual investido por CostCenter
+    private Map<CostCenter, BigDecimal> annualSumInvestmentByCostCenter;
+
 
     // Total crédito mês
     private Map<Month, BigDecimal> monthlySumCredits;
@@ -37,5 +45,8 @@ public final class BalanceCashbook {
 
     // Total saldo mês
     private Map<Month, BigDecimal> monthlyBalance;
+
+    // Total investido mês
+    private Map<Month, BigDecimal> monthlyInvestment;
 }
 

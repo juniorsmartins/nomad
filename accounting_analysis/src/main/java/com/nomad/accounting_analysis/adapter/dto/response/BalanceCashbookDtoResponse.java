@@ -16,14 +16,22 @@ public record BalanceCashbookDtoResponse(
 
     BigDecimal annualBalance,
 
+    BigDecimal annualInvestment,
+
+
     Map<CostCenter, BigDecimal> annualSumCreditsByCostCenter,
 
     Map<CostCenter, BigDecimal> annualSumDebitsByCostCenter,
+
+    Map<CostCenter, BigDecimal> annualSumInvestmentByCostCenter,
+
 
     Map<Month, BigDecimal>monthlySumCredits,
 
     Map<Month, BigDecimal> monthlySumDebits,
 
-    Map<Month, BigDecimal> monthlyBalance
+    Map<Month, BigDecimal> monthlyBalance,
+
+    Map<Month, BigDecimal> monthlyInvestment
 ) { }
 
