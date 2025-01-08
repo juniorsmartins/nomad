@@ -6,6 +6,9 @@ Library                              SeleniumLibrary
 ${URL}                               https://www.amazon.com.br/
 ${MENU_ELETRONICOS}                  //a[@href='/Eletronicos-e-Tecnologia/b/?ie=UTF8&node=16209062011&ref_=nav_cs_electronics'][contains(.,'Eletrônicos')]
 ${H2_ELETRONICOS}                    //h2[@class='a-size-base a-color-base apb-browse-refinements-indent-1 a-text-bold'][contains(.,'Eletrônicos e Tecnologia')]
+${IMAGEM_COMPUTADORES}               //img[contains(@alt,'Computadores e Informática')]
+${BARRA_PESQUISA}                    //input[contains(@type,'text')]
+${BUTTON_PESQUISAR}                  //input[contains(@type,'submit')]
 
 *** Keywords ***
 Abrir o navegador
@@ -28,4 +31,13 @@ Verificar se aparece a frase "${FRASE}"
 
 Verificar se o título da página fica "${TITULO}"
     Title Should Be                  title=${TITULO}
+
+Verificar se aparece a categoria "Computadores e Informática"
+    Element Should Be Visible        locator=${IMAGEM_COMPUTADORES} 
+
+Digitar o nome do produto "${PRODUTO}" no campo de pesquisa
+    Input Text                       locator=${BARRA_PESQUISA}    text=${PRODUTO}
+
+Clicar no botão de pesquisa
+    Click Button    locator=${BUTTON_PESQUISAR}
 
