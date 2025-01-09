@@ -21,7 +21,7 @@ Fechar o navegador
 
 Acessar a home page do site amazon.com.br
     Go To                              url=${URL}
-    Wait Until Element Is Visible      locator=${MENU_ELETRONICOS}
+    Wait Until Element Is Visible      locator=${MENU_ELETRONICOS}    timeout=25
 
 Entrar no menu "Eletrônicos"
     Click Element                      locator=${MENU_ELETRONICOS}
@@ -44,4 +44,11 @@ Clicar no botão de pesquisa
 
 Verificar o resultado da pesquisa se está listando o produto "${PRODUTO}"
     Wait Until Element Is Visible      locator=(//span[contains(.,'${PRODUTO}')])[3]
+
+
+# GHERKIN STEPS
+
+Dado que estou na home page da amazon.com.br
+    Acessar a home page do site amazon.com.br
+    Verificar se o título da página fica "Amazon.com.br | Tudo pra você, de A a Z."
 
