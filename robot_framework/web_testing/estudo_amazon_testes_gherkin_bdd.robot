@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation  Essa suite usa Gherkin para testar o site da Amazon.com.br
-Resource       amazon_resources.robot
+Resource       estudo_amazon_resources.robot
 Test Setup     Abrir o navegador
 Test Teardown  Fechar o navegador
 

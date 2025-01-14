@@ -28,6 +28,7 @@ Usando LOG Console
 Usando screen shots
     Log     Nos testes web, podemos logar Screenshot com a SeleniumLibrary
     Open Browser    http://www.robotizandotestes.blogspot.com.br    chrome
+    Maximize Browser Window
     Capture Page Screenshot      nome_do_meuscreenshot.png
     Close Browser
 
