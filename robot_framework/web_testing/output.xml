@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-01-14T11:35:14.721288" rpa="false" schemaversion="5">
-<suite id="s1" name="Exemplos Tipos Variaveis" source="/home/juniorsmartins/workspace/nomad/robot_framework/web_testing/exemplos_tipos_variaveis.robot">
-<test id="s1-t1" name="Caso de teste de exemplo 01" line="15">
+<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-01-14T15:18:25.282071" rpa="false" schemaversion="5">
+<suite id="s1" name="Exemplos Argumentos" source="/home/juniorsmartins/workspace/nomad/robot_framework/web_testing/exemplos_argumentos.robot">
+<test id="s1-t1" name="Caso de teste de exemplo 01" line="8">
 <kw name="Uma keyword qualquer 01">
+<kw name="Uma subkeyword com argumentos">
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-01-14T11:35:14.736971" level="INFO">Vamos ver os tipos de variáveis no Robot!</msg>
-<arg>${SIMPLES}</arg>
+<msg time="2025-01-14T15:18:25.298032" level="INFO">Nome Usuário: Bruno Silva</msg>
+<arg>Nome Usuário: ${NOME_USUARIO}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-01-14T11:35:14.736873" elapsed="0.000137"/>
-</kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2025-01-14T11:35:14.737573" level="INFO">Essa tem que ser maça: maça e essa tem que ser morango: morango</msg>
-<arg>Essa tem que ser maça: ${FRUTAS[2]} e essa tem que ser morango: ${FRUTAS[0]}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-01-14T11:35:14.737082" elapsed="0.000521"/>
+<status status="PASS" start="2025-01-14T15:18:25.297927" elapsed="0.000148"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-01-14T11:35:14.738022" level="INFO">Nome: Apollo Creed e email: apollo_creed@email.com</msg>
-<arg>Nome: ${PESSOA.nome} e email: ${PESSOA.email}</arg>
+<msg time="2025-01-14T15:18:25.298240" level="INFO">Email: bruno_silva@teste.com.br</msg>
+<arg>Email: ${EMAIL_USUARIO}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-01-14T11:35:14.737671" elapsed="0.000376"/>
+<status status="PASS" start="2025-01-14T15:18:25.298153" elapsed="0.000113"/>
 </kw>
-<status status="PASS" start="2025-01-14T11:35:14.736608" elapsed="0.001476"/>
+<arg>Bruno Silva</arg>
+<arg>bruno_silva@teste.com.br</arg>
+<status status="PASS" start="2025-01-14T15:18:25.297668" elapsed="0.000639"/>
 </kw>
-<status status="PASS" start="2025-01-14T11:35:14.736245" elapsed="0.001918"/>
+<kw name="Uma subkeyword com argumentos">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-01-14T15:18:25.298968" level="INFO">Nome Usuário: May Fernandes</msg>
+<arg>Nome Usuário: ${NOME_USUARIO}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-01-14T15:18:25.298891" elapsed="0.000102"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-01-14T15:18:25.299108" level="INFO">Email: mayfernandes@exemplo.com.br</msg>
+<arg>Email: ${EMAIL_USUARIO}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-01-14T15:18:25.299045" elapsed="0.000083"/>
+</kw>
+<arg>${PESSOA.nome}</arg>
+<arg>${PESSOA.email}</arg>
+<status status="PASS" start="2025-01-14T15:18:25.298382" elapsed="0.000777"/>
+</kw>
+<kw name="Uma subkeyword com retorno">
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2025-01-14T15:18:25.299783" level="INFO">${MENSAGEM} = OK!Usuário é maior de idade!</msg>
+<var>${MENSAGEM}</var>
+<arg>${IDADE_USUARIO}&lt;18</arg>
+<arg>Não autorizado! O usuário ${NOME_USUARIO} é menor de idade!</arg>
+<arg>OK!Usuário é maior de idade!</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2025-01-14T15:18:25.299660" elapsed="0.000140"/>
+</kw>
+<return>
+<value>${MENSAGEM}</value>
+<status status="PASS" start="2025-01-14T15:18:25.299839" elapsed="0.000031"/>
+</return>
+<msg time="2025-01-14T15:18:25.299947" level="INFO">${MENSAGEM_ALERTA} = OK!Usuário é maior de idade!</msg>
+<var>${MENSAGEM_ALERTA}</var>
+<arg>${PESSOA.nome}</arg>
+<arg>${PESSOA.idade}</arg>
+<status status="PASS" start="2025-01-14T15:18:25.299238" elapsed="0.000721"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-01-14T15:18:25.300085" level="INFO">OK!Usuário é maior de idade!</msg>
+<arg>${MENSAGEM_ALERTA}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-01-14T15:18:25.300016" elapsed="0.000091"/>
+</kw>
+<status status="PASS" start="2025-01-14T15:18:25.297448" elapsed="0.002688"/>
+</kw>
+<status status="PASS" start="2025-01-14T15:18:25.297054" elapsed="0.003164"/>
 </test>
-<doc>Exemplos de tipos de variáveis: SIMPLES, LISTAS E DICIONÁRIOS</doc>
-<status status="PASS" start="2025-01-14T11:35:14.721892" elapsed="0.016468"/>
+<doc>Exemplo de uso de variáveis como argumentos em Keywords</doc>
+<status status="PASS" start="2025-01-14T15:18:25.282677" elapsed="0.017771"/>
 </suite>
 <statistics>
 <total>
@@ -35,9 +77,11 @@
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="Exemplos Tipos Variaveis">Exemplos Tipos Variaveis</stat>
+<stat pass="1" fail="0" skip="0" id="s1" name="Exemplos Argumentos">Exemplos Argumentos</stat>
 </suite>
 </statistics>
 <errors>
+<msg time="2025-01-14T15:18:25.280588" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/web_testing/exemplos_argumentos.robot' on line 4: Singular section headers like '*** Variable ***' are deprecated. Use plural format like '*** Variables ***' instead.</msg>
+<msg time="2025-01-14T15:18:25.281004" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/web_testing/exemplos_argumentos.robot' on line 26: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
 </errors>
 </robot>
