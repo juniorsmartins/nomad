@@ -61,3 +61,13 @@ Então o título da página deve ficar "${TITULO}"
 E o texto "Eletrônicos e Tecnologia" deve ser exibido na página
     Verificar se aparece a frase "Eletrônicos e Tecnologia"
 
+E a categoria "Computadores e Informática" deve ser exibida na página
+    Verificar se aparece a categoria "Computadores e Informática"
+
+Quando pesquisar pelo produto "Xbox Series S"
+    Digitar o nome do produto "Xbox Series S" no campo de pesquisa
+    Clicar no botão de pesquisa
+
+E um produto da linha "Xbox Series S" deve ser mostrado na página
+    Verificar o resultado da pesquisa se está listando o produto "Xbox Series S"
+

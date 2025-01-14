@@ -20,7 +20,7 @@ Caso de Teste 02 - Pesquisa de um produto
     [Documentation]  Verifica a busca de um produto no site da Amazon.com.br
     [Tags]           busca_produtos  lista_busca
     Acessar a home page do site amazon.com.br
-    Digitar o nome do produto "Xbox Series 5" no campo de pesquisa
+    Digitar o nome do produto "Xbox Series S" no campo de pesquisa
     Clicar no botão de pesquisa
     Verificar o resultado da pesquisa se está listando o produto "Xbox Series"
 
