@@ -27,6 +27,7 @@ public class BalanceCashbookController {
     private final CashbookMapper cashbookMapper;
 
     @GetMapping(path = "/{id}")
+
     public ResponseEntity<BalanceCashbookDtoResponse> annual(@PathVariable(name = "id") final UUID cashBookId) {
 
         log.info("Controller Annual iniciado: {}", cashBookId);

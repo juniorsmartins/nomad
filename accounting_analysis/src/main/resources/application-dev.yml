@@ -1,2 +1,18 @@
 spring:
 
+management: # Define ajustes para o Spring Boot Actuator, um módulo que fornece endpoints prontos para monitorar, gerenciar e obter métricas da aplicação.
+  endpoints:
+    web:
+      exposure:
+        include: info, metrics, health # Essa configuração controla quais endpoints do Actuator estarão disponíveis via HTTP. Atenção: Expor todos os endpoints pode ser um risco de segurança, especialmente em ambientes de produção. Recomenda-se restringir os endpoints expostos.
+  endpoint:
+    health:
+      enabled: true
+      show-details: always # Ele exibe informações detalhadas como o estado de bancos de dados, serviços externos, etc. Pode ter os valores: always (mostra detalhes sempre), when-authorized (detalhes apenas para usuários autenticados) e never (nunca mostra detalhes).
+#  security:
+#    enabled: true # Proteja endpoints sensíveis com autenticação
+  metrics:
+    tags:
+      application: ${spring.application.name} # Faz o micrometer organizar as métricas unificadas por nome de microsserviço
+      environment: ${spring.profiles.active} # Organize tags para ambientes: Inclua informações úteis como ambiente (dev, prod) nas tags.
+

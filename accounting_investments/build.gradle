@@ -48,6 +48,9 @@ dependencies {
 	// Database
 	runtimeOnly 'org.postgresql:postgresql'
 
+	// Resilience4j - CircuitBreaker, BulkHead, RateLimiter, Retry, Cache. TimeLimiter e Micrometer
+	implementation 'io.github.resilience4j:resilience4j-all:2.3.0'
+
 	// Mensageria - Kafka
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
