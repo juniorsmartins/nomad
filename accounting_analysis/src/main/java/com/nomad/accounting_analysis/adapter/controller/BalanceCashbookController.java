@@ -1,8 +1,8 @@
 package com.nomad.accounting_analysis.adapter.controller;
 
-import com.nomad.accounting_analysis.adapter.dto.response.BalanceCashbookDtoResponse;
 import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
 import com.nomad.accounting_analysis.application.port.input.BalanceCashbookInputPort;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +27,12 @@ public class BalanceCashbookController {
     private final CashbookMapper cashbookMapper;
 
     @GetMapping(path = "/{id}")
+    @CircuitBreaker(name = "default", fallbackMethod = "getFallbackAnnual")
+    public ResponseEntity<Object> annual(@PathVariable(name = "id") final UUID cashbookId) {
 
-    public ResponseEntity<BalanceCashbookDtoResponse> annual(@PathVariable(name = "id") final UUID cashBookId) {
+        log.info("Controller Annual iniciado: {}", cashbookId);
 
-        log.info("Controller Annual iniciado: {}", cashBookId);
-
-        var response = Optional.of(cashBookId)
+        var response = Optional.of(cashbookId)
                 .map(balanceCashbookInputPort::annual)
                 .map(cashbookMapper::toBalanceCashbookDtoResponse)
                 .orElseThrow();
@@ -42,6 +42,14 @@ public class BalanceCashbookController {
         return ResponseEntity
                 .ok()
                 .body(response);
+    }
+
+    private ResponseEntity<String> getFallbackAnnual(final UUID cashbookId, Throwable exception) {
+        log.info("Falha ao buscar relatório anual com cashbookId: {}.", cashbookId, exception);
+        return ResponseEntity
+                .internalServerError()
+                .body(String
+                    .format("Falha ao buscar relatório anual com cashbookId: %s. Tente novamente mais tarde.", cashbookId));
     }
 }
 
