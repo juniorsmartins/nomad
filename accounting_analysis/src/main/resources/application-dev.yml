@@ -28,6 +28,7 @@ management: # Define ajustes para o Spring Boot Actuator, um módulo que fornece
 
 resilience4j: # Raiz da configuração para todas as funcionalidades do Resilience4j.
   circuit-breakers: # Especifica as configurações para o componente de circuit breaker.
+    circuit-breaker-aspect-order: 1
     instances: # Permite definir múltiplas instâncias (ou configurações) de circuit breakers.
       default:
         failure-rate-threshold: 50 # Define o limite de falhas permitido (em %) antes de abrir o circuito. Por exemplo: Se 50% ou mais das chamadas falharem (com base na janela deslizante configurada), o circuito será aberto e futuras chamadas serão bloqueadas até o estado ser alterado.
@@ -36,6 +37,15 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
         sliding-window-type: COUNT_BASED # Define o tipo de janela usada para calcular as métricas (taxa de falhas e número de chamadas): COUNT_BASED: A janela é baseada em um número fixo de chamadas. TIME_BASED: A janela é baseada em um período de tempo.
         sliding-window-size: 50 # Define o tamanho da janela deslizante usada para coletar métricas. Exemplo no caso: O circuito irá monitorar as últimas 50 chamadas.
         minimum-number-of-calls: 10 # Define o número mínimo de chamadas que precisam ser registradas antes de avaliar se o circuito deve abrir. Exemplo no caso: Mesmo que o limite de 50% de falhas seja atingido, o circuito só será avaliado após pelo menos 10 chamadas terem ocorrido.
+  retry:
+    retry-aspect-order: 2
+    instances:
+      default:
+        max-attempts: 3
+        wait-duration: 2s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 5
+
 
 
 
