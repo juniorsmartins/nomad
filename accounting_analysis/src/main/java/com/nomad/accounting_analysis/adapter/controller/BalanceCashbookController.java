@@ -4,6 +4,7 @@ import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
 import com.nomad.accounting_analysis.application.port.input.BalanceCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class BalanceCashbookController {
     private final CashbookMapper cashbookMapper;
 
     @GetMapping(path = "/{id}")
+    @Retry(name = "default")
     @CircuitBreaker(name = "default", fallbackMethod = "getFallbackAnnual")
     public ResponseEntity<Object> annual(@PathVariable(name = "id") final UUID cashbookId) {
 
