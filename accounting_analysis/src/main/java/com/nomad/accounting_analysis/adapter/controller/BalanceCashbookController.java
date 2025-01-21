@@ -55,12 +55,12 @@ public class BalanceCashbookController {
                 .body(String.format("Não encontrado Cashbook com identificador: %s", cashbookId));
     }
 
-//    private ResponseEntity<String> getFallbackAnnual(final UUID cashbookId, RuntimeException exception) {
-//        log.info("Falha ao buscar relatório anual com cashbookId: {}.", cashbookId, exception);
-//        return ResponseEntity
-//                .internalServerError()
-//                .body(String
-//                        .format("Falha ao buscar relatório anual com cashbookId: %s. Tente novamente mais tarde.", cashbookId));
-//    }
+    private ResponseEntity<String> getFallbackAnnual(final UUID cashbookId, RuntimeException exception) {
+        log.info("Falha ao buscar relatório anual com cashbookId: {}.", cashbookId, exception);
+        return ResponseEntity
+                .internalServerError()
+                .body(String
+                        .format("Falha ao buscar relatório anual com cashbookId: %s. Tente novamente mais tarde.", cashbookId));
+    }
 }
 
