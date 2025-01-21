@@ -28,24 +28,31 @@ management: # Define ajustes para o Spring Boot Actuator, um módulo que fornece
 
 resilience4j: # Raiz da configuração para todas as funcionalidades do Resilience4j.
   circuit-breakers: # Especifica as configurações para o componente de circuit breaker.
-    circuit-breaker-aspect-order: 2
+    circuitBreakerAspectOrder: 1
     instances: # Permite definir múltiplas instâncias (ou configurações) de circuit breakers.
       default:
-        failure-rate-threshold: 50 # Define o limite de falhas permitido (em %) antes de abrir o circuito. Por exemplo: Se 50% ou mais das chamadas falharem (com base na janela deslizante configurada), o circuito será aberto e futuras chamadas serão bloqueadas até o estado ser alterado.
+        registerHealthIndicator: true # Adiciona o status do Circuit Breaker ao sistema de monitoramento (health check), permitindo rastrear o estado dele (CLOSED, OPEN, HALF-OPEN).
+        failureRateThreshold: 50 # Define o limite de falhas permitido (em %) antes de abrir o circuito. Por exemplo: Se 50% ou mais das chamadas falharem (com base na janela deslizante configurada), o circuito será aberto e futuras chamadas serão bloqueadas até o estado ser alterado.
         automatic-transition-from-open-to-half-open-enabled: true # Ativa a transição automática do estado OPEN para HALF-OPEN após o período configurado em wait-duration-in-open-state.
-        wait-duration-in-open-state: 10s # Define quanto tempo o circuito permanecerá no estado OPEN antes de mudar automaticamente para HALF-OPEN
-        sliding-window-type: COUNT_BASED # Define o tipo de janela usada para calcular as métricas (taxa de falhas e número de chamadas): COUNT_BASED: A janela é baseada em um número fixo de chamadas. TIME_BASED: A janela é baseada em um período de tempo.
-        sliding-window-size: 50 # Define o tamanho da janela deslizante usada para coletar métricas. Exemplo no caso: O circuito irá monitorar as últimas 50 chamadas.
-        minimum-number-of-calls: 10 # Define o número mínimo de chamadas que precisam ser registradas antes de avaliar se o circuito deve abrir. Exemplo no caso: Mesmo que o limite de 50% de falhas seja atingido, o circuito só será avaliado após pelo menos 10 chamadas terem ocorrido.
+        waitDurationInOpenState: 10s # Define quanto tempo o circuito permanecerá no estado OPEN antes de mudar automaticamente para HALF-OPEN
+        slidingWindowType: COUNT_BASED # Define o tipo de janela usada para calcular as métricas (taxa de falhas e número de chamadas): COUNT_BASED: A janela é baseada em um número fixo de chamadas. TIME_BASED: A janela é baseada em um período de tempo.
+        slidingWindowSize: 50 # Define o tamanho da janela deslizante usada para coletar métricas. Exemplo no caso: O circuito irá monitorar as últimas 50 chamadas.
+        minimumNumberOfCalls: 10 # Define o número mínimo de chamadas que precisam ser registradas antes de avaliar se o circuito deve abrir. Exemplo no caso: Mesmo que o limite de 50% de falhas seja atingido, o circuito só será avaliado após pelo menos 10 chamadas terem ocorrido.
+        eventConsumerBufferSize: 25 # Define o número de eventos armazenados no buffer de eventos do Circuit Breaker.
   retry:
-    retry-aspect-order: 1 # Define a ordem em que o aspecto Retry será aplicado em relação a outros aspectos do Resilience4j. Útil para controlar a sequência de execução de diferentes políticas de resiliência.
+    retryAspectOrder: 2 # Define a ordem em que o aspecto Retry será aplicado em relação a outros aspectos do Resilience4j. Útil para controlar a sequência de execução de diferentes políticas de resiliência.
     instances:
       default:
-        max-attempts: 3 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
-        wait-duration: 2s # Define o intervalo de tempo entre as tentativas.
-        enable-exponential-backoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
-        exponential-backoff-multiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
-
+        registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
+        maxAttempts: 3 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
+        waitDuration: 2s # Define o intervalo de tempo entre as tentativas.
+        enableExponentialBackoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
+        exponentialBackoffMultiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
+        retryExceptions: # Lista de exceções que acionam o Retry
+          - org.springframework.web.reactive.function.client.WebClientResponseException
+          - org.springframework.web.client.HttpServerErrorException
+#        ignoreExceptions: # Lista de exceções ignoradas pelo Retry
+#          - io.github.robwin.exception.BusinessException
 
 
 
