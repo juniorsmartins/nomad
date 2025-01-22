@@ -50,12 +50,13 @@ spring:
       org.hibernate.SQL: DEBUG # Loga queries executadas (usar INFO em produção).
       org.hibernate.type.descriptor.sql: TRACE  # Loga parâmetros das queries para depuração (usar WARN em produção).
 
-management: # Este bloco define as configurações de gerenciamento da sua aplicação. Ele controla quais endpoints de gerenciamento estão disponíveis e como eles podem ser acessados.
+management: # Define ajustes para o Spring Boot Actuator, um módulo que fornece endpoints prontos para monitorar, gerenciar e obter métricas da aplicação.
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: "*" # Essa configuração controla quais endpoints do Actuator estarão disponíveis via HTTP. Atenção: Expor todos os endpoints pode ser um risco de segurança, especialmente em ambientes de produção. Recomenda-se restringir os endpoints expostos.
   metrics:
     tags:
       application: ${spring.application.name} # Faz o micrometer organizar as métricas unificadas por nome de microsserviço
+      environment: ${spring.profiles.active} # Organize tags para ambientes: Inclua informações úteis como ambiente (dev, prod) nas tags.
 

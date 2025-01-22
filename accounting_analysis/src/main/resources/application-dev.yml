@@ -1,0 +1,64 @@
+spring:
+
+management: # Define ajustes para o Spring Boot Actuator, um módulo que fornece endpoints prontos para monitorar, gerenciar e obter métricas da aplicação.
+  endpoints:
+    web:
+      exposure:
+        include: info, metrics, health # Essa configuração controla quais endpoints do Actuator estarão disponíveis via HTTP. Atenção: Expor todos os endpoints pode ser um risco de segurança, especialmente em ambientes de produção. Recomenda-se restringir os endpoints expostos.
+  endpoint:
+    health:
+      enabled: true
+      show-details: always # Ele exibe informações detalhadas como o estado de bancos de dados, serviços externos, etc. Pode ter os valores: always (mostra detalhes sempre), when-authorized (detalhes apenas para usuários autenticados) e never (nunca mostra detalhes).
+#  security:
+#    enabled: true # Proteja endpoints sensíveis com autenticação
+  health:
+    circuit-breakers:
+      enabled: true # Habilita verificações de saúde específicas para circuit breakers (caso esteja usando bibliotecas como Resilience4j ou Hystrix). O estado do circuito (fechado, aberto ou semi-aberto) será incluído no relatório de saúde.
+    retry:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name} # Faz o micrometer organizar as métricas unificadas por nome de microsserviço
+      environment: ${spring.profiles.active} # Organize tags para ambientes: Inclua informações úteis como ambiente (dev, prod) nas tags.
+
+# endpoints.web.exposure.include: info, metrics, health
+#  Define quais endpoints de gerenciamento serão expostos via web.
+#
+#  info: Exibe informações sobre a aplicação, como nome, versão, etc.
+#  metrics: Exibe métricas da aplicação, como memória, uso de CPU, número de requisições, etc.
+#  health: Exibe o estado de saúde da aplicação, como se está funcionando corretamente ou se há problemas com serviços dependentes.
+
+resilience4j: # Raiz da configuração para todas as funcionalidades do Resilience4j.
+  circuitBreaker: # Especifica as configurações para o componente de circuit breaker.
+    circuitBreakerAspectOrder: 1
+    instances: # Permite definir múltiplas instâncias (ou configurações) de circuit breakers.
+      default:
+        registerHealthIndicator: true # Adiciona o status do Circuit Breaker ao sistema de monitoramento (health check), permitindo rastrear o estado dele (CLOSED, OPEN, HALF-OPEN).
+        failureRateThreshold: 40 # Define o limite de falhas permitido (em %) antes de abrir o circuito. Por exemplo: Se 40% ou mais das chamadas falharem (com base na janela deslizante configurada), o circuito será aberto e futuras chamadas serão bloqueadas até o estado ser alterado.
+        automaticTransitionFromOpenToHalfOpenEnabled: true # Ativa a transição automática do estado OPEN para HALF-OPEN após o período configurado em wait-duration-in-open-state.
+        waitDurationInOpenState: 8s # Define quanto tempo o circuito permanecerá no estado OPEN antes de mudar automaticamente para HALF-OPEN
+        slidingWindowType: COUNT_BASED # Define o tipo de janela usada para calcular as métricas (taxa de falhas e número de chamadas): COUNT_BASED: A janela é baseada em um número fixo de chamadas. TIME_BASED: A janela é baseada em um período de tempo.
+        slidingWindowSize: 50 # Define o tamanho da janela deslizante usada para coletar métricas. Exemplo no caso: O circuito irá monitorar as últimas 50 chamadas.
+        minimumNumberOfCalls: 10 # Define o número mínimo de chamadas que precisam ser registradas antes de avaliar se o circuito deve abrir. Exemplo no caso: Mesmo que o limite de 50% de falhas seja atingido, o circuito só será avaliado após pelo menos 10 chamadas terem ocorrido.
+        eventConsumerBufferSize: 25 # Define o número de eventos armazenados no buffer de eventos do Circuit Breaker.
+        slowCallRateThreshold: 50 # Define a porcentagem de chamadas que podem ser consideradas lentas antes de o circuito ser aberto.
+        slowCallDurationThreshold: 4s # Define o tempo que uma chamada pode levar antes de ser classificada como lenta.
+  retry:
+    retryAspectOrder: 2 # Define a ordem em que o aspecto Retry será aplicado em relação a outros aspectos do Resilience4j. Útil para controlar a sequência de execução de diferentes políticas de resiliência.
+    instances:
+      default:
+        registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
+        maxAttempts: 3 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
+        waitDuration: 2s # Define o intervalo de tempo entre as tentativas.
+        enableExponentialBackoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
+        exponentialBackoffMultiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
+        retryExceptions: # Lista de exceções que acionam o Retry
+          - org.springframework.web.reactive.function.client.WebClientResponseException
+          - org.springframework.web.client.HttpServerErrorException
+          - java.lang.RuntimeException
+#        ignoreExceptions: # Lista de exceções ignoradas pelo Retry
+#          - io.github.robwin.exception.BusinessException
+        metrics:
+          enabled: true
+
+
