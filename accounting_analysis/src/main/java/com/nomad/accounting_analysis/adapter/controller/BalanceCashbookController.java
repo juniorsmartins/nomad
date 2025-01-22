@@ -2,6 +2,7 @@ package com.nomad.accounting_analysis.adapter.controller;
 
 import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
 import com.nomad.accounting_analysis.application.port.input.BalanceCashbookInputPort;
+import com.nomad.accounting_analysis.application.port.input.SurplusCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -27,7 +28,28 @@ public class BalanceCashbookController {
 
     private final BalanceCashbookInputPort balanceCashbookInputPort;
 
+    private final SurplusCashbookInputPort surplusCashbookInputPort;
+
     private final CashbookMapper cashbookMapper;
+
+    @GetMapping(path = "/surplus/{id}")
+    @Retry(name = "surplus")
+    @CircuitBreaker(name = "default", fallbackMethod = "getFallbackAnnual")
+    public ResponseEntity<Object> surplus(@PathVariable(name = "id") final UUID cashbookId) {
+
+        log.info("Controller Surplus iniciado: {}", cashbookId);
+
+        var response = Optional.of(cashbookId)
+                .map(surplusCashbookInputPort::surplus)
+                .map(cashbookMapper::toBalanceCashbookDtoResponse)
+                .orElseThrow();
+
+        log.info("Controller Surplus concluído: {}", response);
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
 
     @GetMapping(path = "/{id}")
     @Retry(name = "default")

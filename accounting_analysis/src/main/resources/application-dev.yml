@@ -45,7 +45,7 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
         slowCallDurationThreshold: 4s # Define o tempo que uma chamada pode levar antes de ser classificada como lenta.
   retry:
     retryAspectOrder: 2 # Define a ordem em que o aspecto Retry será aplicado em relação a outros aspectos do Resilience4j. Útil para controlar a sequência de execução de diferentes políticas de resiliência.
-    instances:
+    configs:
       default:
         registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
         maxAttempts: 3 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
@@ -60,5 +60,9 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
 #          - io.github.robwin.exception.BusinessException
         metrics:
           enabled: true
+    instances:
+      surplus:
+        baseConfig: default
+        maxAttempts: 5
 
 
