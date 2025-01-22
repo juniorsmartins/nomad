@@ -33,7 +33,7 @@ public class BalanceCashbookController {
     private final CashbookMapper cashbookMapper;
 
     @GetMapping(path = "/surplus/{id}")
-    @Retry(name = "surplus")
+    @Retry(name = "surplus2")
     @CircuitBreaker(name = "default", fallbackMethod = "getFallbackAnnual")
     public ResponseEntity<Object> surplus(@PathVariable(name = "id") final UUID cashbookId) {
 
