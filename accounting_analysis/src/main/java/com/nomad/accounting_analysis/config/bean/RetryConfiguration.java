@@ -15,18 +15,20 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class RetryConfiguration {
 
+    private static final String SURPLUS2 = "surplus2";
+
     private final RetryRegistry retryRegistry;
 
     @Bean
-    public Retry surplusRetryConfig() {
+    public Retry surplus2RetryConfig() {
 
-        RetryConfig surplusRetryConfig = RetryConfig.custom()
+        RetryConfig surplus2RetryConfig = RetryConfig.custom()
                 .maxAttempts(2)
                 .waitDuration(Duration.ofSeconds(2))
                 .retryExceptions(WebClientResponseException.class, HttpServerErrorException.class, RuntimeException.class)
                 .build();
 
-        return retryRegistry.retry("surplus2", surplusRetryConfig);
+        return retryRegistry.retry(SURPLUS2, surplus2RetryConfig);
     }
 }
 
