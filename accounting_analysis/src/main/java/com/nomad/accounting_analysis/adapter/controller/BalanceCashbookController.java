@@ -5,7 +5,8 @@ import com.nomad.accounting_analysis.application.port.input.BalanceCashbookInput
 import com.nomad.accounting_analysis.application.port.input.SurplusCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.retry.Retry;
+import io.github.resilience4j.retry.RetryRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @Slf4j
 @RestController
@@ -32,19 +34,36 @@ public class BalanceCashbookController {
 
     private final CashbookMapper cashbookMapper;
 
+    private final RetryRegistry retryRegistry;
+
     @GetMapping(path = "/surplus/{id}")
-    @Retry(name = "surplus2")
+//    @Retry(name = "surplus2")
     @CircuitBreaker(name = "default", fallbackMethod = "getFallbackAnnual")
     public ResponseEntity<Object> surplus(@PathVariable(name = "id") final UUID cashbookId) {
 
         log.info("Controller Surplus iniciado: {}", cashbookId);
 
-        var response = Optional.of(cashbookId)
-                .map(surplusCashbookInputPort::surplus)
-                .map(cashbookMapper::toBalanceCashbookDtoResponse)
-                .orElseThrow();
+        var retry = retryRegistry.retry("surplus2");
 
-        log.info("Controller Surplus concluído: {}", response);
+        Supplier<Object> supplier = Retry.decorateSupplier(retry, () -> {
+            return Optional.of(cashbookId)
+                    .map(surplusCashbookInputPort::surplus)
+                    .map(cashbookMapper::toBalanceCashbookDtoResponse)
+                    .orElseThrow();
+        });
+
+        Object response;
+
+        try {
+            response = supplier.get();
+            log.info("Controller Surplus concluído: {}", response);
+
+        } catch (Exception ex) {
+            log.info("Erro ao executar a operação com Retry", ex);
+            return ResponseEntity
+                    .internalServerError()
+                    .build();
+        }
 
         return ResponseEntity
                 .ok()
@@ -52,7 +71,7 @@ public class BalanceCashbookController {
     }
 
     @GetMapping(path = "/{id}")
-    @Retry(name = "default")
+//    @Retry(name = "default")
     @CircuitBreaker(name = "default", fallbackMethod = "getFallbackAnnual")
     public ResponseEntity<Object> annual(@PathVariable(name = "id") final UUID cashbookId) {
 
