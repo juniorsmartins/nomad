@@ -1,7 +1,7 @@
 package com.nomad.accounting_analysis.adapter.controller;
 
 import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
-import com.nomad.accounting_analysis.application.port.input.SurplusCashbookInputPort;
+import com.nomad.accounting_analysis.application.port.input.DebitsCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.Retry;
@@ -19,33 +19,33 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import static com.nomad.accounting_analysis.config.bean.RetryRegistryConfiguration.SURPLUS2;
+import static com.nomad.accounting_analysis.config.bean.RetryRegistryConfiguration.DEBITS;
 
 @Slf4j
 @RestController
-@RequestMapping(path = {SurplusCashbookController.URI_BALANCE_CASHBOOK})
+@RequestMapping(path = {DebitsCashbookController.URI_BALANCE_CASHBOOK})
 @RequiredArgsConstructor
-public class SurplusCashbookController {
+public class DebitsCashbookController {
 
     protected static final String URI_BALANCE_CASHBOOK = "/api/v1/accounting-analysis/cashbook";
 
-    private final SurplusCashbookInputPort surplusCashbookInputPort;
+    private final DebitsCashbookInputPort debitsCashbookInputPort;
 
     private final CashbookMapper cashbookMapper;
 
     private final RetryRegistry retryRegistry;
 
-    @GetMapping(path = "/surplus/{id}")
-    @CircuitBreaker(name = "default", fallbackMethod = "getFallbackSurplus")
-    public ResponseEntity<Object> surplus(@PathVariable(name = "id") final UUID cashbookId) {
+    @GetMapping(path = "/debits/{id}")
+    @CircuitBreaker(name = "default", fallbackMethod = "getFallbackDebits")
+    public ResponseEntity<Object> debits(@PathVariable(name = "id") final UUID cashbookId) {
 
-        log.info("classe=controller metodo=surplus - Iniciado com id: {}", cashbookId);
+        log.info("classe=controller metodo=debits - Iniciado com id: {}", cashbookId);
 
-        var retry = retryRegistry.retry(SURPLUS2);
+        var retry = retryRegistry.retry(DEBITS);
 
         Supplier<Object> supplier = Retry.decorateSupplier(retry, () -> {
             return Optional.of(cashbookId)
-                    .map(surplusCashbookInputPort::surplus)
+                    .map(debitsCashbookInputPort::debits)
                     .map(cashbookMapper::toBalanceCashbookDtoResponse)
                     .orElseThrow();
         });
@@ -54,10 +54,11 @@ public class SurplusCashbookController {
 
         try {
             response = supplier.get();
-            log.info("classe=controller metodo=surplus - Concluído com resposta: {}", response);
+            log.info("classe=controller metodo=debits - Concluído com resposta: {}", response);
 
         } catch (Exception ex) {
-            log.info("classe=controller metodo=surplus - Erro ao executar a operação com Retry.", ex);
+            log.info("classe=controller metodo=debits - Erro ao executar a operação com Retry.", ex);
+
             return ResponseEntity
                     .internalServerError()
                     .build();
@@ -68,8 +69,8 @@ public class SurplusCashbookController {
                 .body(response);
     }
 
-    private ResponseEntity<String> getFallbackSurplus(final UUID cashbookId, CashbookNotFoundException exception) {
-        log.info("classe=controller metodo=getFallbackSurplus - Não encontrado Cashbook com identificador: {}.",
+    private ResponseEntity<String> getFallbackDebits(final UUID cashbookId, CashbookNotFoundException exception) {
+        log.info("classe=controller metodo=getFallbackDebits - Não encontrado Cashbook com identificador: {}.",
                 cashbookId, exception);
 
         return ResponseEntity
@@ -77,8 +78,8 @@ public class SurplusCashbookController {
                 .body(String.format("Não encontrado Cashbook com identificador: %s", cashbookId));
     }
 
-    private ResponseEntity<String> getFallbackSurplus(final UUID cashbookId, RuntimeException exception) {
-        log.info("classe=controller metodo=getFallbackSurplus - Falha ao buscar relatório com cashbookId: {}.",
+    private ResponseEntity<String> getFallbackDebits(final UUID cashbookId, RuntimeException exception) {
+        log.info("classe=controller metodo=getFallbackDebits - Falha ao buscar relatório com cashbookId: {}.",
                 cashbookId, exception);
 
         return ResponseEntity
