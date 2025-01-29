@@ -23,10 +23,11 @@ public class RetryRegistryConfiguration {
     @Bean
     public RetryRegistry retryRegistry() {
 
+        Map<String, RetryConfig> configMap = new HashMap<>();
+
         RetryConfig retryConfigSurplus2 = retryConfigSurplus2();
         RetryConfig retryConfigDebits = retryConfigDebits();
 
-        Map<String, RetryConfig> configMap = new HashMap<>();
         configMap.put(SURPLUS2, retryConfigSurplus2);
         configMap.put(DEBITS, retryConfigDebits);
 
@@ -46,7 +47,7 @@ public class RetryRegistryConfiguration {
     private RetryConfig retryConfigDebits() {
 
         return RetryConfig.custom()
-                .maxAttempts(4)
+                .maxAttempts(6)
                 .waitDuration(Duration.ofSeconds(1))
                 .retryExceptions(WebClientResponseException.class, HttpServerErrorException.class,
                         ResourceAccessException.class, SocketTimeoutException.class, RuntimeException.class)

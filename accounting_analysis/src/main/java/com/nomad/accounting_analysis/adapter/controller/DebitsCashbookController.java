@@ -44,6 +44,7 @@ public class DebitsCashbookController {
         var retry = retryRegistry.retry(DEBITS);
 
         Supplier<Object> supplier = Retry.decorateSupplier(retry, () -> {
+            log.info("Retry - name: {} e config: {}", retry.getName(), retry.getRetryConfig());
             return Optional.of(cashbookId)
                     .map(debitsCashbookInputPort::debits)
                     .map(cashbookMapper::toBalanceCashbookDtoResponse)

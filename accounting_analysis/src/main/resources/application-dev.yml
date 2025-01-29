@@ -48,7 +48,7 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
     configs:
       default:
         registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
-        maxAttempts: 3 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
+        maxAttempts: 1 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
         waitDuration: 2s # Define o intervalo de tempo entre as tentativas.
         enableExponentialBackoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
         exponentialBackoffMultiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
