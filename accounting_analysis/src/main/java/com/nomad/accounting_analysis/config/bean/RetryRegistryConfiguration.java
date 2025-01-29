@@ -5,9 +5,10 @@ import io.github.resilience4j.retry.RetryRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import java.rmi.registry.Registry;
+import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,8 @@ public class RetryRegistryConfiguration {
         return RetryConfig.custom()
                 .maxAttempts(2)
                 .waitDuration(Duration.ofSeconds(2))
-                .retryExceptions(WebClientResponseException.class, HttpServerErrorException.class, RuntimeException.class)
+                .retryExceptions(WebClientResponseException.class, HttpServerErrorException.class,
+                        ResourceAccessException.class, SocketTimeoutException.class, RuntimeException.class)
                 .build();
     }
 
@@ -46,7 +48,8 @@ public class RetryRegistryConfiguration {
         return RetryConfig.custom()
                 .maxAttempts(4)
                 .waitDuration(Duration.ofSeconds(1))
-                .retryExceptions(WebClientResponseException.class, HttpServerErrorException.class, RuntimeException.class)
+                .retryExceptions(WebClientResponseException.class, HttpServerErrorException.class,
+                        ResourceAccessException.class, SocketTimeoutException.class, RuntimeException.class)
                 .build();
     }
 }
