@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -48,13 +47,7 @@ public class DebitsCashbookController {
 
         log.info("classe=controller metodo=debits - Iniciado com id: {}", cashbookId);
 
-        AtomicInteger retryCount = new AtomicInteger(1);
-
         Supplier<Object> supplier = Retry.decorateSupplier(retry, () -> {
-
-            log.info("Retry - retryCount={} name: {} e config: {}",
-                    retryCount.getAndIncrement(), retry.getName(), retry.getRetryConfig());
-
             return Optional.of(cashbookId)
                     .map(debitsCashbookInputPort::debits)
                     .map(cashbookMapper::toBalanceCashbookDtoResponse)
