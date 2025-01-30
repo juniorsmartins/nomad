@@ -28,12 +28,14 @@ public class CentralRetryEventsListener {
 
             @Override
             public void onEntryRemovedEvent(EntryRemovedEvent<Retry> entryRemoveEvent) {
-
+                log.info("Retry entry removed: {}", entryRemoveEvent.getRemovedEntry().getName());
             }
 
             @Override
             public void onEntryReplacedEvent(EntryReplacedEvent<Retry> entryReplacedEvent) {
-
+                log.info("Retry entry replaced: {} -> {}",
+                        entryReplacedEvent.getOldEntry().getName(),
+                        entryReplacedEvent.getNewEntry().getName());
             }
 
             private void registryLogs(final RetryOnRetryEvent retryOnRetryEvent) {
@@ -43,7 +45,6 @@ public class CentralRetryEventsListener {
                         retryOnRetryEvent.getNumberOfRetryAttempts(),
                         retryOnRetryEvent.getWaitInterval(),
                         retryOnRetryEvent.getCreationTime());
-                log.info("toString={}", retryOnRetryEvent.toString());
             }
         };
     }
