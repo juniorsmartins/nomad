@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 @Slf4j
@@ -47,7 +48,13 @@ public class SurplusCashbookController {
 
         log.info("classe=controller metodo=surplus - Iniciado com id: {}", cashbookId);
 
+        AtomicInteger retryCount = new AtomicInteger(1);
+
         Supplier<Object> supplier = Retry.decorateSupplier(retry, () -> {
+
+            log.info("Retry - retryCount={} name: {} e config: {}",
+                    retryCount.getAndIncrement(), retry.getName(), retry.getRetryConfig());
+
             return Optional.of(cashbookId)
                     .map(surplusCashbookInputPort::surplus)
                     .map(cashbookMapper::toBalanceCashbookDtoResponse)
@@ -60,16 +67,24 @@ public class SurplusCashbookController {
             response = supplier.get();
             log.info("classe=controller metodo=surplus - Concluído com resposta: {}", response);
 
+            return ResponseEntity
+                    .ok()
+                    .body(response);
+
+        } catch (CashbookNotFoundException ex) {
+            log.info("classe=controller metodo=surplus - Não encontrado Cashbook com identificador: {}.", cashbookId, ex);
+
+            return ResponseEntity
+                    .notFound()
+                    .build();
+
         } catch (Exception ex) {
             log.info("classe=controller metodo=surplus - Erro ao executar a operação com Retry.", ex);
+
             return ResponseEntity
                     .internalServerError()
                     .build();
         }
-
-        return ResponseEntity
-                .ok()
-                .body(response);
     }
 
     private ResponseEntity<String> getFallbackSurplus(final UUID cashbookId, CashbookNotFoundException exception) {
