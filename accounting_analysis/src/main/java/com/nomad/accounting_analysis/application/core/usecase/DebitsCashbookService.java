@@ -30,7 +30,7 @@ public class DebitsCashbookService implements DebitsCashbookInputPort {
         var cashbook = cashbookMapper.toCashbook(cashbookDtoResponse);
         var debitsCashbook = generateCashbookDebits(cashbook);
 
-        log.info("Serviço Debits concluído: {}", debitsCashbook);
+        log.info("Serviço Debits concluído: {}", id);
 
         return debitsCashbook;
     }

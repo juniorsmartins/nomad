@@ -54,35 +54,17 @@ public class SurplusCashbookController {
                     .orElseThrow();
         });
 
-        Object response;
+        Object response = supplier.get();
 
-        try {
-            response = supplier.get();
-            log.info("classe=controller metodo=surplus - Concluído com resposta: {}", response);
-
-            return ResponseEntity
-                    .ok()
-                    .body(response);
-
-        } catch (CashbookNotFoundException ex) {
-            log.info("classe=controller metodo=surplus - Não encontrado Cashbook com identificador: {}.", cashbookId, ex);
-
-            return ResponseEntity
-                    .notFound()
-                    .build();
-
-        } catch (Exception ex) {
-            log.info("classe=controller metodo=surplus - Erro ao executar a operação com Retry.", ex);
-
-            return ResponseEntity
-                    .internalServerError()
-                    .build();
-        }
+        log.info("classe=controller metodo=surplus - Concluído com resposta: {}", response);
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 
     private ResponseEntity<String> getFallbackSurplus(final UUID cashbookId, CashbookNotFoundException exception) {
-        log.info("classe=controller metodo=getFallbackSurplus - Não encontrado Cashbook com identificador: {}. Stack Trace={}",
-                cashbookId, exception.getStackTrace(), exception);
+        log.info("classe=controller metodo=getFallbackSurplus - Não encontrado Cashbook com identificador: {}.",
+                cashbookId, exception);
 
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
@@ -90,13 +72,12 @@ public class SurplusCashbookController {
     }
 
     private ResponseEntity<String> getFallbackSurplus(final UUID cashbookId, RuntimeException exception) {
-        log.info("classe=controller metodo=getFallbackSurplus - Falha ao buscar relatório com cashbookId: {}. Stack Trace={}.",
-                cashbookId, exception.getStackTrace(), exception);
+        log.info("classe=controller metodo=getFallbackSurplus - Falha ao buscar relatório com cashbookId: {}.",
+                cashbookId, exception);
 
         return ResponseEntity
                 .internalServerError()
-                .body(String
-                        .format("Falha ao buscar relatório com cashbookId: %s. Tente mais tarde.", cashbookId));
+                .body(String.format("Falha ao buscar relatório com cashbookId: %s. Tente mais tarde.", cashbookId));
     }
 }
 
