@@ -1,4 +1,4 @@
-package com.nomad.accounting_analysis.config.bean;
+package com.nomad.accounting_analysis.config.retry_patern;
 
 import io.github.resilience4j.core.registry.RegistryEventConsumer;
 import io.github.resilience4j.retry.Retry;

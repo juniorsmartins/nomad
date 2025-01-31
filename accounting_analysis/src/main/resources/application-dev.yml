@@ -45,24 +45,53 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
         slowCallDurationThreshold: 4s # Define o tempo que uma chamada pode levar antes de ser classificada como lenta.
   retry:
     retryAspectOrder: 2 # Define a ordem em que o aspecto Retry será aplicado em relação a outros aspectos do Resilience4j. Útil para controlar a sequência de execução de diferentes políticas de resiliência.
-    configs:
-      default:
-        registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
-        maxAttempts: 5 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
+    instances:
+      surplus:
+        maxAttempts: 4 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
         waitDuration: 2s # Define o intervalo de tempo entre as tentativas.
+        registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
         enableExponentialBackoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
         exponentialBackoffMultiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
         retryExceptions: # Lista de exceções que acionam o Retry
           - org.springframework.web.reactive.function.client.WebClientResponseException
           - org.springframework.web.client.HttpServerErrorException
-          - java.lang.RuntimeException
-#        ignoreExceptions: # Lista de exceções ignoradas pelo Retry
-#          - io.github.robwin.exception.BusinessException
+          - org.springframework.web.reactive.function.client.WebClientRequestException
+          - org.springframework.web.client.ResourceAccessException
+          - java.net.SocketTimeoutException
+        ignoreExceptions: # Lista de exceções ignoradas pelo Retry
+          - com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException
         metrics:
           enabled: true
-    instances:
-      surplus:
-        baseConfig: default
-        maxAttempts: 4
-
+      surplus2:
+        maxAttempts: 2 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
+        waitDuration: 3s # Define o intervalo de tempo entre as tentativas.
+        registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
+        enableExponentialBackoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
+        exponentialBackoffMultiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
+        retryExceptions: # Lista de exceções que acionam o Retry
+          - org.springframework.web.reactive.function.client.WebClientResponseException
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.reactive.function.client.WebClientRequestException
+          - org.springframework.web.client.ResourceAccessException
+          - java.net.SocketTimeoutException
+        ignoreExceptions: # Lista de exceções ignoradas pelo Retry
+          - com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException
+        metrics:
+          enabled: true
+      debits:
+        maxAttempts: 3 # Define o número máximo de tentativas que o Retry fará para executar novamente a operação antes de desistir.
+        waitDuration: 1s # Define o intervalo de tempo entre as tentativas.
+        registerHealthIndicator: true # Adiciona o estado do Retry ao sistema de monitoramento (health check).
+        enableExponentialBackoff: true # Ativa o modo de backoff exponencial. Isso significa que o intervalo entre as tentativas será aumentado exponencialmente, em vez de ser fixo.
+        exponentialBackoffMultiplier: 5 # Define o fator de multiplicação para o backoff exponencial. Neste caso, o intervalo entre as tentativas será multiplicado por 5 após cada falha.
+        retryExceptions: # Lista de exceções que acionam o Retry
+          - org.springframework.web.reactive.function.client.WebClientResponseException
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.reactive.function.client.WebClientRequestException
+          - org.springframework.web.client.ResourceAccessException
+          - java.net.SocketTimeoutException
+        ignoreExceptions: # Lista de exceções ignoradas pelo Retry
+          - com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException
+        metrics:
+          enabled: true
 

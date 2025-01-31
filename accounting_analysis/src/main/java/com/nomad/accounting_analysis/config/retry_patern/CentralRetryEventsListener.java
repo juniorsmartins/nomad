@@ -1,4 +1,4 @@
-package com.nomad.accounting_analysis.config.bean;
+package com.nomad.accounting_analysis.config.retry_patern;
 
 import io.github.resilience4j.core.registry.EntryAddedEvent;
 import io.github.resilience4j.core.registry.EntryRemovedEvent;
@@ -23,7 +23,7 @@ public class CentralRetryEventsListener {
             public void onEntryAddedEvent(EntryAddedEvent<Retry> entryAddedEvent) {
                 entryAddedEvent.getAddedEntry()
                         .getEventPublisher()
-                        .onRetry(this::registryLogs);
+                        .onRetry(this::logRetryEvent);
             }
 
             @Override
@@ -38,7 +38,7 @@ public class CentralRetryEventsListener {
                         entryReplacedEvent.getNewEntry().getName());
             }
 
-            private void registryLogs(final RetryOnRetryEvent retryOnRetryEvent) {
+            private void logRetryEvent(final RetryOnRetryEvent retryOnRetryEvent) {
                 log.info("classe=CentralRetryEventsListener metodo=registryEventConsumer - name={}, type={}, numberOfRetryAttempts={}, waitInterval={} e creationTime={}",
                         retryOnRetryEvent.getName(),
                         retryOnRetryEvent.getEventType(),
