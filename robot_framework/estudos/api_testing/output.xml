@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-02-01T15:50:15.835645" rpa="false" schemaversion="5">
+<suite id="s1" name="Estudo Usuarios" source="/home/juniorsmartins/workspace/nomad/robot_framework/estudos/api_testing/estudo_usuarios.robot">
+<test id="s1-t1" name="Cenário 01: cadastrar um novo usuário com sucesso na ServeRest" line="7">
+<kw name="Criar um usuário novo" owner="estudo_usuarios">
+<kw name="Generate Random String" owner="String">
+<msg time="2025-02-01T15:50:15.937110" level="INFO">${palavra_aleatoria} = HNRqjmtzhA</msg>
+<var>${palavra_aleatoria}</var>
+<arg>length=10</arg>
+<arg>chars=[LETTERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<status status="PASS" start="2025-02-01T15:50:15.936887" elapsed="0.000250"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-01T15:50:15.937333" level="INFO">HNRqjmtzhA</msg>
+<arg>${palavra_aleatoria}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-01T15:50:15.937231" elapsed="0.000133"/>
+</kw>
+<status status="PASS" start="2025-02-01T15:50:15.936510" elapsed="0.000900"/>
+</kw>
+<status status="PASS" start="2025-02-01T15:50:15.935979" elapsed="0.001522"/>
+</test>
+<status status="PASS" start="2025-02-01T15:50:15.836351" elapsed="0.101378"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Estudo Usuarios">Estudo Usuarios</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

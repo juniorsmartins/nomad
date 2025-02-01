@@ -1,15 +1,14 @@
 *** Settings ***
-Library        RequestsLibrary
-Library        String
-Library        cpf_generator.py
+Library             RequestsLibrary
+Library             String
+Library             FakerLibrary
+Library             cpf_generator.py
 
 *** Keywords ***
-Gerar CPF Válido
-    ${cpf}=    Gerar CPF
-    return ${cpf}
+Gerar UUID
+    ${uuid}=        Evaluate        str(uuid.uuid4())       modules=uuid
+    [Return]        ${uuid}
 
-Criar um Cashbook novo
-    ${cpf}     Gerar CPF Válido
-    Log        ${cpf}
-        
-
+Gerar UUID
+    ${uuid}=        Evaluate        str(uuid.uuid4())       modules=uuid
+    [Return]        ${uuid}

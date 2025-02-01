@@ -5,7 +5,13 @@ Resource        ../../resources/accounting.resource
 
 *** Test Cases ***
 Cenário 1: cadastrar um novo Cashbook com sucesso
-    Criar um Cashbook novo
+    Gerar UUID
+
+Exemplo de Geração de CPF
+    ${uuid}=    Gerar UUID
+    Log         ${uuid}
+
+#    Criar um Cashbook novo
     # Cadastrar novo Cashbook
     # Conferir se novo Cashbook foi cadastrado corretamente
 

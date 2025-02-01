@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-02-01T16:20:22.681624" rpa="false" schemaversion="5">
+<suite id="s1" name="Post Testes" source="/home/juniorsmartins/workspace/nomad/robot_framework/tests/accounting/post_testes.robot">
+<test id="s1-t1" name="Exemplo de Geração de CPF" line="10">
+<kw name="Gerar UUID" owner="accounting">
+<msg time="2025-02-01T16:20:22.746342" level="FAIL">Keyword with same name defined multiple times.</msg>
+<var>${uuid}</var>
+<status status="FAIL" start="2025-02-01T16:20:22.746162" elapsed="0.000212">Keyword with same name defined multiple times.</status>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<arg>${uuid}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" start="2025-02-01T16:20:22.746710" elapsed="0.000020"/>
+</kw>
+<status status="FAIL" start="2025-02-01T16:20:22.745717" elapsed="0.001125">Keyword with same name defined multiple times.</status>
+</test>
+<status status="FAIL" start="2025-02-01T16:20:22.682255" elapsed="0.064811"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Post Testes">Post Testes</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-02-01T16:20:22.697066" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 10: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-01T16:20:22.697164" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 14: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-01T16:20:22.697203" level="ERROR">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 12: Creating keyword 'Gerar UUID' failed: Keyword with same name defined multiple times.</msg>
+<msg time="2025-02-01T16:20:22.744921" level="ERROR">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 4: Importing library 'FakerLibrary' failed: ModuleNotFoundError: No module named 'pkg_resources'
+Traceback (most recent call last):
+  File "/home/juniorsmartins/.local/lib/python3.12/site-packages/FakerLibrary/__init__.py", line 1, in &lt;module&gt;
+    import pkg_resources
+PYTHONPATH:
+  /home/juniorsmartins/.local/bin
+  /usr/local/lib/python312.zip
+  /usr/local/lib/python3.12
+  /usr/local/lib/python3.12/lib-dynload
+  /home/juniorsmartins/.local/lib/python3.12/site-packages
+  /usr/local/lib/python3.12/site-packages</msg>
+</errors>
+</robot>
