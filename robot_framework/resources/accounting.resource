@@ -1,14 +1,22 @@
 *** Settings ***
 Library             RequestsLibrary
 Library             String
-Library             FakerLibrary
-Library             cpf_generator.py
 
 *** Keywords ***
 Gerar UUID
-    ${uuid}=        Evaluate        str(uuid.uuid4())       modules=uuid
-    [Return]        ${uuid}
+    ${uuid}         Evaluate        str(uuid.uuid4())               modules=uuid
+    Log             Uuid gerado: ${uuid}
+    [RETURN]        ${uuid}
 
-Gerar UUID
-    ${uuid}=        Evaluate        str(uuid.uuid4())       modules=uuid
-    [Return]        ${uuid}
+Gerar Ano
+    ${ano}          Evaluate        random.randint(1800, 2025)      modules=random
+    Log             Ano gerado: ${ano}
+    [RETURN]        ${ano}
+
+Gerar Cashbook
+    ${ano}          Gerar Ano
+    Log             Ano: ${ano}
+
+
+
+

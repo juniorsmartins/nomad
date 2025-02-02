@@ -4,12 +4,14 @@ Resource        ../../resources/accounting.resource
 *** Variables ***
 
 *** Test Cases ***
-Cenário 1: cadastrar um novo Cashbook com sucesso
+Cenario 0: verificar palavras chaves
     Gerar UUID
+    Gerar Ano
 
-Exemplo de Geração de CPF
-    ${uuid}=    Gerar UUID
-    Log         ${uuid}
+Cenario 1: cadastrar um novo Cashbook com sucesso
+    Gerar Cashbook
+
+
 
 #    Criar um Cashbook novo
     # Cadastrar novo Cashbook
