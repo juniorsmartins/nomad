@@ -1,87 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-02-02T09:46:52.341296" rpa="false" schemaversion="5">
+<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-02-02T10:13:02.953510" rpa="false" schemaversion="5">
 <suite id="s1" name="Post Testes" source="/home/juniorsmartins/workspace/nomad/robot_framework/tests/accounting/post_testes.robot">
 <test id="s1-t1" name="Cenario 0: verificar palavras chaves" line="7">
 <kw name="Gerar UUID" owner="accounting">
 <kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.404635" level="INFO">${uuid} = ece24c44-3286-4518-9939-6421c528a790</msg>
+<msg time="2025-02-02T10:13:03.018361" level="INFO">${uuid} = f3ea76ee-69af-40a6-8048-ff58e48a9acc</msg>
 <var>${uuid}</var>
 <arg>str(uuid.uuid4())</arg>
 <arg>modules=uuid</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.403158" elapsed="0.001504"/>
+<status status="PASS" start="2025-02-02T10:13:03.016785" elapsed="0.001605"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.404873" level="INFO">Uuid gerado: ece24c44-3286-4518-9939-6421c528a790</msg>
+<msg time="2025-02-02T10:13:03.018616" level="INFO">Uuid gerado: f3ea76ee-69af-40a6-8048-ff58e48a9acc</msg>
 <arg>Uuid gerado: ${uuid}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.404763" elapsed="0.000152"/>
+<status status="PASS" start="2025-02-02T10:13:03.018498" elapsed="0.000149"/>
 </kw>
 <return>
 <value>${uuid}</value>
-<status status="PASS" start="2025-02-02T09:46:52.404952" elapsed="0.000029"/>
+<status status="PASS" start="2025-02-02T10:13:03.018688" elapsed="0.000032"/>
 </return>
-<status status="PASS" start="2025-02-02T09:46:52.402817" elapsed="0.002234"/>
+<status status="PASS" start="2025-02-02T10:13:03.016440" elapsed="0.002354"/>
 </kw>
 <kw name="Gerar Ano" owner="accounting">
 <kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.405470" level="INFO">${ano} = 1929</msg>
+<msg time="2025-02-02T10:13:03.019249" level="INFO">${ano} = 1903</msg>
 <var>${ano}</var>
 <arg>random.randint(1800, 2025)</arg>
 <arg>modules=random</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.405318" elapsed="0.000169"/>
+<status status="PASS" start="2025-02-02T10:13:03.019095" elapsed="0.000169"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.405632" level="INFO">Ano gerado: 1929</msg>
+<msg time="2025-02-02T10:13:03.019404" level="INFO">Ano gerado: 1903</msg>
 <arg>Ano gerado: ${ano}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.405554" elapsed="0.000100"/>
+<status status="PASS" start="2025-02-02T10:13:03.019326" elapsed="0.000101"/>
 </kw>
 <return>
 <value>${ano}</value>
-<status status="PASS" start="2025-02-02T09:46:52.405680" elapsed="0.000024"/>
+<status status="PASS" start="2025-02-02T10:13:03.019454" elapsed="0.000023"/>
 </return>
-<status status="PASS" start="2025-02-02T09:46:52.405173" elapsed="0.000588"/>
+<status status="PASS" start="2025-02-02T10:13:03.018943" elapsed="0.000593"/>
 </kw>
-<status status="PASS" start="2025-02-02T09:46:52.402411" elapsed="0.003428"/>
+<status status="PASS" start="2025-02-02T10:13:03.015998" elapsed="0.003618"/>
 </test>
 <test id="s1-t2" name="Cenario 1: cadastrar um novo Cashbook com sucesso" line="11">
 <kw name="Gerar Cashbook" owner="accounting">
 <kw name="Gerar Ano" owner="accounting">
 <kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.406647" level="INFO">${ano} = 1961</msg>
+<msg time="2025-02-02T10:13:03.020327" level="INFO">${ano} = 1847</msg>
 <var>${ano}</var>
 <arg>random.randint(1800, 2025)</arg>
 <arg>modules=random</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.406408" elapsed="0.000256"/>
+<status status="PASS" start="2025-02-02T10:13:03.020190" elapsed="0.000153"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.406812" level="INFO">Ano gerado: 1961</msg>
+<msg time="2025-02-02T10:13:03.020475" level="INFO">Ano gerado: 1847</msg>
 <arg>Ano gerado: ${ano}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.406738" elapsed="0.000095"/>
+<status status="PASS" start="2025-02-02T10:13:03.020404" elapsed="0.000093"/>
 </kw>
 <return>
 <value>${ano}</value>
-<status status="PASS" start="2025-02-02T09:46:52.406858" elapsed="0.000022"/>
+<status status="PASS" start="2025-02-02T10:13:03.020522" elapsed="0.000020"/>
 </return>
-<msg time="2025-02-02T09:46:52.406947" level="INFO">${ano} = 1961</msg>
+<msg time="2025-02-02T10:13:03.020603" level="INFO">${ano} = 1847</msg>
 <var>${ano}</var>
-<status status="PASS" start="2025-02-02T09:46:52.406295" elapsed="0.000663"/>
+<status status="PASS" start="2025-02-02T10:13:03.020079" elapsed="0.000536"/>
+</kw>
+<kw name="Gerar 11 numeros aleatorios" owner="accounting">
+<kw name="Generate Random String" owner="String">
+<msg time="2025-02-02T10:13:03.020958" level="INFO">${numeros} = 43142191033</msg>
+<var>${numeros}</var>
+<arg>length=11</arg>
+<arg>chars=[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<status status="PASS" start="2025-02-02T10:13:03.020807" elapsed="0.000165"/>
 </kw>
 <kw name="Log" owner="BuiltIn">
-<msg time="2025-02-02T09:46:52.407074" level="INFO">Ano: 1961</msg>
-<arg>Ano: ${ano}</arg>
+<msg time="2025-02-02T10:13:03.021121" level="INFO">Números aleatórios: 43142191033</msg>
+<arg>Números aleatórios: ${numeros}</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-02-02T09:46:52.407009" elapsed="0.000085"/>
+<status status="PASS" start="2025-02-02T10:13:03.021037" elapsed="0.000107"/>
 </kw>
-<status status="PASS" start="2025-02-02T09:46:52.406142" elapsed="0.000979"/>
+<return>
+<value>${numeros}</value>
+<status status="PASS" start="2025-02-02T10:13:03.021169" elapsed="0.000017"/>
+</return>
+<msg time="2025-02-02T10:13:03.021248" level="INFO">${numeros} = 43142191033</msg>
+<var>${numeros}</var>
+<status status="PASS" start="2025-02-02T10:13:03.020689" elapsed="0.000570"/>
 </kw>
-<status status="PASS" start="2025-02-02T09:46:52.405957" elapsed="0.001234"/>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-02-02T10:13:03.021548" level="INFO">${body} = {'yearReference': 1847, 'document': '43142191033'}</msg>
+<var>${body}</var>
+<arg>yearReference=${ano}</arg>
+<arg>document=${numeros}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-02-02T10:13:03.021322" elapsed="0.000239"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T10:13:03.021693" level="INFO">{'yearReference': 1847, 'document': '43142191033'}</msg>
+<arg>${body}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T10:13:03.021622" elapsed="0.000093"/>
+</kw>
+<status status="PASS" start="2025-02-02T10:13:03.019931" elapsed="0.001814"/>
+</kw>
+<status status="PASS" start="2025-02-02T10:13:03.019731" elapsed="0.002089"/>
 </test>
-<status status="PASS" start="2025-02-02T09:46:52.341881" elapsed="0.065512"/>
+<status status="PASS" start="2025-02-02T10:13:02.954105" elapsed="0.067945"/>
 </suite>
 <statistics>
 <total>
@@ -94,7 +125,8 @@
 </suite>
 </statistics>
 <errors>
-<msg time="2025-02-02T09:46:52.356182" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 9: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
-<msg time="2025-02-02T09:46:52.356275" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 14: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-02T10:13:02.968729" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 9: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-02T10:13:02.968828" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 14: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-02T10:13:02.968891" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 19: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
 </errors>
 </robot>

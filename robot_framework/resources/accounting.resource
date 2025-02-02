@@ -13,9 +13,16 @@ Gerar Ano
     Log             Ano gerado: ${ano}
     [RETURN]        ${ano}
 
+Gerar 11 numeros aleatorios
+    ${numeros}      Generate Random String  length=11  chars=[NUMBERS]
+    Log             Números aleatórios: ${numeros}
+    [RETURN]        ${numeros}
+
 Gerar Cashbook
-    ${ano}          Gerar Ano
-    Log             Ano: ${ano}
+    ${ano}           Gerar Ano
+    ${numeros}       Gerar 11 numeros aleatorios
+    ${body}          Create Dictionary      yearReference=${ano}  document=${numeros}
+    Log              ${body}
 
 
 

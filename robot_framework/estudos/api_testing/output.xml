@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-02-02T09:56:20.041694" rpa="false" schemaversion="5">
+<suite id="s1" name="Estudo Usuarios" source="/home/juniorsmartins/workspace/nomad/robot_framework/estudos/api_testing/estudo_usuarios.robot">
+<test id="s1-t1" name="Cenário 01: cadastrar um novo usuário com sucesso na ServeRest" line="7">
+<kw name="Criar um usuário novo" owner="estudo_usuarios">
+<kw name="Generate Random String" owner="String">
+<msg time="2025-02-02T09:56:20.104486" level="INFO">${palavra_aleatoria} = EewjHFtnCK</msg>
+<var>${palavra_aleatoria}</var>
+<arg>length=10</arg>
+<arg>chars=[LETTERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<status status="PASS" start="2025-02-02T09:56:20.104286" elapsed="0.000224"/>
+</kw>
+<kw name="Convert To Lower Case" owner="String">
+<msg time="2025-02-02T09:56:20.104700" level="INFO">${palavra_aleatoria_lower} = eewjhftnck</msg>
+<var>${palavra_aleatoria_lower}</var>
+<arg>${palavra_aleatoria}</arg>
+<doc>Converts string to lower case.</doc>
+<status status="PASS" start="2025-02-02T09:56:20.104596" elapsed="0.000119"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-02-02T09:56:20.105195" level="INFO">${EMAIL_TESTE} = eewjhftnck@emailteste.com</msg>
+<arg>${EMAIL_TESTE}</arg>
+<arg>${palavra_aleatoria_lower}@emailteste.com</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-02-02T09:56:20.104787" elapsed="0.000437"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T09:56:20.105370" level="INFO">eewjhftnck@emailteste.com</msg>
+<arg>${EMAIL_TESTE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T09:56:20.105293" elapsed="0.000099"/>
+</kw>
+<status status="PASS" start="2025-02-02T09:56:20.103948" elapsed="0.001482"/>
+</kw>
+<status status="PASS" start="2025-02-02T09:56:20.103514" elapsed="0.002006"/>
+</test>
+<status status="PASS" start="2025-02-02T09:56:20.042292" elapsed="0.063452"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Estudo Usuarios">Estudo Usuarios</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
