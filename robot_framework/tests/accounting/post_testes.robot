@@ -4,12 +4,9 @@ Resource        ../../resources/accounting.resource
 *** Variables ***
 
 *** Test Cases ***
-Cenario 0: verificar palavras chaves
-    Gerar UUID
-    Gerar Ano
-
 Cenario 1: cadastrar um novo Cashbook com sucesso
-    Gerar Cashbook
+    Post de Cashbook em Accounting
+    Conferir sucesso no Post de Cashbook em Accounting
 
 
 

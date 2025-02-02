@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.1.1 (Python 3.12.8 on linux)" generated="2025-02-02T16:32:48.964891" rpa="false" schemaversion="5">
+<suite id="s1" name="Post Testes" source="/home/juniorsmartins/workspace/nomad/robot_framework/tests/accounting/post_testes.robot">
+<test id="s1-t1" name="Cenario 1: cadastrar um novo Cashbook com sucesso" line="7">
+<kw name="Post de Cashbook em Accounting" owner="accounting">
+<kw name="Criar sessão no Accounting" owner="accounting">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.037785" level="INFO">${headers} = {'accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.037501" elapsed="0.000988"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.038853" level="INFO">{'accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<arg>${headers}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.038664" elapsed="0.000300"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-02-02T16:32:49.039304" level="INFO">Creating Session using : alias=Accounting, url=http://localhost:9201/api/v1/accounting, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>alias=Accounting</arg>
+<arg>url=http://localhost:9201/api/v1/accounting</arg>
+<arg>headers=${headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-02-02T16:32:49.039079" elapsed="0.000426"/>
+</kw>
+<status status="PASS" start="2025-02-02T16:32:49.037087" elapsed="0.002510"/>
+</kw>
+<kw name="Gerar body de Cashbook" owner="accounting">
+<kw name="Gerar Ano" owner="accounting">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.040495" level="INFO">${ano} = 1847</msg>
+<var>${ano}</var>
+<arg>random.randint(1800, 2025)</arg>
+<arg>modules=random</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.040246" elapsed="0.000327"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.040815" level="INFO">Ano gerado: 1847</msg>
+<arg>Ano gerado: ${ano}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.040679" elapsed="0.000216"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.041514" level="INFO">${ANO_TESTE} = 1847</msg>
+<arg>${ANO_TESTE}</arg>
+<arg>${ano}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.040998" elapsed="0.000605"/>
+</kw>
+<return>
+<value>${ano}</value>
+<status status="PASS" start="2025-02-02T16:32:49.041673" elapsed="0.000081"/>
+</return>
+<msg time="2025-02-02T16:32:49.041874" level="INFO">${ano} = 1847</msg>
+<var>${ano}</var>
+<status status="PASS" start="2025-02-02T16:32:49.039978" elapsed="0.001951"/>
+</kw>
+<kw name="Gerar 11 numeros aleatorios" owner="accounting">
+<kw name="Generate Random String" owner="String">
+<msg time="2025-02-02T16:32:49.042489" level="INFO">${numeros} = 25048785723</msg>
+<var>${numeros}</var>
+<arg>length=11</arg>
+<arg>chars=[NUMBERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.042269" elapsed="0.000290"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.042792" level="INFO">Números aleatórios: 25048785723</msg>
+<arg>Números aleatórios: ${numeros}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.042658" elapsed="0.000216"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.043369" level="INFO">${NUMEROS_TESTE} = 25048785723</msg>
+<arg>${NUMEROS_TESTE}</arg>
+<arg>${numeros}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.042968" elapsed="0.000488"/>
+</kw>
+<return>
+<value>${numeros}</value>
+<status status="PASS" start="2025-02-02T16:32:49.043569" elapsed="0.000083"/>
+</return>
+<msg time="2025-02-02T16:32:49.043770" level="INFO">${numeros} = 25048785723</msg>
+<var>${numeros}</var>
+<status status="PASS" start="2025-02-02T16:32:49.042064" elapsed="0.001763"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.044146" level="INFO">${body} = {'yearReference': 1847, 'document': '25048785723'}</msg>
+<var>${body}</var>
+<arg>yearReference=${ano}</arg>
+<arg>document=${numeros}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.043933" elapsed="0.000289"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.044446" level="INFO">{'yearReference': 1847, 'document': '25048785723'}</msg>
+<arg>${body}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.044319" elapsed="0.000209"/>
+</kw>
+<return>
+<value>${body}</value>
+<status status="PASS" start="2025-02-02T16:32:49.044589" elapsed="0.000057"/>
+</return>
+<msg time="2025-02-02T16:32:49.044755" level="INFO">${body} = {'yearReference': 1847, 'document': '25048785723'}</msg>
+<var>${body}</var>
+<status status="PASS" start="2025-02-02T16:32:49.039746" elapsed="0.005067"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-02-02T16:32:49.056434" level="INFO">POST Request : url=http://localhost:9201/api/v1/accounting/cashbook 
+ path_url=/api/v1/accounting/cashbook 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '50'} 
+ body=b'{"yearReference": 1847, "document": "25048785723"}' 
+ </msg>
+<msg time="2025-02-02T16:32:49.056779" level="INFO">POST Response : url=http://localhost:9201/api/v1/accounting/cashbook 
+ status=201, reason= 
+ headers={'Location': '/api/v1/accounting/cashbook/7c4cd0fd-de6f-4704-9196-bd3ce8c40d8c', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Sun, 02 Feb 2025 19:32:49 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"cashbookId":"7c4cd0fd-de6f-4704-9196-bd3ce8c40d8c","yearReference":"1847","document":"25048785723"} 
+ </msg>
+<msg time="2025-02-02T16:32:49.057047" level="INFO">${resposta} = &lt;Response [201]&gt;</msg>
+<var>${resposta}</var>
+<arg>alias=Accounting</arg>
+<arg>url=/cashbook</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.044914" elapsed="0.012262"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.058127" level="INFO">{'cashbookId': '7c4cd0fd-de6f-4704-9196-bd3ce8c40d8c', 'yearReference': '1847', 'document': '25048785723'}</msg>
+<arg>${resposta.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.057465" elapsed="0.000857"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.059178" level="INFO">${RESPOSTA} = {'cashbookId': '7c4cd0fd-de6f-4704-9196-bd3ce8c40d8c', 'yearReference': '1847', 'document': '25048785723'}</msg>
+<arg>${RESPOSTA}</arg>
+<arg>${resposta.json()}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.058544" elapsed="0.000818"/>
+</kw>
+<status status="PASS" start="2025-02-02T16:32:49.036751" elapsed="0.022765"/>
+</kw>
+<kw name="Conferir sucesso no Post de Cashbook em Accounting" owner="accounting">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.060589" level="INFO">{'cashbookId': '7c4cd0fd-de6f-4704-9196-bd3ce8c40d8c', 'yearReference': '1847', 'document': '25048785723'}</msg>
+<arg>${RESPOSTA}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.060352" elapsed="0.000429"/>
+</kw>
+<kw name="Convert To String" owner="BuiltIn">
+<msg time="2025-02-02T16:32:49.061111" level="INFO">${ANO_STRING} = 1847</msg>
+<var>${ANO_STRING}</var>
+<arg>${ANO_TESTE}</arg>
+<doc>Converts the given item to a Unicode string.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.060911" elapsed="0.000281"/>
+</kw>
+<kw name="Dictionary Should Contain Item" owner="Collections">
+<arg>${RESPOSTA}</arg>
+<arg>yearReference</arg>
+<arg>${ANO_STRING}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.061297" elapsed="0.000189"/>
+</kw>
+<kw name="Dictionary Should Contain Item" owner="Collections">
+<arg>${RESPOSTA}</arg>
+<arg>document</arg>
+<arg>${NUMEROS_TESTE}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" start="2025-02-02T16:32:49.061587" elapsed="0.000174"/>
+</kw>
+<status status="PASS" start="2025-02-02T16:32:49.059941" elapsed="0.001904"/>
+</kw>
+<status status="PASS" start="2025-02-02T16:32:49.036013" elapsed="0.025992"/>
+</test>
+<status status="PASS" start="2025-02-02T16:32:48.966755" elapsed="0.095761"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Post Testes">Post Testes</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-02-02T16:32:48.979400" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 10: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-02T16:32:48.979528" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 16: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-02T16:32:48.979606" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 22: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2025-02-02T16:32:48.979676" level="WARN">Error in file '/home/juniorsmartins/workspace/nomad/robot_framework/resources/accounting.resource' on line 31: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+</errors>
+</robot>

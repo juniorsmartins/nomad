@@ -1,6 +1,7 @@
 *** Settings ***
 Library        RequestsLibrary
 Library        String
+Library    Collections
 
 *** Keywords ***
 Criar um usuário novo
@@ -33,5 +34,11 @@ Cadastrar o usuário criado na ServeRest
 	...									url=/usuarios
 	...									json=${body}
 	Log								${resposta.json()}
+	Set Test Variable               ${RESPOSTA}  ${resposta.json()}
+
+Conferir se o usuário foi cadastrado corretamente
+    Log                             ${RESPOSTA}
+	Dictionary Should Contain Item  ${RESPOSTA}  message  Cadastro realizado com sucesso
+	Dictionary Should Contain Key   ${RESPOSTA}  _id
 
 
