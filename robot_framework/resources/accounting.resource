@@ -21,9 +21,18 @@ Gerar 11 numeros aleatorios
 Gerar Cashbook
     ${ano}           Gerar Ano
     ${numeros}       Gerar 11 numeros aleatorios
-    ${body}          Create Dictionary      yearReference=${ano}  document=${numeros}
+    ${body}          Create Dictionary
+    ...                 yearReference=${ano}
+    ...                 document=${numeros}
     Log              ${body}
+    [RETURN]         ${body}
 
+Criar sessão no Accounting
+    ${headers}						Create Dictionary
+    ...									accept=application/json
+    ...									Content-Type=application/json
+    Log								${headers}
+    Create Session      alias=Accounting    url=http://localhost:9201/api/v1/accounting    headers=${headers}
 
 
 
