@@ -21,6 +21,9 @@ public interface RegistrationMapperIn {
     @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
     RegistrationDtoResponse toRegistrationDtoResponse(Registration registration);
 
+    @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
+    RegistrationDtoResponse toRegistrationDtoResponse(RegistrationEntity registrationEntity);
+
     RegistrationSearchDtoResponse toRegistrationSearchDtoResponse(RegistrationEntity registrationEntity);
 }
 

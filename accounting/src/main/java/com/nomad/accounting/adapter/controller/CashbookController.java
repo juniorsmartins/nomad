@@ -55,9 +55,9 @@ public class CashbookController {
         log.info("Controller Create iniciado: {}", cashBookCreateDtoRequest);
 
         var response = Optional.ofNullable(cashBookCreateDtoRequest)
-                .map(cashBookMapperIn::toCashBook)
+                .map(cashBookMapperIn::toCashbook)
                 .map(cashBookCreateInputPort::create)
-                .map(cashBookMapperIn::toCashBookCreateDtoResponse)
+                .map(cashBookMapperIn::toCashbookCreateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Create concluído: {}", response);
@@ -73,9 +73,9 @@ public class CashbookController {
         log.info("Controller Update iniciado: {}", cashBookUpdateDtoRequest);
 
         var response = Optional.ofNullable(cashBookUpdateDtoRequest)
-                .map(cashBookMapperIn::toCashBook)
+                .map(cashBookMapperIn::toCashbook)
                 .map(cashBookUpdateInputPort::update)
-                .map(cashBookMapperIn::toCashBookUpdateDtoResponse)
+                .map(cashBookMapperIn::toCashbookUpdateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Update concluído: {}", response);
@@ -92,7 +92,7 @@ public class CashbookController {
         log.info("Controller FindAll acionado com paginação: {}", pagination);
 
         var response = cashBookFindAllOutputPort.findAll(pagination)
-                .map(cashBookMapperIn::toCashBookFindDtoResponse);
+                .map(cashBookMapperIn::toCashbookFindDtoResponse);
 
         log.info("Controller FindAll concluído: {}", response);
 
@@ -108,7 +108,7 @@ public class CashbookController {
 
         var response = Optional.of(id)
                 .map(cashBookFindByIdOutputPort::findById)
-                .map(cashBookMapperIn::toCashBookFindDtoResponse)
+                .map(cashBookMapperIn::toCashbookFindDtoResponse)
                 .orElseThrow();
 
         log.info("Controller FindById concluído: {}", response);
@@ -126,7 +126,7 @@ public class CashbookController {
         log.info("Controller Search acionado: {}", cashBookFilter);
 
         var response = cashBookSearchOutputPort.search(cashBookFilter, pagination)
-            .map(cashBookMapperIn::toCashBookSearchDtoResponse);
+            .map(cashBookMapperIn::toCashbookSearchDtoResponse);
 
         log.info("Controller Search concluído: {}", response);
 

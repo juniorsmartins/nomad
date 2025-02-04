@@ -13,23 +13,23 @@ public interface CashbookMapperIn {
 
     @Mapping(target = "cashbookId", ignore = true)
     @Mapping(target = "registrations", ignore = true)
-    Cashbook toCashBook(CashbookCreateDtoRequest cashBookCreateDtoRequest);
+    Cashbook toCashbook(CashbookCreateDtoRequest cashbookCreateDtoRequest);
 
     @Mapping(target = "registrations", ignore = true)
-    Cashbook toCashBook(CashbookUpdateDtoRequest cashBookUpdateDtoRequest);
+    Cashbook toCashbook(CashbookUpdateDtoRequest cashbookUpdateDtoRequest);
 
-    CashbookDtoResponse toCashBookDtoResponse(Cashbook cashBook);
+    CashbookDtoResponse toCashbookDtoResponse(Cashbook cashbook);
 
-    CashbookDtoResponse toCashBookDtoResponse(CashbookEntity cashBookEntity);
+    CashbookDtoResponse toCashbookDtoResponse(CashbookEntity cashbookEntity);
 
-    CashbookCreateDtoResponse toCashBookCreateDtoResponse(Cashbook cashBook);
+    CashbookCreateDtoResponse toCashbookCreateDtoResponse(Cashbook cashbook);
 
-    CashbookUpdateDtoResponse toCashBookUpdateDtoResponse(Cashbook cashBook);
+    CashbookUpdateDtoResponse toCashbookUpdateDtoResponse(Cashbook cashbook);
 
-    CashbookFindDtoResponse toCashBookFindDtoResponse(CashbookEntity cashBookEntity);
+    CashbookFindDtoResponse toCashbookFindDtoResponse(CashbookEntity cashbookEntity);
 
-    CashbookFindDtoResponse toCashBookFindDtoResponse(Cashbook cashBook);
+    CashbookFindDtoResponse toCashbookFindDtoResponse(Cashbook cashbook);
 
-    CashbookSearchDtoResponse toCashBookSearchDtoResponse(CashbookEntity cashBookEntity);
+    CashbookSearchDtoResponse toCashbookSearchDtoResponse(CashbookEntity cashbookEntity);
 }
 
