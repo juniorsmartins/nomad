@@ -6,12 +6,13 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = "pretty",
+        features = {"src/test/cucumber/tests", "src/test/cucumber/estudos"},
+        glue = {"src/test/cucumber/tests", "src/test/cucumber/estudos"},
         monochrome = true,
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         dryRun = false
 )
-public class Runner {
+public class RunnerTest {
 
 }
 
