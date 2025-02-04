@@ -1,4 +1,4 @@
-package utils;
+package cucumber.utils;
 
 import java.util.Random;
 

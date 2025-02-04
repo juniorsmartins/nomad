@@ -1,10 +1,10 @@
-package cucumber.tests;
+package cucumber.steps;
 
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
-import utils.GenerateCPF;
+import cucumber.utils.GenerateCPF;
 
 import java.time.Year;
 import java.util.concurrent.ThreadLocalRandom;
