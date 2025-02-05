@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CashbookSearchAdapter implements CashbookSearchOutputPort {
 
-    private final CashbookRepository cashBookRepository;
+    private final CashbookRepository cashbookRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -27,9 +27,9 @@ public class CashbookSearchAdapter implements CashbookSearchOutputPort {
         log.info("Adapter Search iniciado: {}", cashBookFilter);
 
         var cashbookSearch = Optional.ofNullable(cashBookFilter)
-            .map(filters -> this.cashBookRepository
-                    .findAll(CashbookFactorySpec.dynamicQuery(filters), pagination))
-            .orElseThrow();
+                .map(filters -> this.cashbookRepository
+                        .findAll(CashbookFactorySpec.dynamicQuery(filters), pagination))
+                .orElseThrow();
 
         log.info("Adapter Search concluído: {}", cashbookSearch);
 

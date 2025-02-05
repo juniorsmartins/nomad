@@ -1,7 +1,7 @@
 package com.nomad.accounting.adapter.repository;
 
 import com.nomad.accounting.adapter.entity.RegistrationEntity;
-import com.nomad.accounting.adapter.mapper.RegistrationMapperOut;
+import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Registration;
 import com.nomad.accounting.application.port.output.RegistrationCreateOutputPort;
 import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
@@ -22,11 +22,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
 
-    private final CashbookRepository cashBookRepository;
+    private final CashbookRepository cashbookRepository;
 
     private final RegistrationRepository registrationRepository;
 
-    private final RegistrationMapperOut registrationMapperOut;
+    private final CentralMapper centralMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     @Modifying
@@ -36,9 +36,9 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
         log.info("Adaptador Create iniciado para cashbookId: {} {}", cashbookId, registration);
 
         var registrationCreated = Optional.of(registration)
-                .map(registrationMapperOut::toRegistrationEntity)
+                .map(centralMapper::toRegistrationEntity)
                 .map(entity -> registrationRepository.save(verifyCashBook(cashbookId, entity)))
-                .map(registrationMapperOut::toRegistration)
+                .map(centralMapper::toRegistration)
                 .orElseThrow();
 
         log.info("Adaptador Create concluído: {}", registrationCreated);
@@ -47,12 +47,12 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
     }
 
     private RegistrationEntity verifyCashBook(UUID cashbookId, RegistrationEntity registrationEntity) {
-        return cashBookRepository.findById(cashbookId)
+        return cashbookRepository.findById(cashbookId)
                 .map(cashBookEntity -> {
                     registrationEntity.setCashbook(cashBookEntity);
                     return registrationEntity;
                 })
-            .orElseThrow(() -> new CashBookNotFoundException(cashbookId));
+                .orElseThrow(() -> new CashBookNotFoundException(cashbookId));
     }
 }
 

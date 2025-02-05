@@ -7,8 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface RegistrationMapperOut {
 
-    RegistrationEntity toRegistrationEntity(Registration registration);
 
-    Registration toRegistration(RegistrationEntity registrationEntity);
 }
 

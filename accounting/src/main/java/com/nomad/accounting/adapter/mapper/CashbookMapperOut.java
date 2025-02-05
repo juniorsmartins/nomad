@@ -7,8 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CashbookMapperOut {
 
-    CashbookEntity toCashBookEntity(Cashbook cashBook);
 
-    Cashbook toCashBook(CashbookEntity cashBookEntity);
 }
 

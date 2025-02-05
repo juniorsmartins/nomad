@@ -4,7 +4,7 @@ import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationFindDtoResponse;
-import com.nomad.accounting.adapter.mapper.RegistrationMapperIn;
+import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.port.input.RegistrationCreateInputPort;
 import com.nomad.accounting.application.port.input.RegistrationDeleteInputPort;
 import com.nomad.accounting.application.port.output.RegistrationFindByIdOutputPort;
@@ -33,18 +33,18 @@ public class RegistrationController {
 
     private final RegistrationDeleteInputPort registrationDeleteInputPort;
 
-    private final RegistrationMapperIn registrationMapperIn;
+    private final CentralMapper centralMapper;
 
     @PostMapping(path = "/{id}")
     public ResponseEntity<RegistrationDtoResponse> create(@PathVariable(name = "id") final UUID cashBookId,
-                                      @RequestBody @Valid RegistrationCreateDtoRequest registrationCreateDtoRequest) {
+                                                          @RequestBody @Valid RegistrationCreateDtoRequest registrationCreateDtoRequest) {
 
         log.info("Controller Create iniciado para cashbookId: {} {}", cashBookId, registrationCreateDtoRequest);
 
         var response = Optional.ofNullable(registrationCreateDtoRequest)
-                .map(registrationMapperIn::toRegistration)
+                .map(centralMapper::toRegistration)
                 .map(registration -> registrationCreateInputPort.create(cashBookId, registration))
-                .map(registrationMapperIn::toRegistrationDtoResponse)
+                .map(centralMapper::toRegistrationDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Create concluído: {}", response);
@@ -61,7 +61,7 @@ public class RegistrationController {
 
         var response = Optional.of(id)
                 .map(registrationFindByIdOutputPort::findById)
-                .map(registrationMapperIn::toRegistrationFindDtoResponse)
+                .map(centralMapper::toRegistrationFindDtoResponse)
                 .orElseThrow();
 
         log.info("Controller FindById concluído: {}", response);
@@ -78,7 +78,9 @@ public class RegistrationController {
 
         Optional.ofNullable(registrationId)
                 .ifPresentOrElse(registrationDeleteInputPort::delete,
-                    () -> {throw new NoSuchElementException();}
+                        () -> {
+                            throw new NoSuchElementException();
+                        }
                 );
 
         log.info("Controller Update concluído: {}", registrationId);

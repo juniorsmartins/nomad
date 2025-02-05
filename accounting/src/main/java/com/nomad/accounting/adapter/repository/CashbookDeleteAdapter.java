@@ -17,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CashbookDeleteAdapter implements CashbookDeleteOutputPort {
 
-    private final CashbookRepository cashBookRepository;
+    private final CashbookRepository cashbookRepository;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     @Modifying
@@ -26,7 +26,7 @@ public class CashbookDeleteAdapter implements CashbookDeleteOutputPort {
 
         log.info("Adapter Delete iniciado: {}", cashBookId);
 
-        cashBookRepository.deleteById(cashBookId);
+        cashbookRepository.deleteById(cashBookId);
 
         log.info("Adapter Delete concluído: {}", cashBookId);
     }

@@ -1,6 +1,6 @@
 package com.nomad.accounting.adapter.repository;
 
-import com.nomad.accounting.adapter.mapper.CashbookMapperOut;
+import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Cashbook;
 import com.nomad.accounting.application.port.output.CashbookUpdadeOutputPort;
 import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
@@ -19,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CashbookUpdateAdapter implements CashbookUpdadeOutputPort {
 
-    private final CashbookRepository cashBookRepository;
+    private final CashbookRepository cashbookRepository;
 
-    private final CashbookMapperOut cashBookMapperOut;
+    private final CentralMapper centralMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     @Modifying
@@ -32,12 +32,12 @@ public class CashbookUpdateAdapter implements CashbookUpdadeOutputPort {
 
         var cashBookId = cashBook.getCashbookId();
 
-        var cashBookUpdated = cashBookRepository.findById(cashBookId)
+        var cashBookUpdated = cashbookRepository.findById(cashBookId)
                 .map(entity -> {
                     BeanUtils.copyProperties(cashBook, entity, "cashbookId");
                     return entity;
                 })
-                .map(cashBookMapperOut::toCashBook)
+                .map(centralMapper::toCashBook)
                 .orElseThrow(() -> new CashBookNotFoundException(cashBookId));
 
         log.info("Adaptador Update concluído: {}", cashBookUpdated);

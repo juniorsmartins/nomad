@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CashbookFindAllAdapter implements CashbookFindAllOutputPort {
 
-    private final CashbookRepository cashBookRepository;
+    private final CashbookRepository cashbookRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -23,7 +23,7 @@ public class CashbookFindAllAdapter implements CashbookFindAllOutputPort {
 
         log.info("Adapter FindAll iniciado com paginação: {}", pagination);
 
-        var cashBookAll = cashBookRepository.findAll(pagination);
+        var cashBookAll = cashbookRepository.findAll(pagination);
 
         log.info("Adapter FindAll concluído: {}", pagination);
 

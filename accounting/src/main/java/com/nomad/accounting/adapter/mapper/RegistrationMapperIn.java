@@ -12,18 +12,5 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface RegistrationMapperIn {
 
-    @Mapping(target = "registrationId", ignore = true)
-    @Mapping(target = "cashbook", ignore = true)
-    Registration toRegistration(RegistrationCreateDtoRequest registrationCreateDtoRequest);
-
-    RegistrationFindDtoResponse toRegistrationFindDtoResponse(RegistrationEntity registrationEntity);
-
-    @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
-    RegistrationDtoResponse toRegistrationDtoResponse(Registration registration);
-
-    @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
-    RegistrationDtoResponse toRegistrationDtoResponse(RegistrationEntity registrationEntity);
-
-    RegistrationSearchDtoResponse toRegistrationSearchDtoResponse(RegistrationEntity registrationEntity);
 }
 

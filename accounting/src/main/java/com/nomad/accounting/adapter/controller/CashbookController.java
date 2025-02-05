@@ -3,8 +3,11 @@ package com.nomad.accounting.adapter.controller;
 import com.nomad.accounting.adapter.dto.filter.CashbookFilter;
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
-import com.nomad.accounting.adapter.dto.out.*;
-import com.nomad.accounting.adapter.mapper.CashbookMapperIn;
+import com.nomad.accounting.adapter.dto.out.CashbookCreateDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashbookFindDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashbookSearchDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashbookUpdateDtoResponse;
+import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.port.input.CashbookCreateInputPort;
 import com.nomad.accounting.application.port.input.CashbookDeleteInputPort;
 import com.nomad.accounting.application.port.input.CashbookUpdateInputPort;
@@ -47,7 +50,7 @@ public class CashbookController {
 
     private final CashbookDeleteInputPort cashBookDeleteInputPort;
 
-    private final CashbookMapperIn cashBookMapperIn;
+    private final CentralMapper centralMapper;
 
     @PostMapping
     public ResponseEntity<CashbookCreateDtoResponse> create(@RequestBody @Valid CashbookCreateDtoRequest cashBookCreateDtoRequest) {
@@ -55,9 +58,9 @@ public class CashbookController {
         log.info("Controller Create iniciado: {}", cashBookCreateDtoRequest);
 
         var response = Optional.ofNullable(cashBookCreateDtoRequest)
-                .map(cashBookMapperIn::toCashbook)
+                .map(centralMapper::toCashbook)
                 .map(cashBookCreateInputPort::create)
-                .map(cashBookMapperIn::toCashbookCreateDtoResponse)
+                .map(centralMapper::toCashbookCreateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Create concluído: {}", response);
@@ -73,9 +76,9 @@ public class CashbookController {
         log.info("Controller Update iniciado: {}", cashBookUpdateDtoRequest);
 
         var response = Optional.ofNullable(cashBookUpdateDtoRequest)
-                .map(cashBookMapperIn::toCashbook)
+                .map(centralMapper::toCashbook)
                 .map(cashBookUpdateInputPort::update)
-                .map(cashBookMapperIn::toCashbookUpdateDtoResponse)
+                .map(centralMapper::toCashbookUpdateDtoResponse)
                 .orElseThrow();
 
         log.info("Controller Update concluído: {}", response);
@@ -87,12 +90,12 @@ public class CashbookController {
 
     @GetMapping
     public ResponseEntity<Page<CashbookFindDtoResponse>> findAll(
-        @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
+            @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = 12) final Pageable pagination) {
 
         log.info("Controller FindAll acionado com paginação: {}", pagination);
 
         var response = cashBookFindAllOutputPort.findAll(pagination)
-                .map(cashBookMapperIn::toCashbookFindDtoResponse);
+                .map(centralMapper::toCashbookFindDtoResponse);
 
         log.info("Controller FindAll concluído: {}", response);
 
@@ -108,7 +111,7 @@ public class CashbookController {
 
         var response = Optional.of(id)
                 .map(cashBookFindByIdOutputPort::findById)
-                .map(cashBookMapperIn::toCashbookFindDtoResponse)
+                .map(centralMapper::toCashbookFindDtoResponse)
                 .orElseThrow();
 
         log.info("Controller FindById concluído: {}", response);
@@ -120,13 +123,12 @@ public class CashbookController {
 
     @GetMapping(path = "/search")
     public ResponseEntity<Page<CashbookSearchDtoResponse>> search(@Valid final CashbookFilter cashBookFilter,
-                                                                  @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
-          final Pageable pagination) {
+                                                                  @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE) final Pageable pagination) {
 
         log.info("Controller Search acionado: {}", cashBookFilter);
 
         var response = cashBookSearchOutputPort.search(cashBookFilter, pagination)
-            .map(cashBookMapperIn::toCashbookSearchDtoResponse);
+                .map(centralMapper::toCashbookSearchDtoResponse);
 
         log.info("Controller Search concluído: {}", response);
 
@@ -142,7 +144,9 @@ public class CashbookController {
 
         Optional.ofNullable(id)
                 .ifPresentOrElse(cashBookDeleteInputPort::delete,
-                        () -> {throw new NoSuchElementException();}
+                        () -> {
+                            throw new NoSuchElementException();
+                        }
                 );
 
         log.info("Controller Delete concluído: {}", id);

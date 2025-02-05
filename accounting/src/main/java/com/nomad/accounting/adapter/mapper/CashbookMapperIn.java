@@ -8,28 +8,10 @@ import com.nomad.accounting.application.core.domain.Cashbook;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+//@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {RegistrationMapperIn.class})
 public interface CashbookMapperIn {
 
-    @Mapping(target = "cashbookId", ignore = true)
-    @Mapping(target = "registrations", ignore = true)
-    Cashbook toCashbook(CashbookCreateDtoRequest cashbookCreateDtoRequest);
 
-    @Mapping(target = "registrations", ignore = true)
-    Cashbook toCashbook(CashbookUpdateDtoRequest cashbookUpdateDtoRequest);
-
-    CashbookDtoResponse toCashbookDtoResponse(Cashbook cashbook);
-
-    CashbookDtoResponse toCashbookDtoResponse(CashbookEntity cashbookEntity);
-
-    CashbookCreateDtoResponse toCashbookCreateDtoResponse(Cashbook cashbook);
-
-    CashbookUpdateDtoResponse toCashbookUpdateDtoResponse(Cashbook cashbook);
-
-    CashbookFindDtoResponse toCashbookFindDtoResponse(CashbookEntity cashbookEntity);
-
-    CashbookFindDtoResponse toCashbookFindDtoResponse(Cashbook cashbook);
-
-    CashbookSearchDtoResponse toCashbookSearchDtoResponse(CashbookEntity cashbookEntity);
 }
 
