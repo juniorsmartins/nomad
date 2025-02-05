@@ -4,15 +4,15 @@ Funcionalidade: Aprender Cucumber
   Eu quero aprender a utilizar Cucumber
   Para que eu possa automatizar critérios de aceitação
 
-Cenário: Deve incrementar contador
-  Dado que o valor do contador é 15
-  Quando eu incrementar em 3
-  Então o valor do contador será 18
+Esquema do Cenário: Deve incrementar contador
+  Dado que o valor do contador é <valor_inicial>
+  Quando eu incrementar em <incremento>
+  Então o valor do contador será <valor_final>
 
-Cenário: Deve incrementar contador
-  Dado que o valor do contador é 123
-  Quando eu incrementar em 35
-  Então o valor do contador será 158
+Exemplos:
+  | valor_inicial | incremento | valor_final |
+  |     15        |     3      |      18     |
+  |     123       |     35     |      158    |
 
 Cenário: Deve calcular atraso na entrega
   Dado que a entrega será dia 24/12/25

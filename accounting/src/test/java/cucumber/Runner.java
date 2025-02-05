@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = {"src/test/resources/features/steps/cashbook_cucumber.feature", "src/test/resources/features/estudos/aprender_cucumber.feature"},
         glue = {"src/test/java/cucumber/steps", "src/test/java/cucumber/estudos"},
-        plugin = "pretty",
+        plugin = {"pretty", "html:src/test/java/cucumber/relatorios", "json:src/test/java/cucumber/relatorios/report.json"},
         monochrome = true,
         snippets = CucumberOptions.SnippetType.UNDERSCORE,
         dryRun = false

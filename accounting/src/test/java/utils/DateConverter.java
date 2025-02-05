@@ -1,4 +1,4 @@
-package cucumber.utils;
+package utils;
 
 import io.cucumber.cucumberexpressions.Transformer;
 
