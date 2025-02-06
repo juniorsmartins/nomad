@@ -7,11 +7,15 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/resources/features/steps", "src/test/resources/features/estudos"},
-        glue = {"src/test/java/cucumber/steps", "src/test/java/cucumber/estudos"},
-        plugin = {"pretty", "html:src/test/java/cucumber/relatorios", "json:src/test/java/cucumber/relatorios/report.json"},
+        glue = {"cucumber.steps", "cucumber.estudos"},
+        plugin = {
+                "pretty",
+                "html:target/cucumber-reports/cucumber.html", // Relatório HTML
+                "json:target/cucumber-reports/cucumber.json" // Relatório JSON
+        },
         monochrome = true,
         snippets = CucumberOptions.SnippetType.UNDERSCORE,
-        dryRun = false
+        dryRun = false // Defina como true para verificar se todos os steps estão implementados sem executar os testes
 )
 public class RunnerTest {
 
