@@ -28,6 +28,7 @@ Gerar body de Cashbook
     ...                 yearReference=${ano}
     ...                 document=${numeros}
     Log              ${body}
+    Set Test Variable   ${BODY_TESTE}   ${body}
     [RETURN]         ${body}
 
 Criar sessão no Accounting
@@ -52,4 +53,10 @@ Conferir sucesso no Post de Cashbook em Accounting
     ${ANO_STRING}=  Convert To String  ${ANO_TESTE}
     Dictionary Should Contain Item  ${RESPOSTA}  yearReference  ${ANO_STRING}
     Dictionary Should Contain Item  ${RESPOSTA}  document  ${NUMEROS_TESTE}
+
+Repetir Post de Cashbook em Accounting
+    Log                         ${BODY_TESTE}
+
+Conferir falha no Post repetido de Cashbook em Accounting
+    Log                         ${BODY_TESTE}
 

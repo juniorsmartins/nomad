@@ -8,11 +8,11 @@ Cenario 1: cadastrar um novo Cashbook com sucesso
     Post de Cashbook em Accounting
     Conferir sucesso no Post de Cashbook em Accounting
 
-
-
-#    Criar um Cashbook novo
-    # Cadastrar novo Cashbook
-    # Conferir se novo Cashbook foi cadastrado corretamente
+Cenário 2: cadastrar um Cashbook existente com falha
+    Post de Cashbook em Accounting
+    Conferir sucesso no Post de Cashbook em Accounting
+    Repetir Post de Cashbook em Accounting
+    Conferir falha no Post repetido de Cashbook em Accounting
 
 # Cenário 2: atualizar um Cashbook com sucesso
 
