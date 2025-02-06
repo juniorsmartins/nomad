@@ -71,5 +71,13 @@ Consultar cadastro de Cashbook por Id em Accounting
     ...                            expected_status=${status_code_desejado}
     Log                         ${resposta_consulta}
     Log                         ${resposta_consulta.json()}
+    Set Test Variable           ${RESP_CONSULTA}    ${resposta_consulta.json()}
+
+Conferir dados retornados do Get de Cashbook em Accounting
+    Log                                 ${RESP_CONSULTA}
+    ${ANO_STRING}=  Convert To String  ${ANO_TESTE}
+    Dictionary Should Contain Item      ${RESP_CONSULTA}    cashbookId      ${RESPOSTA["cashbookId"]}
+    Dictionary Should Contain Item      ${RESP_CONSULTA}    yearReference   ${ANO_STRING}
+    Dictionary Should Contain Item      ${RESP_CONSULTA}    document        ${NUMEROS_TESTE}
 
 

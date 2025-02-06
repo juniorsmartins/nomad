@@ -21,7 +21,7 @@ Cenário 3: consultar um Cashbook por Id com sucesso
     Post de Cashbook em Accounting	                       status_code_desejado=201
     Conferir sucesso no Post de Cashbook em Accounting
     Consultar cadastro de Cashbook por Id em Accounting    status_code_desejado=200
-#    Conferir dados retornados do cadastro de Cashbook em Accounting
+    Conferir dados retornados do Get de Cashbook em Accounting
 
 
 # Cenário 4: atualizar um Cashbook com sucesso
