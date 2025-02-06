@@ -63,10 +63,12 @@ Conferir falha no Post repetido de Cashbook em Accounting
     Log                             ${RESPOSTA}
     Dictionary Should Contain Item  ${RESPOSTA}     error   Internal Server Error
 
-Consultar cadastro de Cashbook em Accounting
+Consultar cadastro de Cashbook por Id em Accounting
+    [Arguments]                 ${status_code_desejado}
     ${resposta_consulta}        GET On Session
     ...                            alias=Accounting
     ...                            url=/cashbook/${RESPOSTA["cashbookId"]}
+    ...                            expected_status=${status_code_desejado}
     Log                         ${resposta_consulta}
     Log                         ${resposta_consulta.json()}
 

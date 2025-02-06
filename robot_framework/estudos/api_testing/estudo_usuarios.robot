@@ -20,6 +20,6 @@ Cenário 03: consultar os dados de um novo usuário
     Criar um usuário novo
     Cadastrar o usuário criado na ServeRest	    status_code_desejado=201
     Conferir se o usuário foi cadastrado corretamente
-    Consultar cadastro do novo usuário
-#    Conferir os dados retornados
+    Consultar cadastro do novo usuário          status_code_desejado=200
+    Conferir os dados retornados
 

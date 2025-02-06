@@ -51,10 +51,18 @@ Verificar se a aplicação não permitiu o cadastro repetido
 	Dictionary Should Contain Item	${RESPOSTA}  message  Este email já está sendo usado
 
 Consultar cadastro do novo usuário
+	[Arguments]						${status_code_desejado}
 	${resposta_consulta}			GET On Session
 	...									alias=ServeRest
 	...									url=/usuarios/${RESPOSTA["_id"]}
+	...									expected_status=${status_code_desejado}
 	Log									${resposta_consulta}
+	Set Test Variable				${RESP_CONSULTA}  ${resposta_consulta.json()}
 
-#Conferir os dados retornados
-
+Conferir os dados retornados
+	Log								${RESP_CONSULTA}
+	Dictionary Should Contain Item	${RESP_CONSULTA}	nome			Fulano da Silva
+	Dictionary Should Contain Item	${RESP_CONSULTA}	email			${EMAIL_TESTE}
+	Dictionary Should Contain Item	${RESP_CONSULTA}	password		1234
+	Dictionary Should Contain Item	${RESP_CONSULTA}	administrador	true
+	Dictionary Should Contain Item	${RESP_CONSULTA}	_id				${RESPOSTA["_id"]}
