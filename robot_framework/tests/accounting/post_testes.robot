@@ -5,11 +5,13 @@ Resource        ../../resources/accounting.resource
 
 *** Test Cases ***
 Cenario 1: cadastrar um novo Cashbook com sucesso
-    Post de Cashbook em Accounting
+    Gerar body de Cashbook
+    Post de Cashbook em Accounting      status_code_desejado=201
     Conferir sucesso no Post de Cashbook em Accounting
 
 Cenário 2: cadastrar um Cashbook existente com falha
-    Post de Cashbook em Accounting
+    Gerar body de Cashbook
+    Post de Cashbook em Accounting      status_code_desejado=201
     Conferir sucesso no Post de Cashbook em Accounting
     Repetir Post de Cashbook em Accounting
     Conferir falha no Post repetido de Cashbook em Accounting

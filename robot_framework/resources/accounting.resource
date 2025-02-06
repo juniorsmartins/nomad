@@ -7,19 +7,19 @@ Library    Collections
 Gerar UUID
     ${uuid}         Evaluate        str(uuid.uuid4())               modules=uuid
     Log             Uuid gerado: ${uuid}
-    [RETURN]        ${uuid}
+    RETURN          ${uuid}
 
 Gerar Ano
     ${ano}          Evaluate        random.randint(1800, 2025)      modules=random
     Log             Ano gerado: ${ano}
     Set Test Variable    ${ANO_TESTE}  ${ano}
-    [RETURN]        ${ano}
+    RETURN          ${ano}
 
 Gerar 11 numeros aleatorios
     ${numeros}      Generate Random String  length=11  chars=[NUMBERS]
     Log             Números aleatórios: ${numeros}
     Set Test Variable    ${NUMEROS_TESTE}  ${numeros} 
-    [RETURN]        ${numeros}
+    RETURN          ${numeros}
 
 Gerar body de Cashbook
     ${ano}           Gerar Ano
@@ -29,7 +29,7 @@ Gerar body de Cashbook
     ...                 document=${numeros}
     Log              ${body}
     Set Test Variable   ${BODY_TESTE}   ${body}
-    [RETURN]         ${body}
+    RETURN           ${body}
 
 Criar sessão no Accounting
     ${headers}					Create Dictionary
@@ -39,12 +39,13 @@ Criar sessão no Accounting
     Create Session              alias=Accounting    url=http://localhost:9201/api/v1/accounting    headers=${headers}
 
 Post de Cashbook em Accounting
+    [Arguments]                 ${status_code_desejado}
     Criar sessão no Accounting
-    ${body}                     Gerar body de Cashbook
     ${resposta}                 Post On Session
     ...                            alias=Accounting
     ...                            url=/cashbook
-    ...                            json=${body}
+    ...                            json=${BODY_TESTE}
+    ...                            expected_status=${status_code_desejado}
     Log                         ${resposta.json()}
     Set Test Variable           ${RESPOSTA}  ${resposta.json()}
 
@@ -56,6 +57,7 @@ Conferir sucesso no Post de Cashbook em Accounting
 
 Repetir Post de Cashbook em Accounting
     Log                         ${BODY_TESTE}
+    Post de Cashbook em Accounting      status_code_desejado=500
 
 Conferir falha no Post repetido de Cashbook em Accounting
     Log                         ${BODY_TESTE}

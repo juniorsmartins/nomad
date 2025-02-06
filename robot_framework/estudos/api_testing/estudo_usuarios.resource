@@ -25,7 +25,7 @@ Criar body para ServeRest usuarios
 	...									password=1234
 	...									administrador=true
 	Log 							${body}
-	[RETURN]						${body}
+	RETURN		   				    ${body}
 
 Cadastrar o usuário criado na ServeRest
 	[Arguments]						${status_code_desejado}
