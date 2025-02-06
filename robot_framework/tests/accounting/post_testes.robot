@@ -16,7 +16,7 @@ Cenário 2: cadastrar um Cashbook existente com falha
     Repetir Post de Cashbook em Accounting
     Conferir falha no Post repetido de Cashbook em Accounting
 
-Cenário 3: consultar um Cashbook por Id com sucesso
+Cenário 3: consultar um Cashbook por id com sucesso
     Gerar body de Cashbook
     Post de Cashbook em Accounting	                       status_code_desejado=201
     Conferir sucesso no Post de Cashbook em Accounting
