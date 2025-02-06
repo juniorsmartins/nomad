@@ -60,12 +60,21 @@ Consultar cadastro do novo usuário
 	...									url=/usuarios/${ID_USUARIO}
 	...									expected_status=${status_code_desejado}
 	Log									${resposta_consulta}
-	Set Test Variable				${RESP_CONSULTA}  ${resposta_consulta.json()}
+	Set Test Variable					${RESP_CONSULTA}  ${resposta_consulta}
+	Set Test Variable					${RESP_CONSULTA_JSON}  ${resposta_consulta.json()}
 
 Conferir os dados retornados
-	Log								${RESP_CONSULTA}
-	Dictionary Should Contain Item	${RESP_CONSULTA}	nome			Fulano da Silva
-	Dictionary Should Contain Item	${RESP_CONSULTA}	email			${EMAIL_TESTE}
-	Dictionary Should Contain Item	${RESP_CONSULTA}	password		1234
-	Dictionary Should Contain Item	${RESP_CONSULTA}	administrador	true
-	Dictionary Should Contain Item	${RESP_CONSULTA}	_id				${RESPOSTA["_id"]}
+	Log								${RESP_CONSULTA.status_code}
+	Log								${RESP_CONSULTA.reason}
+	Log								${RESP_CONSULTA.content}
+	Log								${RESP_CONSULTA.headers}
+	Log								${RESP_CONSULTA.elapsed}
+	Log								${RESP_CONSULTA_JSON}
+	Dictionary Should Contain Item	${RESP_CONSULTA_JSON}	nome			Fulano da Silva
+	Dictionary Should Contain Item	${RESP_CONSULTA_JSON}	email			${EMAIL_TESTE}
+	Dictionary Should Contain Item	${RESP_CONSULTA_JSON}	password		1234
+	Dictionary Should Contain Item	${RESP_CONSULTA_JSON}	administrador	true
+	Dictionary Should Contain Item	${RESP_CONSULTA_JSON}	_id				${RESPOSTA["_id"]}
+
+
+
