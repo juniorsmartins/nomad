@@ -47,7 +47,7 @@ Conferir se o usuário foi cadastrado corretamente
 Repetir o cadastro do usuário na ServeRest
 	Cadastrar o usuário criado na ServeRest		status_code_desejado=400
 
-#Verificar se a API não permitiu o cadastro repetido
-
+Verificar se a API não permitiu o cadastro repetido
+	Dictionary Should Contain Item	${RESPOSTA}  message  Este email já está sendo usado
 
 

@@ -60,5 +60,6 @@ Repetir Post de Cashbook em Accounting
     Post de Cashbook em Accounting      status_code_desejado=500
 
 Conferir falha no Post repetido de Cashbook em Accounting
-    Log                         ${BODY_TESTE}
+    Log                             ${RESPOSTA}
+    Dictionary Should Contain Item  ${RESPOSTA}     error   Internal Server Error
 
