@@ -37,6 +37,9 @@ Cadastrar o usuário criado na ServeRest
 	...									json=${body}
 	...									expected_status=${status_code_desejado}
 	Log								${resposta.json()}
+	IF  ${resposta.status_code} == 201
+		Set Test Variable			${ID_USUARIO}  ${resposta.json()["_id"]}
+	END
 	Set Test Variable               ${RESPOSTA}  ${resposta.json()}
 
 Conferir se o usuário foi cadastrado corretamente
@@ -54,7 +57,7 @@ Consultar cadastro do novo usuário
 	[Arguments]						${status_code_desejado}
 	${resposta_consulta}			GET On Session
 	...									alias=ServeRest
-	...									url=/usuarios/${RESPOSTA["_id"]}
+	...									url=/usuarios/${ID_USUARIO}
 	...									expected_status=${status_code_desejado}
 	Log									${resposta_consulta}
 	Set Test Variable				${RESP_CONSULTA}  ${resposta_consulta.json()}
