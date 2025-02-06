@@ -1,7 +1,7 @@
 *** Settings ***
 Library             RequestsLibrary
 Library             String
-Library    Collections
+Library             Collections
 
 *** Keywords ***
 Gerar UUID
@@ -62,4 +62,12 @@ Repetir Post de Cashbook em Accounting
 Conferir falha no Post repetido de Cashbook em Accounting
     Log                             ${RESPOSTA}
     Dictionary Should Contain Item  ${RESPOSTA}     error   Internal Server Error
+
+Consultar cadastro de Cashbook em Accounting
+    ${resposta_consulta}        GET On Session
+    ...                            alias=Accounting
+    ...                            url=/cashbook/${RESPOSTA["cashbookId"]}
+    Log                         ${resposta_consulta}
+    Log                         ${resposta_consulta.json()}
+
 

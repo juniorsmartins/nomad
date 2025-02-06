@@ -31,7 +31,7 @@ Cadastrar o usuário criado na ServeRest
 	[Arguments]						${status_code_desejado}
 	Criar sessão na ServeRest
 	${body}							Criar body para ServeRest usuarios	email=${EMAIL_TESTE}
-	${resposta}						Post On Session
+	${resposta}						POST On Session
 	...									alias=ServeRest
 	...									url=/usuarios
 	...									json=${body}
@@ -47,7 +47,14 @@ Conferir se o usuário foi cadastrado corretamente
 Repetir o cadastro do usuário na ServeRest
 	Cadastrar o usuário criado na ServeRest		status_code_desejado=400
 
-Verificar se a API não permitiu o cadastro repetido
+Verificar se a aplicação não permitiu o cadastro repetido
 	Dictionary Should Contain Item	${RESPOSTA}  message  Este email já está sendo usado
 
+Consultar cadastro do novo usuário
+	${resposta_consulta}			GET On Session
+	...									alias=ServeRest
+	...									url=/usuarios/${RESPOSTA["_id"]}
+	Log									${resposta_consulta}
+
+#Conferir os dados retornados
 

@@ -14,6 +14,12 @@ Cenário 02: cadastrar um usuário já existente
     Cadastrar o usuário criado na ServeRest     status_code_desejado=201
     Conferir se o usuário foi cadastrado corretamente
     Repetir o cadastro do usuário na ServeRest
-    Verificar se a API não permitiu o cadastro repetido
+    Verificar se a aplicação não permitiu o cadastro repetido
 
+Cenário 03: consultar os dados de um novo usuário
+    Criar um usuário novo
+    Cadastrar o usuário criado na ServeRest	    status_code_desejado=201
+    Conferir se o usuário foi cadastrado corretamente
+    Consultar cadastro do novo usuário
+#    Conferir os dados retornados
 
