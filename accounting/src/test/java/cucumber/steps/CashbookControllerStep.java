@@ -3,7 +3,6 @@ package cucumber.steps;
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
-import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -29,7 +28,7 @@ public class CashbookControllerStep {
 
     @Quando("a requisição Post for feita no método create")
     public void a_requisição_post_for_feita_no_método_create() {
-        throw new io.cucumber.java.PendingException();
+
     }
 
     @Entao("receberei uma ResponseEntity com HTTP {int}")

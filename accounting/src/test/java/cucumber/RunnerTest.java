@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         },
         monochrome = true,
         snippets = CucumberOptions.SnippetType.UNDERSCORE,
-        dryRun = false // Defina como true para verificar se todos os steps estão implementados sem executar os testes
+        dryRun = false // Defina como true para verificar se todos os steps estão implementados sem executar os testes  
 )
 public class RunnerTest {
 

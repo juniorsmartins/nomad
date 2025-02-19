@@ -62,6 +62,11 @@ dependencies {
 	testImplementation 'io.cucumber:cucumber-junit:7.21.0'
 
 	// Tests
+	testImplementation 'org.testcontainers:testcontainers:1.20.4'
+//	testImplementation 'org.testcontainers:junit-jupiter:1.20.4'
+	testImplementation 'org.testcontainers:postgresql:1.20.4'
+
+	testImplementation 'io.rest-assured:rest-assured:5.5.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
