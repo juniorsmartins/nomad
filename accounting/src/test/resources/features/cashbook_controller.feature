@@ -8,13 +8,13 @@ Funcionalidade: testar operações CRUD do CashbookController
     Dado um ambiente de teste de Accounting ativado
 
     Cenario: Post para criar Cashbook com sucesso
-      E uma requisicao Post com CashbookCreateDtoRequest valido, com ano 1950 e documento "47361120008"
+      Dado uma requisicao Post com CashbookCreateDtoRequest valido, com ano 1950 e documento "47361120008"
       Quando a requisicao Post for feita no metodo create
       Entao receberei uma ResponseEntity com HTTP 201
       E com um CashbookDtoResponse no body, com id e ano 1950 e documento "47361120008"
 
     Cenario: Get para listar Cashbooks, sem registrations, com sucesso
-      E tendo cadastros de Cashbook, sem registrations, disponíveis na massa de dados
+      Dado tendo cadastros de Cashbook, sem registrations, disponíveis na massa de dados
         |   yearReference   |     document      |
         |       1988        |   94090259070     |
         |       2001        |   04623846083     |
