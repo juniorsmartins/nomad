@@ -60,12 +60,16 @@ dependencies {
 	// Tests - Cucumber
 	implementation 'io.cucumber:cucumber-java:7.21.0'
 	testImplementation 'io.cucumber:cucumber-junit:7.21.0'
+	testImplementation 'io.cucumber:cucumber-spring:7.21.0'
 
-	// Tests
-	testImplementation 'org.testcontainers:testcontainers:1.20.4'
-//	testImplementation 'org.testcontainers:junit-jupiter:1.20.4'
-	testImplementation 'org.testcontainers:postgresql:1.20.4'
+	// ---------- TESTES ----------
+	// Test - ambiente de banco de dados
+	testImplementation 'com.h2database:h2:2.3.232'
+//	testImplementation 'org.testcontainers:testcontainers:1.20.5'
+//	testImplementation 'org.testcontainers:junit-jupiter:1.20.5'
+//	testImplementation 'org.testcontainers:postgresql:1.20.5'
 
+	// Test
 	testImplementation 'io.rest-assured:rest-assured:5.5.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

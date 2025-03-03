@@ -1,13 +1,13 @@
-package cucumber;
-
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features/steps", "src/test/resources/features/estudos"},
-        glue = {"cucumber.steps", "cucumber.estudos"},
+        features = {"src/test/resources/features"},
+        glue = {"cucumber.config",
+                "cucumber.steps",
+                "cucumber.estudos"},
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber.html", // Relatório HTML
