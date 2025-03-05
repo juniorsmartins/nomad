@@ -13,14 +13,15 @@ Funcionalidade: testar operações CRUD do CashbookController
       Entao receberei uma ResponseEntity com HTTP 201
       E com um CashbookDtoResponse no body, com id e ano 1950 e documento "47361120008"
 
-    Cenario: Get para listar Cashbooks, sem registrations, com sucesso
+    Cenario: Get para consultar Cashbook com sucesso
       Dado tendo cadastros de Cashbook, sem registrations, disponíveis na massa de dados
         |   yearReference   |     document      |
         |       1988        |   94090259070     |
         |       2001        |   04623846083     |
         |       1997        |   59022664082     |
-      Quando uma requisição Get válida for feita para o método findAll
+      Dado um UUID referente ao ano 2001 e o documento "04623846083"
+      Quando uma requisição Get válida for feita para o método findById
       Entao receberei uma ResponseEntity com HTTP 200
-      E uma página com CashbookFindDtoResponse no body
+      E com um CashbookDtoResponse no body, com id e ano 2001 e documento "04623846083"
 
 

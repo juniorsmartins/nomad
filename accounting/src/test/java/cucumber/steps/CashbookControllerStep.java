@@ -4,7 +4,6 @@ import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.adapter.repository.CashbookRepository;
-import com.nomad.accounting.application.core.domain.Cashbook;
 import cucumber.config.ConstantsTest;
 import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
@@ -41,6 +40,8 @@ public class CashbookControllerStep {
     private CashbookCreateDtoRequest cashbookCreateDtoRequest;
 
     private Response response;
+
+    private CashbookEntity cashbookEntity;
 
     @Before
     public void setUp() {
@@ -113,21 +114,20 @@ public class CashbookControllerStep {
         assertThat(cashbookRepository.count()).isEqualTo(cashbooksData.size());
     }
 
-    @Quando("uma requisição Get válida for feita para o método findAll")
-    public void uma_requisicao_get_valida_for_feita_para_o_metodo_find_all() {
+    @Dado("um UUID referente ao ano {int} e o documento {string}")
+    public void um_uuid_referente_ao_ano_e_o_documento(Integer ano, String documento) {
+        cashbookEntity = cashbookRepository.findByYearReferenceAndDocument(Year.of(ano), documento).get();
+    }
+
+    @Quando("uma requisição Get válida for feita para o método findById")
+    public void uma_requisicao_get_valida_for_feita_para_o_metodo_find_by_id() {
         response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
                 .when()
-                    .get();
+                    .get("/" + cashbookEntity.getCashbookId());
 
         assertThat(response).isNotNull();
-    }
-
-    @Entao("uma página com CashbookFindDtoResponse no body")
-    public void uma_pagina_com_cashbook_find_dto_response_no_body() {
-
-
     }
 }
 
