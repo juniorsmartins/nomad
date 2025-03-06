@@ -17,6 +17,8 @@ public record CashbookDtoResponse(
 
         String document,
 
-        List<RegistrationDtoResponse> registrations
+        List<RegistrationDtoResponse> registrations,
+
+        List<InvestmentDtoResponse> investments
 ) { }
 

@@ -18,7 +18,7 @@ public class Registration {
 
     private UUID registrationId;
 
-    private CashbookEntity cashbook;
+    private Cashbook cashbook;
 
     private String description;
 

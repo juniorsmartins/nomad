@@ -42,14 +42,16 @@ public final class InvestmentEntity implements Serializable {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
+    @Column(name = "type_action", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeActionEnum typeActionEnum;
 
     @Column(name = "date_operation", nullable = false)
     private LocalDate dateOperation;
 
+    @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
-    private CategoryEnum category;
+    private CategoryEnum categoryEnum;
 
     @Column(name = "supplier", length = MAX_CARACTER_SUPPLIER, nullable = false)
     private String supplier;
