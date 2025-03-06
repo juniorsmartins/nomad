@@ -2,9 +2,7 @@ package com.nomad.accounting.adapter.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
-import com.nomad.accounting.application.core.domain.enums.CostCenter;
 import com.nomad.accounting.application.core.domain.enums.TypeActionEnum;
-import com.nomad.accounting.application.core.domain.enums.TypeOperation;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

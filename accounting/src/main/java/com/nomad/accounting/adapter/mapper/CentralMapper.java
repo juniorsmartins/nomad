@@ -5,8 +5,10 @@ import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.*;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
+import com.nomad.accounting.adapter.entity.InvestmentEntity;
 import com.nomad.accounting.adapter.entity.RegistrationEntity;
 import com.nomad.accounting.application.core.domain.Cashbook;
+import com.nomad.accounting.application.core.domain.Investment;
 import com.nomad.accounting.application.core.domain.Registration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,9 +18,11 @@ public interface CentralMapper {
 
     @Mapping(target = "cashbookId", ignore = true)
     @Mapping(target = "registrations", ignore = true)
+    @Mapping(target = "investments", ignore = true)
     Cashbook toCashbook(CashbookCreateDtoRequest cashbookCreateDtoRequest);
 
     @Mapping(target = "registrations", ignore = true)
+    @Mapping(target = "investments", ignore = true)
     Cashbook toCashbook(CashbookUpdateDtoRequest cashbookUpdateDtoRequest);
 
     CashbookDtoResponse toCashbookDtoResponse(Cashbook cashbook);
@@ -56,5 +60,15 @@ public interface CentralMapper {
     RegistrationEntity toRegistrationEntity(Registration registration);
 
     Registration toRegistration(RegistrationEntity registrationEntity);
+
+    @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
+    InvestmentDtoResponse toInvestmentDtoResponse(Investment investment);
+
+    @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
+    InvestmentDtoResponse toInvestmentDtoResponse(InvestmentEntity investmentEntity);
+
+    InvestmentEntity toInvestmentEntity(Investment investment);
+
+    Investment toInvestment(InvestmentEntity investmentEntity);
 }
 

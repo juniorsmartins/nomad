@@ -1,7 +1,7 @@
 package com.nomad.accounting.adapter.entity;
 
-import com.nomad.accounting.application.core.domain.enums.CostCenter;
-import com.nomad.accounting.application.core.domain.enums.TypeOperation;
+import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -44,14 +44,14 @@ public final class RegistrationEntity implements Serializable {
 
     @Column(name = "type_operation", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TypeOperation typeOperation;
+    private TypeOperationEnum typeOperationEnum;
 
     @Column(name = "date_operation", nullable = false)
     private LocalDate dateOperation;
 
     @Column(name = "cost_center", nullable = false)
     @Enumerated(EnumType.STRING)
-    private CostCenter costCenter;
+    private CostCenterEnum costCenterEnum;
 
     @Column(name = "supplier", length = MAX_CARACTER_SUPPLIER, nullable = false)
     private String supplier;

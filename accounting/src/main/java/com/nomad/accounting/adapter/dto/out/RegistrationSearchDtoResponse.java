@@ -1,8 +1,8 @@
 package com.nomad.accounting.adapter.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nomad.accounting.application.core.domain.enums.CostCenter;
-import com.nomad.accounting.application.core.domain.enums.TypeOperation;
+import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,11 +17,11 @@ public record RegistrationSearchDtoResponse(
 
         BigDecimal amount,
 
-        TypeOperation typeOperation,
+        TypeOperationEnum typeOperationEnum,
 
         LocalDate dateOperation,
 
-        CostCenter costCenter,
+        CostCenterEnum costCenterEnum,
 
         String supplier
 ) { }

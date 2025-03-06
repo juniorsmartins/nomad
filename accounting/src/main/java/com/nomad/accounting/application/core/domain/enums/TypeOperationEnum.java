@@ -3,7 +3,7 @@ package com.nomad.accounting.application.core.domain.enums;
 import lombok.Getter;
 
 @Getter
-public enum TypeOperation {
+public enum TypeOperationEnum {
 
     INPUT("INPUT"),
     OUTPUT("OUTPUT"),
@@ -13,7 +13,7 @@ public enum TypeOperation {
 
     private final String value;
 
-    TypeOperation(String value) {
+    TypeOperationEnum(String value) {
         this.value = value;
     }
 }

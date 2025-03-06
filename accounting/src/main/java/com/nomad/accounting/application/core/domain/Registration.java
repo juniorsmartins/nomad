@@ -1,8 +1,8 @@
 package com.nomad.accounting.application.core.domain;
 
 import com.nomad.accounting.adapter.entity.CashbookEntity;
-import com.nomad.accounting.application.core.domain.enums.CostCenter;
-import com.nomad.accounting.application.core.domain.enums.TypeOperation;
+import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,17 +18,17 @@ public class Registration {
 
     private UUID registrationId;
 
-    private Cashbook cashbook;
+    private CashbookEntity cashbook;
 
     private String description;
 
     private BigDecimal amount;
 
-    private TypeOperation typeOperation;
+    private TypeOperationEnum typeOperationEnum;
 
     private LocalDate dateOperation;
 
-    private CostCenter costCenter;
+    private CostCenterEnum costCenterEnum;
 
     private String supplier;
 }

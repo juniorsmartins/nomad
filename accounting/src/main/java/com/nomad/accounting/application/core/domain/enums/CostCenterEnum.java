@@ -3,7 +3,7 @@ package com.nomad.accounting.application.core.domain.enums;
 import lombok.Getter;
 
 @Getter
-public enum CostCenter {
+public enum CostCenterEnum {
 
     BANKING("BANKING"),
     BARBERSHOP("BARBERSHOP"),
@@ -33,7 +33,7 @@ public enum CostCenter {
 
     private final String value;
 
-    CostCenter(String value) {
+    CostCenterEnum(String value) {
         this.value = value;
     }
 }
