@@ -21,7 +21,9 @@ import javax.sql.DataSource;
 import java.time.Year;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CashbookControllerStep {
@@ -42,6 +44,8 @@ public class CashbookControllerStep {
     private CashbookCreateDtoRequest cashbookCreateDtoRequest;
 
     private CashbookEntity cashbookEntity;
+
+    private UUID idCashbook;
 
     @Before
     public void setUp() {
@@ -66,8 +70,8 @@ public class CashbookControllerStep {
         assertThat(cashbookCreateDtoRequest).isNotNull();
     }
 
-    @Quando("a requisicao Post for feita no metodo create")
-    public void a_requisicao_post_for_feita_no_metodo_create() {
+    @Quando("a requisicao Post for feita no metodo create do CashbookController")
+    public void a_requisicao_post_for_feita_no_metodo_create_do_cashbookcontroller() {
         response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
@@ -78,8 +82,8 @@ public class CashbookControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("receberei uma ResponseEntity com HTTP {int}")
-    public void receberei_uma_response_entity_com_http(Integer status) {
+    @Entao("receberei do CashbookController uma ResponseEntity com HTTP {int}")
+    public void receberei_do_cashbookcontroller_uma_response_entity_com_http(Integer status) {
         org.junit.jupiter.api.Assertions.assertEquals(status, response.getStatusCode());
     }
 
@@ -119,8 +123,8 @@ public class CashbookControllerStep {
         cashbookEntity = cashbookRepository.findByYearReferenceAndDocument(Year.of(ano), documento).get();
     }
 
-    @Quando("uma requisição Get válida for feita para o método findById")
-    public void uma_requisicao_get_valida_for_feita_para_o_metodo_find_by_id() {
+    @Quando("uma requisição Get for feita no método findById do CashbookController")
+    public void uma_requisicao_get_for_feita_no_metodo_find_by_id_do_cashbookcontroller() {
         response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
@@ -128,6 +132,31 @@ public class CashbookControllerStep {
                     .get("/" + cashbookEntity.getCashbookId());
 
         assertThat(response).isNotNull();
+    }
+
+    @Dado("um UUID de Cashbook, com ano {int} e document {string}")
+    public void um_uuid_de_cashbook_com_ano_e_document(Integer yearReference, String document) {
+        idCashbook = cashbookRepository.findByYearReferenceAndDocument(Year.of(yearReference), document)
+                .get().getCashbookId();
+
+        assertThat(idCashbook).isNotNull();
+    }
+
+    @Quando("a requisição Delete for feita no método delete do CashbookController")
+    public void a_requisição_delete_for_feita_no_método_delete_do_cashbook_controller() {
+        response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(ConstantsTest.CONTENT_TYPE_JSON)
+                .when()
+                    .delete("/" + idCashbook);
+
+        assertThat(response).isNotNull();
+    }
+
+    @Entao("o Cashbook terá sido apagado do banco de dados")
+    public void o_cashbook_terá_sido_apagado_do_banco_de_dados() {
+        var cashbookEntity = cashbookRepository.findById(idCashbook);
+        assertThat(cashbookEntity).isEmpty();
     }
 }
 

@@ -6,22 +6,26 @@ Funcionalidade: testar operações CRUD do CashbookController
 
   Contexto:
     Dado um ambiente de teste de Accounting ativado
+    Dado cadastros de Cashbook, sem registrations, disponíveis na massa de dados
+      |   yearReference   |     document      |
+      |       1988        |   94090259070     |
+      |       2001        |   04623846083     |
+      |       1997        |   59022664082     |
 
     Cenario: Post para criar Cashbook com sucesso
       Dado uma requisicao Post com CashbookCreateDtoRequest valido, com ano 1950 e documento "47361120008"
-      Quando a requisicao Post for feita no metodo create
-      Entao receberei uma ResponseEntity com HTTP 201
+      Quando a requisicao Post for feita no metodo create do CashbookController
+      Entao receberei do CashbookController uma ResponseEntity com HTTP 201
       E com um CashbookDtoResponse no body, com id e ano 1950 e documento "47361120008"
 
     Cenario: Get para consultar Cashbook com sucesso
-      Dado cadastros de Cashbook, sem registrations, disponíveis na massa de dados
-        |   yearReference   |     document      |
-        |       1988        |   94090259070     |
-        |       2001        |   04623846083     |
-        |       1997        |   59022664082     |
       Dado um UUID referente ao ano 2001 e o documento "04623846083"
-      Quando uma requisição Get válida for feita para o método findById
-      Entao receberei uma ResponseEntity com HTTP 200
+      Quando uma requisição Get for feita no método findById do CashbookController
+      Entao receberei do CashbookController uma ResponseEntity com HTTP 200
       E com um CashbookDtoResponse no body, com id e ano 2001 e documento "04623846083"
 
-
+    Cenario: Delete para apagar Cashbook com sucesso
+      Dado um UUID de Cashbook, com ano 2001 e document "04623846083"
+      Quando a requisição Delete for feita no método delete do CashbookController
+      Entao receberei do CashbookController uma ResponseEntity com HTTP 204
+      E o Cashbook terá sido apagado do banco de dados

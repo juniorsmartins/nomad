@@ -122,8 +122,8 @@ public class RegistrationControllerStep {
         assertThat(idRegistration).isNotNull();
     }
 
-    @Quando("a requisição Get for feita no método findById")
-    public void a_requisicao_get_for_feita_no_metodo_find_by_id() {
+    @Quando("a requisição Get for feita no método findById do RegistrationController")
+    public void a_requisicao_get_for_feita_no_metodo_find_by_id_do_registrationcontroller() {
         response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
@@ -142,8 +142,8 @@ public class RegistrationControllerStep {
         assertThat(body.typeOperationEnum()).isEqualTo(TypeOperationEnum.valueOf(typeOperation));
     }
 
-    @Quando("a requisição Delete for feita no método delete")
-    public void a_requisicao_delete_for_feita_no_metodo_delete() {
+    @Quando("a requisição Delete for feita no método delete do RegistrationController")
+    public void a_requisicao_delete_for_feita_no_metodo_delete_do_registrationcontroller() {
         response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
