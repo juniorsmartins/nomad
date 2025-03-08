@@ -28,4 +28,13 @@ Funcionalidade: testar operações CRUD do CashbookController
       Dado um UUID de Cashbook, com ano 2001 e document "04623846083"
       Quando a requisição Delete for feita no método delete do CashbookController
       Entao receberei uma ResponseEntity com HTTP 204 do CashbookController
-      E o Cashbook terá sido apagado do banco de dados pelo CashbookController
+      E o Cashbook foi apagado do banco de dados pelo CashbookController
+
+    Cenario: Update para atualizar Cashbook com sucesso pelo CashbookController
+      Dado um UUID de Cashbook, com ano 1997 e document "59022664082"
+      E um body com CashbookUpdateDtoRequest válido, com ano 1800 e documento "74157567030"
+      Quando a requisição Put for feita no método update do CashbookController
+      Entao receberei uma ResponseEntity com HTTP 200 do CashbookController
+      E com um CashbookUpdateDtoResponse no body, com id e ano 1800 e documento "74157567030"
+      E o Cashbook foi atualizado, com ano 1800 e documento "74157567030", no banco de dados pelo CashbookController
+

@@ -153,7 +153,7 @@ public class RegistrationControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("o Registration terá sido apagado do banco de dados pelo RegistrationController")
+    @Entao("o Registration foi apagado do banco de dados pelo RegistrationController")
     public void o_registration_tera_sido_apagado_do_banco_de_dados() {
         var registrationEntity = registrationRepository.findById(idRegistration);
         assertThat(registrationEntity).isEmpty();

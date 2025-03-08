@@ -28,7 +28,7 @@ Funcionalidade: testar operações CRUD do RegistrationController
       Dado um UUID de Registration, com amount 30 e typeOperation "INPUT", referente a um Cashbook, com ano 1990 e documento "94090259070"
       Quando a requisição Delete for feita no método delete do RegistrationController
       Entao receberei uma ResponseEntity com HTTP 204 do RegistrationController
-      E o Registration terá sido apagado do banco de dados pelo RegistrationController
+      E o Registration foi apagado do banco de dados pelo RegistrationController
 
 
 

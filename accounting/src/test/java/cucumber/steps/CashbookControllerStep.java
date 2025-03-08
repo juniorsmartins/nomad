@@ -1,7 +1,9 @@
 package cucumber.steps;
 
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
+import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
+import com.nomad.accounting.adapter.dto.out.CashbookUpdateDtoResponse;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.adapter.repository.CashbookRepository;
 import cucumber.config.ConstantsTest;
@@ -47,6 +49,8 @@ public class CashbookControllerStep {
 
     private UUID idCashbook;
 
+    private CashbookUpdateDtoRequest cashbookUpdateDtoRequest;
+
     @Before
     public void setUp() {
         requestSpecification = new RequestSpecBuilder()
@@ -88,12 +92,13 @@ public class CashbookControllerStep {
     }
 
     @Entao("com um CashbookDtoResponse no body, com id e ano {int} e documento {string}")
-    public void com_um_cashbook_dto_response_no_body_com_id_e_ano_e_documento(Integer ano, String documento) {
-        CashbookDtoResponse body = response.as(CashbookDtoResponse.class);
+    public void com_um_cashbook_dto_response_no_body_com_id_e_ano_e_documento(Integer yearReference, String document) {
+        var body = response.as(CashbookDtoResponse.class);
+
         assertThat(body).isNotNull();
         assertThat(body.cashbookId()).isNotNull();
-        assertThat(body.yearReference()).isEqualTo(Year.of(ano));
-        assertThat(body.document()).isEqualTo(documento);
+        assertThat(body.yearReference()).isEqualTo(Year.of(yearReference));
+        assertThat(body.document()).isEqualTo(document);
     }
 
     @Dado("cadastros de Cashbook, sem registrations, disponíveis na massa de dados")
@@ -153,10 +158,50 @@ public class CashbookControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("o Cashbook terá sido apagado do banco de dados pelo CashbookController")
-    public void o_cashbook_terá_sido_apagado_do_banco_de_dados() {
+    @Entao("o Cashbook foi apagado do banco de dados pelo CashbookController")
+    public void o_cashbook_tera_sido_apagado_do_banco_de_dados() {
         var cashbookEntity = cashbookRepository.findById(idCashbook);
         assertThat(cashbookEntity).isEmpty();
+    }
+
+    @Dado("um body com CashbookUpdateDtoRequest válido, com ano {int} e documento {string}")
+    public void um_body_com_cashbook_update_dto_request_válido_com_ano_e_documento(Integer yearReference, String document) {
+        cashbookUpdateDtoRequest = new CashbookUpdateDtoRequest(
+                idCashbook, Year.of(yearReference), document
+        );
+
+        assertThat(cashbookUpdateDtoRequest).isNotNull();
+    }
+
+    @Quando("a requisição Put for feita no método update do CashbookController")
+    public void a_requisicao_put_for_feita_no_metodo_update_do_cashbook_controller() {
+        response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(ConstantsTest.CONTENT_TYPE_JSON)
+                    .body(cashbookUpdateDtoRequest)
+                .when()
+                    .put();
+
+        assertThat(response).isNotNull();
+    }
+
+    @Entao("com um CashbookUpdateDtoResponse no body, com id e ano {int} e documento {string}")
+    public void com_um_cashbook_update_dto_response_no_body_com_id_e_ano_e_documento(Integer yearReference, String document) {
+        var body = response.as(CashbookUpdateDtoResponse.class);
+
+        assertThat(body).isNotNull();
+        assertThat(body.cashbookId()).isNotNull();
+        assertThat(body.yearReference()).isEqualTo(Year.of(yearReference));
+        assertThat(body.document()).isEqualTo(document);
+    }
+
+    @Entao("o Cashbook foi atualizado, com ano {int} e documento {string}, no banco de dados pelo CashbookController")
+    public void o_cashbook_foi_atualizado_com_ano_e_documento_no_banco_de_dados_pelo_cashbook_controller(Integer yearReference, String document) {
+        var cashbookEntity = cashbookRepository.findById(idCashbook).get();
+
+        assertThat(cashbookEntity).isNotNull();
+        assertThat(cashbookEntity.getYearReference()).isEqualTo(Year.of(yearReference));
+        assertThat(cashbookEntity.getDocument()).isEqualTo(document);
     }
 }
 
