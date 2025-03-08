@@ -90,6 +90,7 @@ public class RegistrationControllerStep {
     @Entao("com um RegistrationDtoResponse no body, com amount {int} e typeOperation {string}")
     public void com_um_registration_dto_response_no_body_com_amount_e_type_operation(Integer amount, String typeOperation) {
         var body = response.as(RegistrationDtoResponse.class);
+
         assertThat(body).isNotNull();
         assertThat(body.cashbookId()).isNotNull();
         assertThat(body.registrationId()).isNotNull();

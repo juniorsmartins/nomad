@@ -101,8 +101,8 @@ public class CashbookControllerStep {
         assertThat(body.document()).isEqualTo(document);
     }
 
-    @Dado("cadastros de Cashbook, sem registrations, disponíveis na massa de dados")
-    public void cadastros_de_cashbook_sem_registrations_disponiveis_na_massa_de_dados(io.cucumber.datatable.DataTable dataTable) {
+    @Dado("cadastros de Cashbook disponíveis na massa de dados")
+    public void cadastros_de_cashbook_disponiveis_na_massa_de_dados(io.cucumber.datatable.DataTable dataTable) {
         cashbookRepository.deleteAll();
 
         List<Map<String, String>> cashbooksData = dataTable.asMaps(String.class, String.class);

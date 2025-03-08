@@ -1,22 +1,29 @@
 package cucumber.steps;
 
 import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
+import com.nomad.accounting.adapter.dto.out.InvestmentDtoResponse;
 import com.nomad.accounting.adapter.repository.CashbookRepository;
+import com.nomad.accounting.adapter.repository.InvestmentRepository;
 import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
 import com.nomad.accounting.application.core.domain.enums.TypeActionEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 import cucumber.config.ConstantsTest;
 import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Year;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,12 +34,17 @@ public class InvestmentControllerStep {
     @Autowired
     private CashbookRepository cashbookRepository;
 
+    @Autowired
+    private InvestmentRepository investmentRepository;
+
     @LocalServerPort // Esta anotação injeta a porta selecionada pelo Spring Boot
     int port;
 
     private Response response;
 
     private InvestmentCreateDtoRequest investmentCreateDtoRequest;
+
+    private UUID idInvestment;
 
     @Before
     public void setUp() {
@@ -54,32 +66,46 @@ public class InvestmentControllerStep {
         assertThat(investmentCreateDtoRequest).isNotNull();
     }
 
-    @Quando("uma requisição Post for feita no método create do InvestmentController")
-    public void uma_requisicao_post_for_feita_no_metodo_create_do_investment_controller() {
+    @Quando("a requisição Post for feita no método create, para cashbook com ano {int} e document {string}, no InvestmentController")
+    public void a_requisicao_post_for_feita_no_metodo_create_para_cashbook_com_ano_e_document_no_investment_controller(
+            Integer yearReferente, String document) {
 
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        var idCashbook = cashbookRepository.findByYearReferenceAndDocument(
+                Year.of(yearReferente), document).get().getCashbookId();
+
+        response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(ConstantsTest.CONTENT_TYPE_JSON)
+                    .body(investmentCreateDtoRequest)
+                .when()
+                    .post("/" + idCashbook);
+
+        assertThat(response).isNotNull();
     }
 
     @Entao("receberei um ResponseEntity com HTTP {int} do InvestmentController")
-    public void receberei_um_response_entity_com_http_do_investment_controller(Integer int1) {
-
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void receberei_um_response_entity_com_http_do_investment_controller(Integer status) {
+        Assertions.assertEquals(status, response.getStatusCode());
     }
 
     @Entao("com um InvestmentDtoResponse no body, com id e amount {int} e typeAction {string} e category {string}")
-    public void com_um_investment_dto_response_no_body_com_id_e_amount_e_type_action_e_category(Integer int1, String string, String string2) {
+    public void com_um_investment_dto_response_no_body_com_id_e_amount_e_type_action_e_category(
+            Integer amount, String typeAction, String category) {
+        var body = response.as(InvestmentDtoResponse.class);
+        idInvestment = body.investmentId();
 
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        assertThat(body).isNotNull();
+        assertThat(body.cashbookId()).isNotNull();
+        assertThat(body.investmentId()).isNotNull();
+        assertThat(body.amount()).isEqualTo(BigDecimal.valueOf(amount));
+        assertThat(body.typeActionEnum()).isEqualTo(TypeActionEnum.valueOf(typeAction));
+        assertThat(body.categoryEnum()).isEqualTo(CategoryEnum.valueOf(category));
     }
 
     @Entao("o Investment foi criado, com amount {int} e typeAction {string} e category {string}, no banco de dados pelo InvestmentController")
     public void o_investment_foi_criado_com_amount_e_type_action_e_category_no_banco_de_dados_pelo_investment_controller(Integer int1, String string, String string2) {
-
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        var investmentEntity = investmentRepository.findById(idInvestment);
+        assertThat(investmentEntity).isNotEmpty();
     }
 }
 

@@ -6,7 +6,7 @@ Funcionalidade: testar operações CRUD do RegistrationController
 
   Contexto:
     Dado um ambiente de teste de Accounting ativado
-    Dado cadastros de Cashbook, sem registrations, disponíveis na massa de dados
+    Dado cadastros de Cashbook disponíveis na massa de dados
       |   yearReference   |     document      |
       |       1990        |   94090259070     |
       |       2021        |   04623846083     |

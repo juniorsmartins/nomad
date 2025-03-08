@@ -6,10 +6,15 @@ Funcionalidade: testar operações CRUD de InvestmentController
 
   Contexto:
     Dado um ambiente de teste de Accounting ativado
+    Dado cadastros de Cashbook disponíveis na massa de dados
+      |   yearReference   |     document      |
+      |       1870        |   69309144017     |
+      |       1855        |   83305660058     |
+      |       1820        |   35052427050     |
 
     Cenario: Post para criar Investment com sucesso pelo InvestmentController
       Dado uma requisição Post com InvestmentCreateDtoRequest válido, com amount 45 e typeAction "INVESTMENT" e category "FUNDO"
-      Quando uma requisição Post for feita no método create do InvestmentController
+      Quando a requisição Post for feita no método create, para cashbook com ano 1855 e document "83305660058", no InvestmentController
       Entao receberei um ResponseEntity com HTTP 201 do InvestmentController
       E com um InvestmentDtoResponse no body, com id e amount 45 e typeAction "INVESTMENT" e category "FUNDO"
       E o Investment foi criado, com amount 45 e typeAction "INVESTMENT" e category "FUNDO", no banco de dados pelo InvestmentController
