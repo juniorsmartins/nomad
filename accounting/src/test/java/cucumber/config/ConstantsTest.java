@@ -22,5 +22,7 @@ public class ConstantsTest {
     public static final String PATH_ACCOUNTING_CASHBOOK = "/api/v1/accounting/cashbook";
 
     public static final String PATH_ACCOUNTING_REGISTRATION = "/api/v1/accounting/registration";
+
+    public static final String PATH_ACCOUNTING_INVESTMENT = "/api/v1/accounting/investment";
 }
 

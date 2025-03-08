@@ -1,0 +1,19 @@
+# language: pt
+Funcionalidade: testar operações CRUD de InvestmentController
+  Como cliente dessa API Rest, quero fazer requisições Post, Get, Put e Delete
+  Dessa forma, obter os resultados padrões desejados
+  Para meu sistema cadastrar, ler, atualizar e deletar Investments
+
+  Contexto:
+    Dado um ambiente de teste de Accounting ativado
+
+    Cenario: Post para criar Investment com sucesso pelo InvestmentController
+      Dado uma requisição Post com InvestmentCreateDtoRequest válido, com amount 45 e typeAction "INVESTMENT" e category "FUNDO"
+      Quando uma requisição Post for feita no método create do InvestmentController
+      Entao receberei um ResponseEntity com HTTP 201 do InvestmentController
+      E com um InvestmentDtoResponse no body, com id e amount 45 e typeAction "INVESTMENT" e category "FUNDO"
+      E o Investment foi criado, com amount 45 e typeAction "INVESTMENT" e category "FUNDO", no banco de dados pelo InvestmentController
+
+
+
+

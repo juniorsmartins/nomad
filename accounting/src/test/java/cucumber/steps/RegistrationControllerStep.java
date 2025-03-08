@@ -13,7 +13,6 @@ import io.cucumber.java.Before;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.it.Quando;
 import io.cucumber.java.pt.Entao;
-import io.cucumber.java.pt.Então;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
@@ -83,7 +82,7 @@ public class RegistrationControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("receberei uma ResponseEntity com HTTP {int} do RegistrationController")
+    @Entao("receberei um ResponseEntity com HTTP {int} do RegistrationController")
     public void receberei_do_registration_controller_uma_response_entity_com_http(Integer status) {
         Assertions.assertEquals(status, response.getStatusCode());
     }

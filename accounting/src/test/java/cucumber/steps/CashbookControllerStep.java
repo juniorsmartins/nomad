@@ -86,7 +86,7 @@ public class CashbookControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("receberei uma ResponseEntity com HTTP {int} do CashbookController")
+    @Entao("receberei um ResponseEntity com HTTP {int} do CashbookController")
     public void receberei_do_cashbookcontroller_uma_response_entity_com_http(Integer status) {
         org.junit.jupiter.api.Assertions.assertEquals(status, response.getStatusCode());
     }
