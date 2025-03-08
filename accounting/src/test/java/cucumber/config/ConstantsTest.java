@@ -19,6 +19,8 @@ public class ConstantsTest {
 
     public static final String CONTENT_TYPE_YML = "application/x-yaml";
 
-    public static final String PATH_ACCOUNTING = "/api/v1/accounting/cashbook";
+    public static final String PATH_ACCOUNTING_CASHBOOK = "/api/v1/accounting/cashbook";
+
+    public static final String PATH_ACCOUNTING_REGISTRATION = "/api/v1/accounting/registration";
 }
 
