@@ -141,5 +141,22 @@ public class RegistrationControllerStep {
         assertThat(body.amount().setScale(0, RoundingMode.HALF_UP)).isEqualTo(BigDecimal.valueOf(amount));
         assertThat(body.typeOperationEnum()).isEqualTo(TypeOperationEnum.valueOf(typeOperation));
     }
+
+    @Quando("a requisição Delete for feita no método delete")
+    public void a_requisicao_delete_for_feita_no_metodo_delete() {
+        response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(ConstantsTest.CONTENT_TYPE_JSON)
+                .when()
+                .delete("/" + idRegistration);
+
+        assertThat(response).isNotNull();
+    }
+
+    @Entao("o Registration terá sido apagado do banco de dados")
+    public void o_registration_tera_sido_apagado_do_banco_de_dados() {
+        var registrationEntity = registrationRepository.findById(idRegistration);
+        assertThat(registrationEntity).isEmpty();
+    }
 }
 
