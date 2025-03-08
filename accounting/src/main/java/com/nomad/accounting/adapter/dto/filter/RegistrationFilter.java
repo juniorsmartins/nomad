@@ -1,7 +1,7 @@
 package com.nomad.accounting.adapter.dto.filter;
 
-import com.nomad.accounting.application.core.domain.enums.CostCenter;
-import com.nomad.accounting.application.core.domain.enums.TypeOperation;
+import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,9 +18,9 @@ public record RegistrationFilter(
         @DateTimeFormat(pattern = "dd/MM/yyyy")
         String dateEnd,
 
-        TypeOperation typeOperation,
+        TypeOperationEnum typeOperationEnum,
 
-        CostCenter costCenter
+        CostCenterEnum costCenterEnum
 ) {
         public LocalDate convertDateStart() {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

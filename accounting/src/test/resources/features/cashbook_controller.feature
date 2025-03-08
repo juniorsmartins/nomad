@@ -14,7 +14,7 @@ Funcionalidade: testar operações CRUD do CashbookController
       E com um CashbookDtoResponse no body, com id e ano 1950 e documento "47361120008"
 
     Cenario: Get para consultar Cashbook com sucesso
-      Dado tendo cadastros de Cashbook, sem registrations, disponíveis na massa de dados
+      Dado cadastros de Cashbook, sem registrations, disponíveis na massa de dados
         |   yearReference   |     document      |
         |       1988        |   94090259070     |
         |       2001        |   04623846083     |

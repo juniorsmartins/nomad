@@ -1,7 +1,7 @@
 package com.nomad.accounting.adapter.entity;
 
-import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
-import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
+import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeActionEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,14 +15,14 @@ import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_DESCR
 import static com.nomad.accounting.config.AccountingConstants.MAX_CARACTER_SUPPLIER;
 
 @Entity
-@Table(name = "registrations")
+@Table(name = "investments")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"registrationId"})
-public final class RegistrationEntity implements Serializable {
+@EqualsAndHashCode(of = {"investmentId"})
+public final class InvestmentEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public final class RegistrationEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "registration_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    private UUID registrationId;
+    private UUID investmentId;
 
     @ManyToOne
     @JoinColumn(name = "cashbook_id")
@@ -42,16 +42,16 @@ public final class RegistrationEntity implements Serializable {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "type_operation", nullable = false)
+    @Column(name = "type_action", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TypeOperationEnum typeOperationEnum;
+    private TypeActionEnum typeActionEnum;
 
     @Column(name = "date_operation", nullable = false)
     private LocalDate dateOperation;
 
-    @Column(name = "cost_center", nullable = false)
+    @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
-    private CostCenterEnum costCenterEnum;
+    private CategoryEnum categoryEnum;
 
     @Column(name = "supplier", length = MAX_CARACTER_SUPPLIER, nullable = false)
     private String supplier;

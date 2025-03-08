@@ -42,14 +42,14 @@ public class CashbookFactorySpec {
                             .lessThanOrEqualTo(root.get("registrations").get("dateOperation"), filter.registration().convertDateEnd()));
                 }
 
-                if (!ObjectUtils.isEmpty(filter.registration().typeOperation())) {
+                if (!ObjectUtils.isEmpty(filter.registration().typeOperationEnum())) {
                     parameters.add(criteriaBuilder
-                            .equal(root.get("registrations").get("typeOperation"), filter.registration().typeOperation()));
+                            .equal(root.get("registrations").get("typeOperation"), filter.registration().typeOperationEnum()));
                 }
 
-                if (!ObjectUtils.isEmpty(filter.registration().costCenter())) {
+                if (!ObjectUtils.isEmpty(filter.registration().costCenterEnum())) {
                     parameters.add(criteriaBuilder
-                            .equal(root.get("registrations").get("costCenter"), filter.registration().costCenter()));
+                            .equal(root.get("registrations").get("costCenter"), filter.registration().costCenterEnum()));
                 }
             }
 

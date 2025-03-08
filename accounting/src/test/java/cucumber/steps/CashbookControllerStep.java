@@ -37,9 +37,9 @@ public class CashbookControllerStep {
     @LocalServerPort // Esta anotação injeta a porta selecionada pelo Spring Boot
     int port;
 
-    private CashbookCreateDtoRequest cashbookCreateDtoRequest;
-
     private Response response;
+
+    private CashbookCreateDtoRequest cashbookCreateDtoRequest;
 
     private CashbookEntity cashbookEntity;
 
@@ -47,7 +47,7 @@ public class CashbookControllerStep {
     public void setUp() {
         requestSpecification = new RequestSpecBuilder()
                 .addHeader(ConstantsTest.HEADER_PARAM_ORIGIN, ConstantsTest.ORIGIN_NOMAD)
-                .setBasePath(ConstantsTest.PATH_ACCOUNTING)
+                .setBasePath(ConstantsTest.PATH_ACCOUNTING_CASHBOOK)
                 .setPort(port)
                 .build();
     }
@@ -92,8 +92,8 @@ public class CashbookControllerStep {
         assertThat(body.document()).isEqualTo(documento);
     }
 
-    @Dado("tendo cadastros de Cashbook, sem registrations, disponíveis na massa de dados")
-    public void tendo_cadastros_de_cashbook_sem_registrations_disponíveis_na_massa_de_dados(io.cucumber.datatable.DataTable dataTable) {
+    @Dado("cadastros de Cashbook, sem registrations, disponíveis na massa de dados")
+    public void cadastros_de_cashbook_sem_registrations_disponíveis_na_massa_de_dados(io.cucumber.datatable.DataTable dataTable) {
         cashbookRepository.deleteAll();
 
         List<Map<String, String>> cashbooksData = dataTable.asMaps(String.class, String.class);

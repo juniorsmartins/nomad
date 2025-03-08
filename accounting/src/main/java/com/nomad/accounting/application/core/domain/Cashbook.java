@@ -20,5 +20,7 @@ public class Cashbook {
     private String document;
 
     private List<Registration> registrations;
+
+    private List<Investment> investments;
 }
 

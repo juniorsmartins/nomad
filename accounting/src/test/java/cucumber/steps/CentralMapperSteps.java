@@ -8,8 +8,8 @@ import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Cashbook;
 import com.nomad.accounting.application.core.domain.Registration;
-import com.nomad.accounting.application.core.domain.enums.CostCenter;
-import com.nomad.accounting.application.core.domain.enums.TypeOperation;
+import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -97,9 +97,9 @@ public class CentralMapperSteps {
                 .cashbook(cashbookEntity)
                 .description(description)
                 .amount(BigDecimal.valueOf(amount))
-                .typeOperation(TypeOperation.valueOf(typeOperation))
+                .typeOperationEnum(TypeOperationEnum.valueOf(typeOperation))
                 .dateOperation(LocalDate.parse(dateOperation))
-                .costCenter(CostCenter.valueOf(costCenter))
+                .costCenterEnum(CostCenterEnum.valueOf(costCenter))
                 .supplier(supplier)
                 .build();
         cashbook.setRegistrations(List.of(registration));
@@ -130,9 +130,9 @@ public class CentralMapperSteps {
         Assertions.assertEquals(UUID.fromString(cashbookId), registrationDtoResponse.cashbookId());
         Assertions.assertEquals(description, registrationDtoResponse.description());
         Assertions.assertEquals(BigDecimal.valueOf(amount), registrationDtoResponse.amount());
-        Assertions.assertEquals(TypeOperation.valueOf(typeOperation), registrationDtoResponse.typeOperation());
+        Assertions.assertEquals(TypeOperationEnum.valueOf(typeOperation), registrationDtoResponse.typeOperationEnum());
         Assertions.assertEquals(LocalDate.parse(dateOperation), registrationDtoResponse.dateOperation());
-        Assertions.assertEquals(CostCenter.valueOf(costCenter), registrationDtoResponse.costCenter());
+        Assertions.assertEquals(CostCenterEnum.valueOf(costCenter), registrationDtoResponse.costCenterEnum());
         Assertions.assertEquals(supplier, registrationDtoResponse.supplier());
     }
 }

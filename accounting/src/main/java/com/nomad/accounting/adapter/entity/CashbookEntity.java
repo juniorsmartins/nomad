@@ -41,5 +41,8 @@ public final class CashbookEntity implements Serializable {
 
     @OneToMany(mappedBy = "cashbook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RegistrationEntity> registrations;
+
+    @OneToMany(mappedBy = "cashbook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<InvestmentEntity> investments;
 }
 

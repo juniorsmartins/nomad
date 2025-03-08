@@ -1,27 +1,29 @@
 package com.nomad.accounting.adapter.dto.out;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
-import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
+import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeActionEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record RegistrationSearchDtoResponse(
+public record InvestmentDtoResponse(
 
-        UUID registrationId,
+        UUID investmentId,
+
+        UUID cashbookId,
 
         String description,
 
         BigDecimal amount,
 
-        TypeOperationEnum typeOperationEnum,
+        TypeActionEnum typeActionEnum,
 
         LocalDate dateOperation,
 
-        CostCenterEnum costCenterEnum,
+        CategoryEnum categoryEnum,
 
         String supplier
 ) { }
