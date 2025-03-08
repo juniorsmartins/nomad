@@ -12,20 +12,20 @@ Funcionalidade: testar operações CRUD do CashbookController
       |       2001        |   04623846083     |
       |       1997        |   59022664082     |
 
-    Cenario: Post para criar Cashbook com sucesso
+    Cenario: Post para criar Cashbook com sucesso pelo CashbookController
       Dado uma requisicao Post com CashbookCreateDtoRequest valido, com ano 1950 e documento "47361120008"
       Quando a requisicao Post for feita no metodo create do CashbookController
-      Entao receberei do CashbookController uma ResponseEntity com HTTP 201
+      Entao receberei uma ResponseEntity com HTTP 201 do CashbookController
       E com um CashbookDtoResponse no body, com id e ano 1950 e documento "47361120008"
 
-    Cenario: Get para consultar Cashbook com sucesso
+    Cenario: Get para consultar Cashbook com sucesso pelo CashbookController
       Dado um UUID referente ao ano 2001 e o documento "04623846083"
       Quando uma requisição Get for feita no método findById do CashbookController
-      Entao receberei do CashbookController uma ResponseEntity com HTTP 200
+      Entao receberei uma ResponseEntity com HTTP 200 do CashbookController
       E com um CashbookDtoResponse no body, com id e ano 2001 e documento "04623846083"
 
-    Cenario: Delete para apagar Cashbook com sucesso
+    Cenario: Delete para apagar Cashbook com sucesso pelo CashbookController
       Dado um UUID de Cashbook, com ano 2001 e document "04623846083"
       Quando a requisição Delete for feita no método delete do CashbookController
-      Entao receberei do CashbookController uma ResponseEntity com HTTP 204
-      E o Cashbook terá sido apagado do banco de dados
+      Entao receberei uma ResponseEntity com HTTP 204 do CashbookController
+      E o Cashbook terá sido apagado do banco de dados pelo CashbookController

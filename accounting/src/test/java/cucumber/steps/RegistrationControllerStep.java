@@ -83,7 +83,7 @@ public class RegistrationControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("receberei do RegistrationController uma ResponseEntity com HTTP {int}")
+    @Entao("receberei uma ResponseEntity com HTTP {int} do RegistrationController")
     public void receberei_do_registration_controller_uma_response_entity_com_http(Integer status) {
         Assertions.assertEquals(status, response.getStatusCode());
     }
@@ -153,7 +153,7 @@ public class RegistrationControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("o Registration terá sido apagado do banco de dados")
+    @Entao("o Registration terá sido apagado do banco de dados pelo RegistrationController")
     public void o_registration_tera_sido_apagado_do_banco_de_dados() {
         var registrationEntity = registrationRepository.findById(idRegistration);
         assertThat(registrationEntity).isEmpty();

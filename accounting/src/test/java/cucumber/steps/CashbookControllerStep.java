@@ -82,7 +82,7 @@ public class CashbookControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("receberei do CashbookController uma ResponseEntity com HTTP {int}")
+    @Entao("receberei uma ResponseEntity com HTTP {int} do CashbookController")
     public void receberei_do_cashbookcontroller_uma_response_entity_com_http(Integer status) {
         org.junit.jupiter.api.Assertions.assertEquals(status, response.getStatusCode());
     }
@@ -97,7 +97,7 @@ public class CashbookControllerStep {
     }
 
     @Dado("cadastros de Cashbook, sem registrations, disponíveis na massa de dados")
-    public void cadastros_de_cashbook_sem_registrations_disponíveis_na_massa_de_dados(io.cucumber.datatable.DataTable dataTable) {
+    public void cadastros_de_cashbook_sem_registrations_disponiveis_na_massa_de_dados(io.cucumber.datatable.DataTable dataTable) {
         cashbookRepository.deleteAll();
 
         List<Map<String, String>> cashbooksData = dataTable.asMaps(String.class, String.class);
@@ -143,7 +143,7 @@ public class CashbookControllerStep {
     }
 
     @Quando("a requisição Delete for feita no método delete do CashbookController")
-    public void a_requisição_delete_for_feita_no_método_delete_do_cashbook_controller() {
+    public void a_requisicao_delete_for_feita_no_metodo_delete_do_cashbook_controller() {
         response = RestAssured
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
@@ -153,7 +153,7 @@ public class CashbookControllerStep {
         assertThat(response).isNotNull();
     }
 
-    @Entao("o Cashbook terá sido apagado do banco de dados")
+    @Entao("o Cashbook terá sido apagado do banco de dados pelo CashbookController")
     public void o_cashbook_terá_sido_apagado_do_banco_de_dados() {
         var cashbookEntity = cashbookRepository.findById(idCashbook);
         assertThat(cashbookEntity).isEmpty();
