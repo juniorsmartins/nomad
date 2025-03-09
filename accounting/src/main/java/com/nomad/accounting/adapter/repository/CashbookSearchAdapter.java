@@ -22,16 +22,16 @@ public class CashbookSearchAdapter implements CashbookSearchOutputPort {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<CashbookEntity> search(final CashbookFilter cashBookFilter, final Pageable pagination) {
+    public Page<CashbookEntity> search(final CashbookFilter cashbookFilter, final Pageable pagination) {
 
-        log.info("Adapter Search iniciado: {}", cashBookFilter);
+        log.info("Adapter search iniciado: {}", cashbookFilter);
 
-        var cashbookSearch = Optional.ofNullable(cashBookFilter)
+        var cashbookSearch = Optional.ofNullable(cashbookFilter)
                 .map(filters -> this.cashbookRepository
                         .findAll(CashbookFactorySpec.dynamicQuery(filters), pagination))
                 .orElseThrow();
 
-        log.info("Adapter Search concluído: {}", cashbookSearch);
+        log.info("Adapter search concluído: {}", cashbookSearch);
 
         return cashbookSearch;
     }

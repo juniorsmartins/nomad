@@ -44,12 +44,35 @@ public class CashbookFactorySpec {
 
                 if (!ObjectUtils.isEmpty(filter.registration().typeOperationEnum())) {
                     parameters.add(criteriaBuilder
-                            .equal(root.get("registrations").get("typeOperation"), filter.registration().typeOperationEnum()));
+                            .equal(root.get("registrations").get("typeOperationEnum"), filter.registration().typeOperationEnum()));
                 }
 
                 if (!ObjectUtils.isEmpty(filter.registration().costCenterEnum())) {
                     parameters.add(criteriaBuilder
-                            .equal(root.get("registrations").get("costCenter"), filter.registration().costCenterEnum()));
+                            .equal(root.get("registrations").get("costCenterEnum"), filter.registration().costCenterEnum()));
+                }
+            }
+
+            if (!ObjectUtils.isEmpty(filter.investment())) {
+
+                if (!ObjectUtils.isEmpty(filter.investment().dateStart())) {
+                    parameters.add(criteriaBuilder
+                            .greaterThanOrEqualTo(root.get("investments").get("dateOperation"), filter.investment().convertDateStart()));
+                }
+
+                if (!ObjectUtils.isEmpty(filter.investment().dateEnd())) {
+                    parameters.add(criteriaBuilder
+                            .lessThanOrEqualTo(root.get("investments").get("dateOperation"), filter.investment().convertDateEnd()));
+                }
+
+                if (!ObjectUtils.isEmpty(filter.investment().typeActionEnum())) {
+                    parameters.add(criteriaBuilder
+                            .equal(root.get("investments").get("typeActionEnum"), filter.investment().typeActionEnum()));
+                }
+
+                if (!ObjectUtils.isEmpty(filter.investment().categoryEnum())) {
+                    parameters.add(criteriaBuilder
+                            .equal(root.get("investments").get("categoryEnum"), filter.investment().categoryEnum()));
                 }
             }
 
