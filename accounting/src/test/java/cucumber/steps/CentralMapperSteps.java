@@ -2,15 +2,20 @@ package cucumber.steps;
 
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
+import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Cashbook;
+import com.nomad.accounting.application.core.domain.Investment;
 import com.nomad.accounting.application.core.domain.Registration;
+import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
 import com.nomad.accounting.application.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting.application.core.domain.enums.TypeActionEnum;
 import com.nomad.accounting.application.core.domain.enums.TypeOperationEnum;
 import io.cucumber.java.pt.Dado;
+import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import org.junit.jupiter.api.Assertions;
@@ -22,8 +27,7 @@ import java.time.Year;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralMapperSteps {
 
@@ -38,6 +42,10 @@ public class CentralMapperSteps {
     private Registration registration;
 
     private CashbookDtoResponse cashbookDtoResponse;
+
+    private InvestmentCreateDtoRequest investmentCreateDtoRequest;
+
+    private Investment investment;
 
     @Dado("um CashbookCreateDtoRequest válido, com ano {int} e documento {string}")
     public void um_cashbook_create_dto_request_válido_com_ano_e_documento(Integer ano, String documento) {
@@ -134,6 +142,35 @@ public class CentralMapperSteps {
         Assertions.assertEquals(LocalDate.parse(dateOperation), registrationDtoResponse.dateOperation());
         Assertions.assertEquals(CostCenterEnum.valueOf(costCenter), registrationDtoResponse.costCenterEnum());
         Assertions.assertEquals(supplier, registrationDtoResponse.supplier());
+    }
+
+    @Dado("um InvestmentCreateDtoRequest válido, com description {string} e amount {int} e typeOperation {string} e category {string} e supplier {string}")
+    public void um_investment_create_dto_request_valido_com_description_e_amount_e_type_operation_e_category_e_supplier(
+            String description, Integer amount, String typeOperation, String category, String supplier) {
+
+        investmentCreateDtoRequest = new InvestmentCreateDtoRequest(
+                description, BigDecimal.valueOf(amount), TypeActionEnum.valueOf(typeOperation),
+                LocalDate.now(), CategoryEnum.valueOf(category), supplier);
+
+        assertNotNull(investmentCreateDtoRequest);
+    }
+
+    @Quando("converter InvestmentCreateDtoRequest para Investment")
+    public void converter_investment_create_dto_request_para_investment() {
+        investment = centralMapper.toInvestment(investmentCreateDtoRequest);
+
+        assertNotNull(investment);
+    }
+
+    @Entao("receber um Investment válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void receber_um_investment_valido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
+
+        assertEquals(description, investment.getDescription());
+        assertEquals(BigDecimal.valueOf(amount), investment.getAmount());
+        assertEquals(TypeActionEnum.valueOf(typeAction), investment.getTypeActionEnum());
+        assertEquals(CategoryEnum.valueOf(category), investment.getCategoryEnum());
+        assertEquals(supplier, investment.getSupplier());
     }
 }
 

@@ -36,10 +36,11 @@ public class RegistrationController {
     private final CentralMapper centralMapper;
 
     @PostMapping(path = "/{id}")
-    public ResponseEntity<RegistrationDtoResponse> create(@PathVariable(name = "id") final UUID cashBookId,
-                                                          @RequestBody @Valid RegistrationCreateDtoRequest registrationCreateDtoRequest) {
+    public ResponseEntity<RegistrationDtoResponse> create(
+            @PathVariable(name = "id") final UUID cashBookId,
+            @RequestBody @Valid RegistrationCreateDtoRequest registrationCreateDtoRequest) {
 
-        log.info("Controller Create iniciado para cashbookId: {} {}", cashBookId, registrationCreateDtoRequest);
+        log.info("Controller create iniciado para cashbookId: {} {}", cashBookId, registrationCreateDtoRequest);
 
         var response = Optional.ofNullable(registrationCreateDtoRequest)
                 .map(centralMapper::toRegistration)
@@ -47,7 +48,7 @@ public class RegistrationController {
                 .map(centralMapper::toRegistrationDtoResponse)
                 .orElseThrow();
 
-        log.info("Controller Create concluído: {}", response);
+        log.info("Controller create concluído: {}", response);
 
         return ResponseEntity
                 .created(URI.create(URI_REGISTRATION + "/" + cashBookId))
