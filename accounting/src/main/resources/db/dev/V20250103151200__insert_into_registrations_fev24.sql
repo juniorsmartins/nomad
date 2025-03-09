@@ -24,6 +24,5 @@ VALUES
     ('971b8944-c5ac-4209-9a9f-6acfb061b908', 'c111de6e-396c-4940-bd95-394af78076db', 'Transporte', 8.64, 'OUTPUT', '2024-02-26', 'TRANSPORT', 'Uber'),
     ('0a004507-1b72-4959-86e8-6ad69a1b0136', 'c111de6e-396c-4940-bd95-394af78076db', 'Remédios', 125.61, 'OUTPUT', '2024-02-29', 'HEALTH', 'Drogasil'),
     ('2ece7ce0-0f4f-4f9b-a49e-1475b3b132e2', 'c111de6e-396c-4940-bd95-394af78076db', 'Celular', 15.00, 'OUTPUT', '2024-02-29', 'TELEPHONY', 'Tim'),
-    ('838ed731-10dc-4b1e-a2f4-0ce8cf498681', 'c111de6e-396c-4940-bd95-394af78076db', 'Bolsa de valores', 2100.00, 'INVESTMENT', '2024-02-29', 'BOLSA', 'XP Investimento'),
     ('65e27c31-1303-465c-ace3-0c0e1bdcf4dd', 'c111de6e-396c-4940-bd95-394af78076db', 'Salário de dev pleno', 4671.54, 'INPUT', '2024-02-29', 'WAGE', 'Invillia');
 

@@ -18,8 +18,6 @@ VALUES
     ('c56c8f5b-9f66-4c59-83f3-39249fd6bbdd', 'c111de6e-396c-4940-bd95-394af78076db', 'Compra de roupas', 79.15, 'OUTPUT', '2024-10-08', 'CLOTHING', 'Amazon'),
     ('e1d5be85-4bdd-43f4-9330-e6097ceb57b1', 'c111de6e-396c-4940-bd95-394af78076db', 'Gasto na trilha', 10.00, 'OUTPUT', '2024-10-14', 'SPORT', 'Outros'),
     ('5ad29bab-4195-433a-aa0b-38a66c6b0d49', 'c111de6e-396c-4940-bd95-394af78076db', 'Salário dev pleno', 2712.77, 'INPUT', '2024-10-15', 'WAGE', 'Invillia'),
-    ('6e8f8436-7219-4dd9-884b-52992e25953c', 'c111de6e-396c-4940-bd95-394af78076db', 'Poupança', 1000.00, 'INVESTMENT', '2024-10-15', 'POUPANCA', 'Itaú'),
-    ('6ebdf3b0-e935-4c79-a41e-8ddf32c9c3de', 'c111de6e-396c-4940-bd95-394af78076db', 'Poupança', 1000.00, 'INVESTMENT', '2024-10-15', 'POUPANCA', 'Itaú'),
     ('146d4441-599a-434e-aa5a-103887941343', 'c111de6e-396c-4940-bd95-394af78076db', 'Compra de roupas', 176.97, 'OUTPUT', '2024-10-15', 'CLOTHING', 'Amazon'),
     ('fc471ce2-f5b8-4cf4-8445-578e8f6f63fe', 'c111de6e-396c-4940-bd95-394af78076db', 'Benefícios vales', 24.90, 'INPUT', '2024-10-16', 'WAGE', 'Swille'),
     ('e01d7b1a-b7c1-4454-8056-8b4a70d995e4', 'c111de6e-396c-4940-bd95-394af78076db', 'Ração e ossos', 93.72, 'OUTPUT', '2024-10-16', 'PET', 'Cobasi'),
@@ -31,8 +29,6 @@ VALUES
     ('afed841f-07ae-4ac2-b622-e6d5109dd431', 'c111de6e-396c-4940-bd95-394af78076db', 'Compra de roupas', 188.17, 'OUTPUT', '2024-10-21', 'CLOTHING', 'Amazon'),
     ('27452bf1-0043-4055-91f2-a7b15bef8e0a', 'c111de6e-396c-4940-bd95-394af78076db', 'Suplemento alimentar', 115.00, 'OUTPUT', '2024-10-22', 'SUPPLEMENTATION', 'Atacado Suplementos'),
     ('4fa9cfac-7145-4fdb-8909-fcc349b89161', 'c111de6e-396c-4940-bd95-394af78076db', 'Academia de musculação', 200.00, 'OUTPUT', '2024-10-23', 'SPORT', 'Personal Studio'),
-    ('0f31a1d9-5e70-4f76-8294-98f0b63c43b6', 'c111de6e-396c-4940-bd95-394af78076db', 'CDB', 100.00, 'INVESTMENT', '2024-10-30', 'CDB', 'Itaú'),
     ('acebdea9-418b-417d-8ef0-c6d7cc428777', 'c111de6e-396c-4940-bd95-394af78076db', 'Salário dev pleno', 2472.00, 'INPUT', '2024-10-31', 'WAGE', 'Invillia'),
-    ('e61eef7d-6275-4a57-9e8c-0eacc1d9fcfd', 'c111de6e-396c-4940-bd95-394af78076db', 'CDB', 900.00, 'INVESTMENT', '2024-10-31', 'CDB', 'Itaú'),
     ('aea7c3d8-2d30-4da7-98b4-e8cc6529ab81', 'c111de6e-396c-4940-bd95-394af78076db', 'Compra de roupas', 373.89, 'OUTPUT', '2024-10-31', 'CLOTHING', 'Insider');
 

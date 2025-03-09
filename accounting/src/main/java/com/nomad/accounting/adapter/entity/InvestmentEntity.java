@@ -29,7 +29,7 @@ public final class InvestmentEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "registration_id", columnDefinition = "uuid", updatable = false, nullable = false)
+    @Column(name = "investment_id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID investmentId;
 
     @ManyToOne
