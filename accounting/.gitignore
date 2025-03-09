@@ -2,6 +2,7 @@
 
 
 ### diretórios ###
+docker/default/.data/**
 docker/default/.data/
 docker/default/.data/minio/
 
