@@ -4,6 +4,7 @@ import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
+import com.nomad.accounting.adapter.dto.out.InvestmentDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.adapter.entity.InvestmentEntity;
@@ -49,6 +50,8 @@ public class CentralMapperSteps {
     private Investment investment;
 
     private InvestmentEntity investmentEntity;
+
+    private InvestmentDtoResponse investmentDtoResponse;
 
     @Dado("um CashbookCreateDtoRequest válido, com ano {int} e documento {string}")
     public void um_cashbook_create_dto_request_válido_com_ano_e_documento(Integer ano, String documento) {
@@ -209,6 +212,47 @@ public class CentralMapperSteps {
         assertEquals(TypeActionEnum.valueOf(typeAction), investmentEntity.getTypeActionEnum());
         assertEquals(CategoryEnum.valueOf(category), investmentEntity.getCategoryEnum());
         assertEquals(supplier, investmentEntity.getSupplier());
+    }
+
+    @Quando("converter Investment para InvestmentDtoResponse")
+    public void converter_investment_para_investment_dto_response() {
+        investmentDtoResponse = centralMapper.toInvestmentDtoResponse(investment);
+
+        assertNotNull(investmentDtoResponse);
+    }
+
+    @Entao("receber um InvestmentDtoResponse válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void receber_um_investment_dto_response_válido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
+
+        assertEquals(description, investmentDtoResponse.description());
+        assertEquals(BigDecimal.valueOf(amount), investmentDtoResponse.amount());
+        assertEquals(TypeActionEnum.valueOf(typeAction), investmentDtoResponse.typeActionEnum());
+        assertEquals(CategoryEnum.valueOf(category), investmentDtoResponse.categoryEnum());
+        assertEquals(supplier, investmentDtoResponse.supplier());
+    }
+
+    @Dado("um InvestmentEntity válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void um_investment_entity_valido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
+
+        investmentEntity = InvestmentEntity.builder()
+                .description(description)
+                .amount(BigDecimal.valueOf(amount))
+                .typeActionEnum(TypeActionEnum.valueOf(typeAction))
+                .dateOperation(LocalDate.now())
+                .categoryEnum(CategoryEnum.valueOf(category))
+                .supplier(supplier)
+                .build();
+
+        assertNotNull(investmentEntity);
+    }
+
+    @Quando("converter InvestmentEntity para Investment")
+    public void converter_investment_entity_para_investment() {
+        investment = centralMapper.toInvestment(investmentEntity);
+
+        assertNotNull(investment);
     }
 }
 

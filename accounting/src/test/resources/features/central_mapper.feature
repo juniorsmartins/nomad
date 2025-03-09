@@ -31,3 +31,13 @@ Funcionalidade: testar operações de conversão da CentralMapper
     Quando converter Investment para InvestmentEntity
     Entao receber um InvestmentEntity válido, com description "C3PO" e amount 80 e typeAction "DISINVESTMENT" e category "CDB" e supplier "C3PO"
 
+  Cenario: deve converter InvestmentEntity para Investment
+    Dado um InvestmentEntity válido, com description "XPTO2" e amount 220 e typeAction "INVESTMENT" e category "DOLAR" e supplier "XPTO2"
+    Quando converter InvestmentEntity para Investment
+    Entao receber um Investment válido, com description "XPTO2" e amount 220 e typeAction "INVESTMENT" e category "DOLAR" e supplier "XPTO2"
+
+    Cenario: deve converter Investment para InvestmentDtoResponse
+      Dado um Investment válido, com description "D2Z2" e amount 22 e typeAction "DISINVESTMENT" e category "POUPANCA" e supplier "D2Z2"
+      Quando converter Investment para InvestmentDtoResponse
+      Entao receber um InvestmentDtoResponse válido, com description "D2Z2" e amount 22 e typeAction "DISINVESTMENT" e category "POUPANCA" e supplier "D2Z2"
+
