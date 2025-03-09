@@ -20,11 +20,11 @@ public class RegistrationCreateService implements RegistrationCreateInputPort {
     @Override
     public Registration create(@NonNull final UUID cashBookId, @NonNull Registration registration) {
 
-        log.info("Serviço Create iniciado para cashbookId: {} {}", cashBookId, registration);
+        log.info("Serviço create iniciado para cashbookId: {} {}", cashBookId, registration);
 
         var registrationCreated = registrationCreateOutputPort.create(cashBookId, registration);
 
-        log.info("Serviço Create concluído: {}", registrationCreated);
+        log.info("Serviço create concluído: {}", registrationCreated);
 
         return registrationCreated;
     }

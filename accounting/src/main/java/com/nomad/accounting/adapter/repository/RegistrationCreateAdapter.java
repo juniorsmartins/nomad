@@ -33,7 +33,7 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
     @Override
     public Registration create(@NonNull final UUID cashbookId, @NonNull final Registration registration) {
 
-        log.info("Adaptador Create iniciado para cashbookId: {} {}", cashbookId, registration);
+        log.info("Adaptador create iniciado para cashbookId: {} {}", cashbookId, registration);
 
         var registrationCreated = Optional.of(registration)
                 .map(centralMapper::toRegistrationEntity)
@@ -41,7 +41,7 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
                 .map(centralMapper::toRegistration)
                 .orElseThrow();
 
-        log.info("Adaptador Create concluído: {}", registrationCreated);
+        log.info("Adaptador create concluído: {}", registrationCreated);
 
         return registrationCreated;
     }
