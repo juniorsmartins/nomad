@@ -73,5 +73,7 @@ public interface CentralMapper {
     InvestmentEntity toInvestmentEntity(Investment investment);
 
     Investment toInvestment(InvestmentEntity investmentEntity);
+
+    InvestmentFindDtoResponse toInvestmentFindDtoResponse(InvestmentEntity investmentEntity);
 }
 
