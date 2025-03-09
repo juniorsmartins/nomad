@@ -2,6 +2,7 @@ package com.nomad.accounting.adapter.mapper;
 
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
+import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.*;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
@@ -60,6 +61,8 @@ public interface CentralMapper {
     RegistrationEntity toRegistrationEntity(Registration registration);
 
     Registration toRegistration(RegistrationEntity registrationEntity);
+
+    Investment toInvestment(InvestmentCreateDtoRequest investmentCreateDtoRequest);
 
     @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
     InvestmentDtoResponse toInvestmentDtoResponse(Investment investment);
