@@ -25,11 +25,7 @@ public enum CostCenterEnum {
     SUPPLEMENTATION("SUPPLEMENTATION"),
     TELEPHONY("TELEPHONY"),
     TRANSPORT("TRANSPORT"),
-    WAGE("WAGE"),
-    CDB("CDB"),
-    POUPANCA("POUPANCA"),
-    BOLSA("BOLSA"),
-    DOLAR("DOLAR");
+    WAGE("WAGE");
 
     private final String value;
 

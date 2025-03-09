@@ -16,6 +16,5 @@ VALUES
     ('92bab44c-91e2-4dcb-8351-5b9649a10bf2', 'c111de6e-396c-4940-bd95-394af78076db', 'Academia de musculação', 200.00, 'OUTPUT', '2024-09-23', 'SPORT', 'Personal Studio'),
     ('28c56a32-8ec3-4af4-982e-e8abc1902ed0', 'c111de6e-396c-4940-bd95-394af78076db', 'Dinheiro esquecido em conta bancária', 9.35, 'INPUT', '2024-09-24', 'BANKING', 'Bradesco'),
     ('e27cde30-b292-4f0d-a306-6198674a75e4', 'c111de6e-396c-4940-bd95-394af78076db', 'Outros', 32.99, 'OUTPUT', '2024-09-30', 'OTHER', 'Outros'),
-    ('2be482f9-0feb-4f03-999c-a603e84d0c7e', 'c111de6e-396c-4940-bd95-394af78076db', 'Salário dev pleno', 2472.72, 'INPUT', '2024-09-30', 'WAGE', 'Invillia'),
-    ('26adf884-6a9d-4134-99d3-2c380bdc1e9a', 'c111de6e-396c-4940-bd95-394af78076db', 'Poupança', 2000.00, 'INVESTMENT', '2024-09-30', 'POUPANCA', 'Itaú');
+    ('2be482f9-0feb-4f03-999c-a603e84d0c7e', 'c111de6e-396c-4940-bd95-394af78076db', 'Salário dev pleno', 2472.72, 'INPUT', '2024-09-30', 'WAGE', 'Invillia');
 

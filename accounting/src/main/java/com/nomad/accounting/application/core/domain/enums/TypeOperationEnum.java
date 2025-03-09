@@ -7,9 +7,7 @@ public enum TypeOperationEnum {
 
     INPUT("INPUT"),
     OUTPUT("OUTPUT"),
-    CHARGEBACK("CHARGEBACK"),
-    INVESTMENT("INVESTMENT"),
-    DISINVESTMENT("DISINVESTMENT");
+    CHARGEBACK("CHARGEBACK");
 
     private final String value;
 
