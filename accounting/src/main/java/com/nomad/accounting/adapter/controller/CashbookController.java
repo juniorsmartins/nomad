@@ -46,7 +46,7 @@ public class CashbookController {
 
     private final CashbookFindByIdOutputPort cashBookFindByIdOutputPort;
 
-    private final CashbookSearchOutputPort cashBookSearchOutputPort;
+    private final CashbookSearchOutputPort cashbookSearchOutputPort;
 
     private final CashbookDeleteInputPort cashBookDeleteInputPort;
 
@@ -122,15 +122,17 @@ public class CashbookController {
     }
 
     @GetMapping(path = "/search")
-    public ResponseEntity<Page<CashbookSearchDtoResponse>> search(@Valid final CashbookFilter cashBookFilter,
-                                                                  @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE) final Pageable pagination) {
+    public ResponseEntity<Page<CashbookSearchDtoResponse>> search(
+            @Valid final CashbookFilter cashbookFilter,
+            @PageableDefault(sort = "cashbookId", direction = Sort.Direction.DESC, size = AccountingConstants.PAGE_SIZE)
+            final Pageable pagination) {
 
-        log.info("Controller Search acionado: {}", cashBookFilter);
+        log.info("Controller search acionado: {}", cashbookFilter);
 
-        var response = cashBookSearchOutputPort.search(cashBookFilter, pagination)
+        var response = cashbookSearchOutputPort.search(cashbookFilter, pagination)
                 .map(centralMapper::toCashbookSearchDtoResponse);
 
-        log.info("Controller Search concluído: {}", response);
+        log.info("Controller search concluído: {}", response);
 
         return ResponseEntity
                 .ok()

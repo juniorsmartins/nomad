@@ -31,9 +31,9 @@ public class CashbookCreateAdapter implements CashbookCreateOutputPort {
         log.info("Adaptador Create iniciado: {}", cashBook);
 
         var cashBookSaved = Optional.of(cashBook)
-                .map(centralMapper::toCashBookEntity)
+                .map(centralMapper::toCashbookEntity)
                 .map(cashbookRepository::save)
-                .map(centralMapper::toCashBook)
+                .map(centralMapper::toCashbook)
                 .orElseThrow();
 
         log.info("Adaptador Create concluído: {}", cashBookSaved);

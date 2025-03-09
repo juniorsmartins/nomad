@@ -3,7 +3,7 @@ package com.nomad.accounting.adapter.repository;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Cashbook;
 import com.nomad.accounting.application.port.output.CashbookUpdadeOutputPort;
-import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
+import com.nomad.accounting.config.exception.http404.CashbookNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,8 @@ public class CashbookUpdateAdapter implements CashbookUpdadeOutputPort {
                     BeanUtils.copyProperties(cashBook, entity, "cashbookId");
                     return entity;
                 })
-                .map(centralMapper::toCashBook)
-                .orElseThrow(() -> new CashBookNotFoundException(cashBookId));
+                .map(centralMapper::toCashbook)
+                .orElseThrow(() -> new CashbookNotFoundException(cashBookId));
 
         log.info("Adaptador Update concluído: {}", cashBookUpdated);
 

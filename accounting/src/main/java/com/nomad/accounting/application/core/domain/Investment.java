@@ -1,5 +1,6 @@
 package com.nomad.accounting.application.core.domain;
 
+import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
 import com.nomad.accounting.application.core.domain.enums.TypeActionEnum;
 import lombok.Builder;
@@ -19,7 +20,7 @@ public class Investment {
 
     private UUID investmentId;
 
-    private Cashbook cashbook;
+    private CashbookEntity cashbook;
 
     private String description;
 

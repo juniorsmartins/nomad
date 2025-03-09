@@ -6,7 +6,7 @@ import java.io.Serial;
 import java.util.UUID;
 
 @Getter
-public abstract sealed class ResourceNotFoundException extends RuntimeException permits CashBookNotFoundException,
+public abstract sealed class ResourceNotFoundException extends RuntimeException permits CashbookNotFoundException,
     RegistrationNotFoundException {
 
     @Serial

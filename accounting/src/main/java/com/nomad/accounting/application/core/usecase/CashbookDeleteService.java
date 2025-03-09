@@ -4,7 +4,7 @@ import com.nomad.accounting.application.core.domain.Cashbook;
 import com.nomad.accounting.application.port.input.CashbookDeleteInputPort;
 import com.nomad.accounting.application.port.output.CashbookDeleteOutputPort;
 import com.nomad.accounting.application.port.output.CashbookFindByIdOutputPort;
-import com.nomad.accounting.config.exception.http409.CashBookConflictRulesException;
+import com.nomad.accounting.config.exception.http409.CashbookConflictRulesException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class CashbookDeleteService implements CashbookDeleteInputPort {
 
     private void validateDeletionRules(Cashbook cashBook) {
         if (!cashBook.getRegistrations().isEmpty()) {
-            throw new CashBookConflictRulesException(cashBook.getCashbookId());
+            throw new CashbookConflictRulesException(cashBook.getCashbookId());
         }
     }
 }

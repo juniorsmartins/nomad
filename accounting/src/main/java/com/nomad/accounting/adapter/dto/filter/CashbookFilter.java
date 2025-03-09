@@ -14,6 +14,9 @@ public record CashbookFilter(
         String document,
 
         @Valid
-        RegistrationFilter registration
+        RegistrationFilter registration,
+
+        @Valid
+        InvestmentFilter investment
 ) { }
 

@@ -4,7 +4,7 @@ import com.nomad.accounting.adapter.entity.RegistrationEntity;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Registration;
 import com.nomad.accounting.application.port.output.RegistrationCreateOutputPort;
-import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
+import com.nomad.accounting.config.exception.http404.CashbookNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class RegistrationCreateAdapter implements RegistrationCreateOutputPort {
                     registrationEntity.setCashbook(cashBookEntity);
                     return registrationEntity;
                 })
-                .orElseThrow(() -> new CashBookNotFoundException(cashbookId));
+                .orElseThrow(() -> new CashbookNotFoundException(cashbookId));
     }
 }
 
