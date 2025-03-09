@@ -46,3 +46,9 @@ Funcionalidade: testar operações de conversão da CentralMapper
       Quando converter InvestmentEntity para InvestmentFindDtoResponse
       Entao receber um InvestmentFindDtoResponse válido, com description "XXX" e amount 15 e typeAction "INVESTMENT" e category "FUNDO" e supplier "X2X"
 
+    Cenario: deve converter InvestmentEntity para InvestmentSearchDtoResponse
+      Dado um InvestmentEntity válido, com description "X25" e amount 258 e typeAction "INVESTMENT" e category "BOLSA" e supplier "X7X8"
+      Quando converter InvestmentEntity para InvestmentSearchDtoResponse
+      Entao receber um InvestmentSearchDtoResponse válido, com description "X25" e amount 258 e typeAction "INVESTMENT" e category "BOLSA" e supplier "X7X8"
+
+

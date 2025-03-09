@@ -40,13 +40,15 @@ public interface CentralMapper {
 
     CashbookSearchDtoResponse toCashbookSearchDtoResponse(CashbookEntity cashbookEntity);
 
-    CashbookEntity toCashBookEntity(Cashbook cashBook);
+    CashbookEntity toCashbookEntity(Cashbook cashBook);
 
-    Cashbook toCashBook(CashbookEntity cashBookEntity);
+    Cashbook toCashbook(CashbookEntity cashBookEntity);
 
     @Mapping(target = "registrationId", ignore = true)
     @Mapping(target = "cashbook", ignore = true)
     Registration toRegistration(RegistrationCreateDtoRequest registrationCreateDtoRequest);
+
+    Registration toRegistration(RegistrationEntity registrationEntity);
 
     RegistrationFindDtoResponse toRegistrationFindDtoResponse(RegistrationEntity registrationEntity);
 
@@ -60,10 +62,6 @@ public interface CentralMapper {
 
     RegistrationEntity toRegistrationEntity(Registration registration);
 
-    Registration toRegistration(RegistrationEntity registrationEntity);
-
-    Investment toInvestment(InvestmentCreateDtoRequest investmentCreateDtoRequest);
-
     @Mapping(source = "cashbook.cashbookId", target = "cashbookId")
     InvestmentDtoResponse toInvestmentDtoResponse(Investment investment);
 
@@ -74,6 +72,10 @@ public interface CentralMapper {
 
     Investment toInvestment(InvestmentEntity investmentEntity);
 
+    Investment toInvestment(InvestmentCreateDtoRequest investmentCreateDtoRequest);
+
     InvestmentFindDtoResponse toInvestmentFindDtoResponse(InvestmentEntity investmentEntity);
+
+    InvestmentSearchDtoResponse toInvestmentSearchDtoResponse(InvestmentEntity investmentEntity);
 }
 

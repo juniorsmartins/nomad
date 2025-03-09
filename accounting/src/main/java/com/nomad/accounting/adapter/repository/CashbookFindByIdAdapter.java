@@ -3,7 +3,7 @@ package com.nomad.accounting.adapter.repository;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Cashbook;
 import com.nomad.accounting.application.port.output.CashbookFindByIdOutputPort;
-import com.nomad.accounting.config.exception.http404.CashBookNotFoundException;
+import com.nomad.accounting.config.exception.http404.CashbookNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,17 +23,17 @@ public class CashbookFindByIdAdapter implements CashbookFindByIdOutputPort {
 
     @Transactional(readOnly = true)
     @Override
-    public Cashbook findById(@NotNull final UUID cashBookId) {
+    public Cashbook findById(@NotNull final UUID cashbookId) {
 
-        log.info("Adaptador FindById iniciado: {}", cashBookId);
+        log.info("Adaptador findById iniciado: {}", cashbookId);
 
-        var cashBookFinded = cashbookRepository.findById(cashBookId)
-                .map(centralMapper::toCashBook)
-                .orElseThrow(() -> new CashBookNotFoundException(cashBookId));
+        var cashbookFinded = cashbookRepository.findById(cashbookId)
+                .map(centralMapper::toCashbook)
+                .orElseThrow(() -> new CashbookNotFoundException(cashbookId));
 
-        log.info("Adaptador FindById concluído: {}", cashBookFinded);
+        log.info("Adaptador findById concluído: {}", cashbookFinded);
 
-        return cashBookFinded;
+        return cashbookFinded;
     }
 }
 

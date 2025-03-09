@@ -6,7 +6,7 @@ import java.io.Serial;
 import java.util.UUID;
 
 @Getter
-public abstract sealed class ResourceConflictRulesException extends RuntimeException permits CashBookConflictRulesException {
+public abstract sealed class ResourceConflictRulesException extends RuntimeException permits CashbookConflictRulesException {
 
     @Serial
     private static final long serialVersionUID = 1L;

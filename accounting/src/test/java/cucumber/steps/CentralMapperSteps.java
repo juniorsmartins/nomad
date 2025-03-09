@@ -3,10 +3,7 @@ package cucumber.steps;
 import com.nomad.accounting.adapter.dto.in.CashbookCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.CashbookUpdateDtoRequest;
 import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
-import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
-import com.nomad.accounting.adapter.dto.out.InvestmentDtoResponse;
-import com.nomad.accounting.adapter.dto.out.InvestmentFindDtoResponse;
-import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
+import com.nomad.accounting.adapter.dto.out.*;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
 import com.nomad.accounting.adapter.entity.InvestmentEntity;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
@@ -55,6 +52,8 @@ public class CentralMapperSteps {
     private InvestmentDtoResponse investmentDtoResponse;
 
     private InvestmentFindDtoResponse investmentFindDtoResponse;
+
+    private InvestmentSearchDtoResponse investmentSearchDtoResponse;
 
     @Dado("um CashbookCreateDtoRequest válido, com ano {int} e documento {string}")
     public void um_cashbook_create_dto_request_válido_com_ano_e_documento(Integer ano, String documento) {
@@ -274,6 +273,24 @@ public class CentralMapperSteps {
         assertEquals(TypeActionEnum.valueOf(typeAction), investmentFindDtoResponse.typeActionEnum());
         assertEquals(CategoryEnum.valueOf(category), investmentFindDtoResponse.categoryEnum());
         assertEquals(supplier, investmentFindDtoResponse.supplier());
+    }
+
+    @Quando("converter InvestmentEntity para InvestmentSearchDtoResponse")
+    public void converter_investment_entity_para_investment_search_dto_response() {
+        investmentSearchDtoResponse = centralMapper.toInvestmentSearchDtoResponse(investmentEntity);
+
+        assertNotNull(investmentSearchDtoResponse);
+    }
+
+    @Entao("receber um InvestmentSearchDtoResponse válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void receber_um_investment_search_dto_response_valido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
+
+        assertEquals(description, investmentSearchDtoResponse.description());
+        assertEquals(BigDecimal.valueOf(amount), investmentSearchDtoResponse.amount());
+        assertEquals(TypeActionEnum.valueOf(typeAction), investmentSearchDtoResponse.typeActionEnum());
+        assertEquals(CategoryEnum.valueOf(category), investmentSearchDtoResponse.categoryEnum());
+        assertEquals(supplier, investmentSearchDtoResponse.supplier());
     }
 }
 
