@@ -22,9 +22,12 @@ Funcionalidade: testar operações de conversão da CentralMapper
     Então receber um CashbookDtoResponse com Registration válido, com id "f831f54e-4df2-4ca1-afce-944039ec55ff" e description "Corte de cabelo" e amount 20.50 e typeOperation "OUTPUT" e dateOperation "1990-01-22" e costCenter "BARBERSHOP" e supplier "Barbearia do Careca" e Registration válido com CashbookEntity com apenas cashbookId "7ab93b84-697b-43b9-9f66-8a796b83fd52"
 
   Cenario: deve converter InvestmentCreateDtoRequest para Investment
-    Dado um InvestmentCreateDtoRequest válido, com description "XPTO" e amount 75 e typeOperation "INVESTMENT" e category "CDB" e supplier "XPTO"
+    Dado um InvestmentCreateDtoRequest válido, com description "XPTO" e amount 75 e typeAction "INVESTMENT" e category "CDB" e supplier "XPTO"
     Quando converter InvestmentCreateDtoRequest para Investment
     Entao receber um Investment válido, com description "XPTO" e amount 75 e typeAction "INVESTMENT" e category "CDB" e supplier "XPTO"
 
-
+  Cenario: deve converter Investment para InvestmentEntity
+    Dado um Investment válido, com description "C3PO" e amount 80 e typeAction "DISINVESTMENT" e category "CDB" e supplier "C3PO"
+    Quando converter Investment para InvestmentEntity
+    Entao receber um InvestmentEntity válido, com description "C3PO" e amount 80 e typeAction "DISINVESTMENT" e category "CDB" e supplier "C3PO"
 

@@ -6,6 +6,7 @@ import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
 import com.nomad.accounting.adapter.entity.CashbookEntity;
+import com.nomad.accounting.adapter.entity.InvestmentEntity;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.core.domain.Cashbook;
 import com.nomad.accounting.application.core.domain.Investment;
@@ -46,6 +47,8 @@ public class CentralMapperSteps {
     private InvestmentCreateDtoRequest investmentCreateDtoRequest;
 
     private Investment investment;
+
+    private InvestmentEntity investmentEntity;
 
     @Dado("um CashbookCreateDtoRequest válido, com ano {int} e documento {string}")
     public void um_cashbook_create_dto_request_válido_com_ano_e_documento(Integer ano, String documento) {
@@ -144,12 +147,12 @@ public class CentralMapperSteps {
         Assertions.assertEquals(supplier, registrationDtoResponse.supplier());
     }
 
-    @Dado("um InvestmentCreateDtoRequest válido, com description {string} e amount {int} e typeOperation {string} e category {string} e supplier {string}")
-    public void um_investment_create_dto_request_valido_com_description_e_amount_e_type_operation_e_category_e_supplier(
-            String description, Integer amount, String typeOperation, String category, String supplier) {
+    @Dado("um InvestmentCreateDtoRequest válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void um_investment_create_dto_request_valido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
 
         investmentCreateDtoRequest = new InvestmentCreateDtoRequest(
-                description, BigDecimal.valueOf(amount), TypeActionEnum.valueOf(typeOperation),
+                description, BigDecimal.valueOf(amount), TypeActionEnum.valueOf(typeAction),
                 LocalDate.now(), CategoryEnum.valueOf(category), supplier);
 
         assertNotNull(investmentCreateDtoRequest);
@@ -171,6 +174,41 @@ public class CentralMapperSteps {
         assertEquals(TypeActionEnum.valueOf(typeAction), investment.getTypeActionEnum());
         assertEquals(CategoryEnum.valueOf(category), investment.getCategoryEnum());
         assertEquals(supplier, investment.getSupplier());
+    }
+
+    @Dado("um Investment válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void um_investment_valido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
+
+        investment = Investment.builder()
+                .description(description)
+                .amount(BigDecimal.valueOf(amount))
+                .typeActionEnum(TypeActionEnum.valueOf(typeAction))
+                .dateOperation(LocalDate.now())
+                .categoryEnum(CategoryEnum.valueOf(category))
+                .supplier(supplier)
+                .build();
+
+        assertNotNull(investment);
+    }
+
+    @Quando("converter Investment para InvestmentEntity")
+    public void converter_investment_para_investment_entity() {
+
+        investmentEntity = centralMapper.toInvestmentEntity(investment);
+
+        assertNotNull(investmentEntity);
+    }
+
+    @Entao("receber um InvestmentEntity válido, com description {string} e amount {int} e typeAction {string} e category {string} e supplier {string}")
+    public void receber_um_investment_entity_valido_com_description_e_amount_e_type_action_e_category_e_supplier(
+            String description, Integer amount, String typeAction, String category, String supplier) {
+
+        assertEquals(description, investmentEntity.getDescription());
+        assertEquals(BigDecimal.valueOf(amount), investmentEntity.getAmount());
+        assertEquals(TypeActionEnum.valueOf(typeAction), investmentEntity.getTypeActionEnum());
+        assertEquals(CategoryEnum.valueOf(category), investmentEntity.getCategoryEnum());
+        assertEquals(supplier, investmentEntity.getSupplier());
     }
 }
 
