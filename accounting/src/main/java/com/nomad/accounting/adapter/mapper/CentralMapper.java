@@ -72,6 +72,8 @@ public interface CentralMapper {
 
     Investment toInvestment(InvestmentEntity investmentEntity);
 
+    @Mapping(target = "investmentId", ignore = true)
+    @Mapping(target = "cashbook", ignore = true)
     Investment toInvestment(InvestmentCreateDtoRequest investmentCreateDtoRequest);
 
     InvestmentFindDtoResponse toInvestmentFindDtoResponse(InvestmentEntity investmentEntity);
