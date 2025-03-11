@@ -4,6 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
+description = "Gerencia livro-caixa e registros financeiros de entrada e saída."
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
@@ -33,18 +34,22 @@ dependencies {
 	// Bean Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// Lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+	// Migration
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// Monitoramento e Observabilidade
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
 
 	// Conversão MapStruct
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-	// Migration
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.flywaydb:flyway-database-postgresql'
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
 	// Database
 	runtimeOnly 'org.postgresql:postgresql'
@@ -53,21 +58,15 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 
-	// Monitoramento e Observabilidade
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
+	// ---------- TESTES ----------
 
 	// Tests - Cucumber
 	implementation 'io.cucumber:cucumber-java:7.21.0'
 	testImplementation 'io.cucumber:cucumber-junit:7.21.0'
 	testImplementation 'io.cucumber:cucumber-spring:7.21.0'
 
-	// ---------- TESTES ----------
 	// Test - ambiente de banco de dados
 	testImplementation 'com.h2database:h2:2.3.232'
-//	testImplementation 'org.testcontainers:testcontainers:1.20.5'
-//	testImplementation 'org.testcontainers:junit-jupiter:1.20.5'
-//	testImplementation 'org.testcontainers:postgresql:1.20.5'
 
 	// Test
 	testImplementation 'io.rest-assured:rest-assured:5.5.1'
@@ -78,3 +77,4 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
