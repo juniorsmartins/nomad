@@ -2,7 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.0'
 	id 'io.spring.dependency-management' version '1.1.6'
-//	id 'checkstyle'
 }
 
 description = "Gerencia livro-caixa e registros financeiros de entrada e saída."
@@ -78,13 +77,4 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-//checkstyle {
-//	toolVersion = '10.17.0' // Versão compatível com Java 21
-//	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-//}
-//
-//tasks.named('checkstyleMain') {
-//	maxWarnings = 0 // Falha o build se houver violações
-//}
 
