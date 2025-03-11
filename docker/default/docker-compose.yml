@@ -34,7 +34,7 @@ services:
       args:
         APP_NAME: "accounting"
         APP_VERSION: "v0.0.1"
-        APP_DESCRIPTION: "Gerencia livro-caixa e registros de entrada e saída."
+        APP_DESCRIPTION: "Gerencia livro-caixa e registros financeiros de entrada e saída."
     ports:
       - "9201:9201"
     deploy:
