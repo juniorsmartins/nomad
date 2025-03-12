@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
         snippets = CucumberOptions.SnippetType.UNDERSCORE,
         dryRun = false // Defina como true para verificar se todos os steps estão implementados sem executar os testes
 )
-public class RunnerTest {
+public class CucumberRunnerTest {
 
 }
 

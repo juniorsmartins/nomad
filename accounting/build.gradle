@@ -9,8 +9,8 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 apply from: 'gradle/config/source-sets.gradle' // o source-sets precisa vir antes do config - primeiro source-sets.
-apply from: 'gradle/config/config.gradle'
-apply from: 'gradle/config/task.gradle'
+apply from: 'gradle/config/config.gradle' // Segundo: configura extensões
+apply from: 'gradle/config/task.gradle' // Terceiro: define tarefas
 
 java {
 	toolchain {

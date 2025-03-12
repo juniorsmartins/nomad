@@ -4,7 +4,7 @@ task cucumberTest(type: Test) {
     classpath = sourceSets.cucumberTest.runtimeClasspath
 
     testLogging {
-        events 'skipped', 'failed'
+        events 'passed', 'skipped', 'failed'
     }
 
     useJUnitPlatform()
