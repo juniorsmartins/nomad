@@ -8,15 +8,13 @@ description = "Gerencia livro-caixa e registros financeiros de entrada e saída.
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
+apply from: 'gradle/config/source-sets.gradle' // o source-sets precisa vir antes do config - primeiro source-sets.
+apply from: 'gradle/config/config.gradle'
+apply from: 'gradle/config/task.gradle'
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
 	}
 }
 
@@ -76,5 +74,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Define estratégia de comportamento frente a resources duplicados - applications
+tasks.withType(Copy).all {
+	duplicatesStrategy 'exclude'
 }
 

@@ -1,0 +1,24 @@
+task cucumberTest(type: Test) {
+
+    testClassesDirs = sourceSets.cucumberTest.output.classesDirs
+    classpath = sourceSets.cucumberTest.runtimeClasspath
+
+    testLogging {
+        events 'skipped', 'failed'
+    }
+
+    useJUnitPlatform()
+}
+
+task robotTest(type: Test) {
+
+    testClassesDirs = sourceSets.robotTest.output.classesDirs
+    classpath = sourceSets.robotTest.runtimeClasspath
+
+    testLogging {
+        events 'skipped', 'failed'
+    }
+
+    useJUnitPlatform()
+}
+
