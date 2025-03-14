@@ -38,9 +38,3 @@ sourceSets {
     }
 }
 
-dependencies {
-
-    cucumberTestImplementation sourceSets.main.output
-    robotTestImplementation sourceSets.main.output
-}
-

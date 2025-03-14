@@ -8,6 +8,11 @@ task cucumberTest(type: Test) {
     }
 
     useJUnitPlatform()
+
+    // Configuração do Cucumber
+    systemProperty 'cucumber.features', 'classpath:features'
+    systemProperty 'cucumber.glue', 'cucumber.config,cucumber.steps'
+    systemProperty 'cucumber.plugin', 'pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/cucumber.json'
 }
 
 task robotTest(type: Test) {
