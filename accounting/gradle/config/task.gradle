@@ -1,0 +1,29 @@
+task cucumberTest(type: Test) {
+
+    testClassesDirs = sourceSets.cucumberTest.output.classesDirs
+    classpath = sourceSets.cucumberTest.runtimeClasspath
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+
+    useJUnitPlatform()
+
+    // Configuração do Cucumber
+    systemProperty 'cucumber.features', 'classpath:features'
+    systemProperty 'cucumber.glue', 'cucumber.config,cucumber.steps'
+    systemProperty 'cucumber.plugin', 'pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/cucumber.json'
+}
+
+task robotTest(type: Test) {
+
+    testClassesDirs = sourceSets.robotTest.output.classesDirs
+    classpath = sourceSets.robotTest.runtimeClasspath
+
+    testLogging {
+        events 'skipped', 'failed'
+    }
+
+    useJUnitPlatform()
+}
+

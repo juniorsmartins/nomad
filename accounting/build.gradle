@@ -8,15 +8,13 @@ description = "Gerencia livro-caixa e registros financeiros de entrada e saída.
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
+apply from: 'gradle/config/source-sets.gradle' // o source-sets precisa vir antes do config - primeiro source-sets.
+apply from: 'gradle/config/config.gradle' // Segundo: configura extensões
+apply from: 'gradle/config/task.gradle' // Terceiro: define tarefas
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
 	}
 }
 
@@ -62,6 +60,7 @@ dependencies {
 
 	// Tests - Cucumber
 	implementation 'io.cucumber:cucumber-java:7.21.0'
+	testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.21.0'
 	testImplementation 'io.cucumber:cucumber-junit:7.21.0'
 	testImplementation 'io.cucumber:cucumber-spring:7.21.0'
 
@@ -76,5 +75,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Define estratégia de comportamento frente a resources duplicados - applications
+tasks.withType(Copy).all {
+	duplicatesStrategy = 'exclude'
 }
 

@@ -1,0 +1,12 @@
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+
+    cucumberTestImplementation.extendsFrom testImplementation
+    cucumberTestImplementation.extendsFrom testRuntimeOnly
+
+    robotTestImplementation.extendsFrom testImplementation
+    robotTestImplementation.extendsFrom testRuntimeOnly
+}
+

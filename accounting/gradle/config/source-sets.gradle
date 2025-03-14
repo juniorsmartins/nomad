@@ -1,0 +1,40 @@
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/java"
+        }
+        resources {
+            srcDir "src/main/resources"
+        }
+    }
+
+    test {
+        java {
+            srcDir "src/test/java"
+        }
+        resources {
+            srcDir "src/test/resources"
+        }
+    }
+
+    cucumberTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir "src/cucumberTest/java"
+        }
+        resources {
+            srcDir "src/cucumberTest/resources"
+        }
+    }
+
+    robotTest {
+        java {
+            srcDir "src/robotTest/java"
+        }
+        resources {
+            srcDir "src/robotTest/resources"
+        }
+    }
+}
+
