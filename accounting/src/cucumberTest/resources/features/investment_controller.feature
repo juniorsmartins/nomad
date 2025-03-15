@@ -19,6 +19,9 @@ Funcionalidade: testar operações CRUD de InvestmentController
       E com um InvestmentDtoResponse no body, com id e amount 45 e typeAction "INVESTMENT" e category "FUNDO"
       E o Investment foi criado, com amount 45 e typeAction "INVESTMENT" e category "FUNDO", no banco de dados pelo InvestmentController
 
-
-
+    Cenario: Get para consultar Investment com sucesso
+      Dado um UUID de Investiment, com amount 80 e typeAction "INVESTMENT" e category "DOLAR", de um Cashbook, com ano 1820 e documento "35052427050"
+      Quando a requisição Get for feita no método findById do InvestmentController
+      Entao receberei um ResponseEntity com HTTP 200 do InvestmentController
+      E com um InvestmentFindDtoResponse no body, com amount 80 e typeAction "INVESTMENT" e category "DOLAR"
 

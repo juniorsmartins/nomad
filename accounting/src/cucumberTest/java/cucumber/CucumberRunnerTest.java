@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
                 "cucumber.steps"},
         plugin = {
                 "pretty",
-                "html:target/cucumber-reports/cucumber.html", // Relatório HTML
-                "json:target/cucumber-reports/cucumber.json" // Relatório JSON
+                "html:src/cucumberTest/cucumber-reports/cucumber.html", // Relatório HTML
+                "json:src/cucumberTest/cucumber-reports/cucumber.json" // Relatório JSON
         },
         monochrome = true,
         snippets = CucumberOptions.SnippetType.UNDERSCORE,

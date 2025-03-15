@@ -2,8 +2,10 @@ package com.nomad.accounting.adapter.controller;
 
 import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.InvestmentDtoResponse;
+import com.nomad.accounting.adapter.dto.out.InvestmentFindDtoResponse;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.port.input.InvestmentCreateInputPort;
+import com.nomad.accounting.application.port.output.InvestmentFindByIdOutputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +24,11 @@ public class InvestmentController {
 
     protected static final String URI_INVESTMENT = "/api/v1/accounting/investment";
 
-    private final CentralMapper centralMapper;
-
     private final InvestmentCreateInputPort investmentCreateInputPort;
+
+    private final InvestmentFindByIdOutputPort investmentFindByIdOutputPort;
+
+    private final CentralMapper centralMapper;
 
     @PostMapping(path = "/{id}")
     public ResponseEntity<InvestmentDtoResponse> create(
@@ -43,6 +47,23 @@ public class InvestmentController {
 
         return ResponseEntity
                 .created(URI.create(URI_INVESTMENT + "/" + investmentId))
+                .body(response);
+    }
+
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<InvestmentFindDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
+
+        log.info("Controller findById iniciado: {}", id);
+
+        var response = Optional.of(id)
+                .map(investmentFindByIdOutputPort::findById)
+                .map(centralMapper::toInvestmentFindDtoResponse)
+                .orElseThrow();
+
+        log.info("Controller findById concluído: {}", response);
+
+        return ResponseEntity
+                .ok()
                 .body(response);
     }
 }

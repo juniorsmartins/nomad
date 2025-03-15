@@ -2,6 +2,8 @@ package cucumber.steps;
 
 import com.nomad.accounting.adapter.dto.in.InvestmentCreateDtoRequest;
 import com.nomad.accounting.adapter.dto.out.InvestmentDtoResponse;
+import com.nomad.accounting.adapter.dto.out.InvestmentFindDtoResponse;
+import com.nomad.accounting.adapter.entity.InvestmentEntity;
 import com.nomad.accounting.adapter.repository.CashbookRepository;
 import com.nomad.accounting.adapter.repository.InvestmentRepository;
 import com.nomad.accounting.application.core.domain.enums.CategoryEnum;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.UUID;
@@ -105,6 +108,55 @@ public class InvestmentControllerStep {
     public void o_investment_foi_criado_com_amount_e_type_action_e_category_no_banco_de_dados_pelo_investment_controller(Integer int1, String string, String string2) {
         var investmentEntity = investmentRepository.findById(idInvestment);
         assertThat(investmentEntity).isNotEmpty();
+    }
+
+    @Dado("um UUID de Investiment, com amount {int} e typeAction {string} e category {string}, de um Cashbook, com ano {int} e documento {string}")
+    public void um_uuid_de_investiment_com_amount_e_type_action_e_category_de_um_cashbook_com_ano_e_documento(
+            Integer amount, String typeAction, String category, Integer yearReference, String document) {
+
+        var cashbookEntity = cashbookRepository
+                .findByYearReferenceAndDocument(Year.of(yearReference), document).get();
+
+        var investmentEntity = InvestmentEntity.builder()
+                .cashbook(cashbookEntity)
+                .description("Descrição qualquer")
+                .amount(BigDecimal.valueOf(amount))
+                .typeActionEnum(TypeActionEnum.valueOf(typeAction))
+                .dateOperation(LocalDate.now())
+                .categoryEnum(CategoryEnum.valueOf(category))
+                .supplier("Fornecedor qualquer")
+                .build();
+
+        var investmentSave = investmentRepository.save(investmentEntity);
+        idInvestment = investmentSave.getInvestmentId();
+
+        assertThat(cashbookEntity).isNotNull();
+        assertThat(investmentSave).isNotNull();
+        assertThat(idInvestment).isNotNull();
+    }
+
+    @Quando("a requisição Get for feita no método findById do InvestmentController")
+    public void a_requisição_get_for_feita_no_método_find_by_id_do_investment_controller() {
+
+        response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(ConstantsTest.CONTENT_TYPE_JSON)
+                .when()
+                    .get("/" + idInvestment);
+
+        assertThat(response).isNotNull();
+    }
+
+    @Entao("com um InvestmentFindDtoResponse no body, com amount {int} e typeAction {string} e category {string}")
+    public void com_um_investment_find_dto_response_no_body_com_amount_e_type_action_e_category(
+            Integer amount, String typeAction, String category) {
+
+        var body = response.as(InvestmentFindDtoResponse.class);
+        assertThat(body).isNotNull();
+        assertThat(body.investmentId()).isNotNull();
+        assertThat(body.amount().setScale(0, RoundingMode.HALF_UP)).isEqualTo(BigDecimal.valueOf(amount));
+        assertThat(body.typeActionEnum()).isEqualTo(TypeActionEnum.valueOf(typeAction));
+        assertThat(body.categoryEnum()).isEqualTo(CategoryEnum.valueOf(category));
     }
 }
 
