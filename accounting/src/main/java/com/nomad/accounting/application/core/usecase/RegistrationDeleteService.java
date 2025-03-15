@@ -2,7 +2,6 @@ package com.nomad.accounting.application.core.usecase;
 
 import com.nomad.accounting.application.port.input.RegistrationDeleteInputPort;
 import com.nomad.accounting.application.port.output.RegistrationDeleteOutputPort;
-import com.nomad.accounting.application.port.output.RegistrationFindByIdOutputPort;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +19,11 @@ public class RegistrationDeleteService implements RegistrationDeleteInputPort {
     @Override
     public void delete(@NonNull final UUID registrationId) {
 
-        log.info("Serviço Delete iniciado com id: {}", registrationId);
+        log.info("Serviço delete iniciado com id: {}", registrationId);
 
         registrationDeleteOutputPort.delete(registrationId);
 
-        log.info("Serviço Delete concluído: {}", registrationId);
+        log.info("Serviço delete concluído: {}", registrationId);
     }
 }
 

@@ -148,7 +148,7 @@ public class RegistrationControllerStep {
                 .given().spec(requestSpecification)
                     .contentType(ConstantsTest.CONTENT_TYPE_JSON)
                 .when()
-                .delete("/" + idRegistration);
+                    .delete("/" + idRegistration);
 
         assertThat(response).isNotNull();
     }

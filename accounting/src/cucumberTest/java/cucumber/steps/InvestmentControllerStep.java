@@ -158,5 +158,22 @@ public class InvestmentControllerStep {
         assertThat(body.typeActionEnum()).isEqualTo(TypeActionEnum.valueOf(typeAction));
         assertThat(body.categoryEnum()).isEqualTo(CategoryEnum.valueOf(category));
     }
+
+    @Quando("a requisição Delete for feita no método delete do InvestmentController")
+    public void a_requisicao_delete_for_feita_no_metodo_delete_do_investment_controller() {
+        response = RestAssured
+                .given().spec(requestSpecification)
+                    .contentType(ConstantsTest.CONTENT_TYPE_JSON)
+                .when()
+                    .delete("/" + idInvestment);
+
+        assertThat(response).isNotNull();
+    }
+
+    @Entao("o Investment foi apagado do banco de dados pelo InvestmentController")
+    public void o_investment_foi_apagado_do_banco_de_dados_pelo_investment_controller() {
+        var registrationEntity = investmentRepository.findById(idInvestment);
+        assertThat(registrationEntity).isEmpty();
+    }
 }
 
