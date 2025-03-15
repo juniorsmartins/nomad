@@ -1,5 +1,7 @@
-task cucumberTest(type: Test) {
+// registro de tarefa cucumberTest
+tasks.register('cucumberTest', Test) {
 
+    // configurações da tarefa
     testClassesDirs = sourceSets.cucumberTest.output.classesDirs
     classpath = sourceSets.cucumberTest.runtimeClasspath
 
@@ -15,17 +17,20 @@ task cucumberTest(type: Test) {
     systemProperty 'cucumber.plugin', 'pretty,html:src/cucumberTest/cucumber-reports/cucumber.html,json:src/cucumberTest/cucumber-reports/cucumber.json'
 }
 
-task robotTest(type: Test) {
+// registro de tarefa robotTest
+tasks.register('robotTest', Test) {
 
     testClassesDirs = sourceSets.robotTest.output.classesDirs
     classpath = sourceSets.robotTest.runtimeClasspath
 
     testLogging {
-        events 'skipped', 'failed'
+        events 'passed', 'skipped', 'failed'
     }
 
     useJUnitPlatform()
 }
 
-check.dependsOn cucumberTest
+tasks.named('check') {
+    dependsOn tasks.named('cucumberTest')
+}
 
