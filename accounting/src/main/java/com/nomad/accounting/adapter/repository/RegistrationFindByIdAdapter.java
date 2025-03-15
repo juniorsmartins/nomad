@@ -22,12 +22,12 @@ public class RegistrationFindByIdAdapter implements RegistrationFindByIdOutputPo
     @Override
     public RegistrationEntity findById(@NonNull final UUID registrationId) {
 
-        log.info("Adaptador FindById iniciado: {}", registrationId);
+        log.info("Adaptador findById iniciado: {}", registrationId);
 
         var registrationFind = registrationRepository.findById(registrationId)
                 .orElseThrow(() -> new RegistrationNotFoundException(registrationId));
 
-        log.info("Adaptador FindById concluído: {}", registrationFind);
+        log.info("Adaptador findById concluído: {}", registrationFind);
 
         return registrationFind;
     }

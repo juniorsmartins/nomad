@@ -107,9 +107,9 @@ public class RegistrationControllerStep {
 
         var registrationEntity = RegistrationEntity.builder()
                 .cashbook(cashbookEntity)
+                .description("Qualquer descrição")
                 .amount(BigDecimal.valueOf(amount))
                 .typeOperationEnum(TypeOperationEnum.valueOf(typeOperation))
-                .description("Qualquer descrição")
                 .dateOperation(LocalDate.now())
                 .costCenterEnum(CostCenterEnum.WAGE)
                 .supplier("Qualquer fornecedor")

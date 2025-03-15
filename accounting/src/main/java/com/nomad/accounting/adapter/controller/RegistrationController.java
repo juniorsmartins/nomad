@@ -58,14 +58,14 @@ public class RegistrationController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<RegistrationFindDtoResponse> findById(@PathVariable(name = "id") final UUID id) {
 
-        log.info("Controller FindById iniciado: {}", id);
+        log.info("Controller findById iniciado: {}", id);
 
         var response = Optional.of(id)
                 .map(registrationFindByIdOutputPort::findById)
                 .map(centralMapper::toRegistrationFindDtoResponse)
                 .orElseThrow();
 
-        log.info("Controller FindById concluído: {}", response);
+        log.info("Controller findById concluído: {}", response);
 
         return ResponseEntity
                 .ok()
