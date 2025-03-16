@@ -25,3 +25,9 @@ Funcionalidade: testar operações CRUD de InvestmentController
       Entao receberei um ResponseEntity com HTTP 200 do InvestmentController
       E com um InvestmentFindDtoResponse no body, com amount 80 e typeAction "INVESTMENT" e category "DOLAR"
 
+    Cenario: Delete para apagar Investment com sucesso
+      Dado um UUID de Investiment, com amount 80 e typeAction "INVESTMENT" e category "DOLAR", de um Cashbook, com ano 1855 e documento "83305660058"
+      Quando a requisição Delete for feita no método delete do InvestmentController
+      Entao receberei um ResponseEntity com HTTP 204 do InvestmentController
+      E o Investment foi apagado do banco de dados pelo InvestmentController
+

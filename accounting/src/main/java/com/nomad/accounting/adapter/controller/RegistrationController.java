@@ -1,7 +1,6 @@
 package com.nomad.accounting.adapter.controller;
 
 import com.nomad.accounting.adapter.dto.in.RegistrationCreateDtoRequest;
-import com.nomad.accounting.adapter.dto.out.CashbookDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationDtoResponse;
 import com.nomad.accounting.adapter.dto.out.RegistrationFindDtoResponse;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
@@ -73,9 +72,9 @@ public class RegistrationController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<CashbookDtoResponse> delete(@PathVariable(name = "id") final UUID registrationId) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final UUID registrationId) {
 
-        log.info("Controller Update iniciado para cashbookId: {}", registrationId);
+        log.info("Controller update iniciado para registrationId: {}", registrationId);
 
         Optional.ofNullable(registrationId)
                 .ifPresentOrElse(registrationDeleteInputPort::delete,
@@ -84,7 +83,7 @@ public class RegistrationController {
                         }
                 );
 
-        log.info("Controller Update concluído: {}", registrationId);
+        log.info("Controller update concluído: {}", registrationId);
 
         return ResponseEntity
                 .noContent()

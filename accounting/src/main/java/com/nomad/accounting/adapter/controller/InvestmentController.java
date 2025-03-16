@@ -5,6 +5,7 @@ import com.nomad.accounting.adapter.dto.out.InvestmentDtoResponse;
 import com.nomad.accounting.adapter.dto.out.InvestmentFindDtoResponse;
 import com.nomad.accounting.adapter.mapper.CentralMapper;
 import com.nomad.accounting.application.port.input.InvestmentCreateInputPort;
+import com.nomad.accounting.application.port.input.InvestmentDeleteInputPort;
 import com.nomad.accounting.application.port.output.InvestmentFindByIdOutputPort;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,6 +29,8 @@ public class InvestmentController {
     private final InvestmentCreateInputPort investmentCreateInputPort;
 
     private final InvestmentFindByIdOutputPort investmentFindByIdOutputPort;
+
+    private final InvestmentDeleteInputPort investmentDeleteInputPort;
 
     private final CentralMapper centralMapper;
 
@@ -65,6 +69,25 @@ public class InvestmentController {
         return ResponseEntity
                 .ok()
                 .body(response);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") final UUID investmentId) {
+
+        log.info("Controller update iniciado para investmentId: {}", investmentId);
+
+        Optional.ofNullable(investmentId)
+                .ifPresentOrElse(investmentDeleteInputPort::delete,
+                        () -> {
+                            throw new NoSuchElementException();
+                        }
+                );
+
+        log.info("Controller update concluído: {}", investmentId);
+
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
 

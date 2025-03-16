@@ -26,7 +26,7 @@ public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
     @Override
     public void delete(@NonNull final UUID registrationId) {
 
-        log.info("Adapter Delete iniciado: {}", registrationId);
+        log.info("Adapter delete iniciado: {}", registrationId);
 
         var cashbookEntity = registrationRepository.findById(registrationId)
                 .map(RegistrationEntity::getCashbook)
@@ -37,7 +37,7 @@ public class RegistrationDeleteAdapter implements RegistrationDeleteOutputPort {
 
         registrationRepository.deleteById(registrationId);
 
-        log.info("Adapter Delete concluído: {}", registrationId);
+        log.info("Adapter delete concluído: {}", registrationId);
     }
 }
 
