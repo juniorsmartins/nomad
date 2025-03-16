@@ -11,7 +11,7 @@ services:
       args:
         APP_NAME: "accounting_analysis"
         APP_VERSION: "v0.0.1"
-        APP_DESCRIPTION: "Desenvolve análises de dados do livro-caixa."
+        APP_DESCRIPTION: "Desenvolve análises de dados a partir do livro-caixa."
     ports:
       - "9202:9202"
     deploy:

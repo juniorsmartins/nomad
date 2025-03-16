@@ -18,6 +18,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/accounting_analysis" />
+            <option value="$PROJECT_DIR$/accounting_analysis/data" />
+            <option value="$PROJECT_DIR$/accounting_analysis/integration" />
+            <option value="$PROJECT_DIR$/accounting_analysis/services" />
+            <option value="$PROJECT_DIR$/accounting_analysis/web" />
           </set>
         </option>
       </GradleProjectSettings>
