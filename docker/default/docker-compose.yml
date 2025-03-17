@@ -2,6 +2,29 @@ name: nomad
 
 services:
 
+  kafka:
+    container_name: kafka
+    #    image: confluentinc/cp-kafka:7.5.3
+    image: obsidiandynamics/kafka
+    restart: "no"
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    networks:
+      - babystepsnet
+    environment:
+      KAFKA_LISTENERS: "INTERNAL://:29092,EXTERNAL://:9092"
+      KAFKA_ADVERTISED_LISTENERS: "INTERNAL://kafka:29092,EXTERNAL://localhost:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "INTERNAL"
+      KAFKA_ZOOKEEPER_SESSION_TIMEOUT: "6000"
+      KAFKA_RESTART_ATTEMPTS: "10"
+      KAFKA_RESTART_DELAY: "5"
+      ZOOKEEPER_AUTOPURGE_PURGE_INTERVAL: "0"
+    volumes:
+      - ./data/kafka/data:/var/lib/kafka/data
+
+
   accounting_analysis:
     container_name: accounting_analysis
     image: juniorsmartins/accounting_analysis:v0.0.1
@@ -11,7 +34,7 @@ services:
       args:
         APP_NAME: "accounting_analysis"
         APP_VERSION: "v0.0.1"
-        APP_DESCRIPTION: "Desenvolve análises de dados do livro-caixa."
+        APP_DESCRIPTION: "Desenvolve análises de dados a partir do livro-caixa."
     ports:
       - "9202:9202"
     deploy:

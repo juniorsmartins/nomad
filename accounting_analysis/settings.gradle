@@ -1,1 +1,6 @@
 rootProject.name = 'accounting_analysis'
+include('web')
+include('services')
+include('data')
+include('integration')
+
