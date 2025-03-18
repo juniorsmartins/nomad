@@ -1,5 +1,18 @@
 spring:
 
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:kafka:9092}
+    topic:
+      investment-create: investment-create
+      investment-delete: investment-delete
+    consumer:
+      group-id: ${spring.application.name}:-group
+      auto-offset-reset: latest
+
+  flyway: # Opcional
+    enabled: true
+    locations: classpath:db/migration,classpath:db/dev
+
   datasource: # Configura o datasource do banco de dados.
     driver-class-name: org.postgresql.Driver # Especifica o driver JDBC (neste caso, para Postgres).
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:accounting} # Define a URL de conexão ao banco.
@@ -12,10 +25,6 @@ spring:
       idle-timeout: 600000 # Tempo de inatividade antes de uma conexão ser removida.
       minimum-idle: 2 # Número mínimo de conexões inativas que o pool deve manter.
       maximum-pool-size: 4 # Número máximo de conexões simultâneas.
-
-  flyway: # Opcional
-    enabled: true
-    locations: classpath:db/migration,classpath:db/dev
 
   jpa: # Configura o JPA/Hibernate.
     database: POSTGRESQL # Especifica o banco usado.
@@ -45,10 +54,18 @@ spring:
     #    generate-ddl: true
     show-sql: true
 
-  logging: # Configura o nível de log para queries SQL.
-    level:
-      org.hibernate.SQL: DEBUG # Loga queries executadas (usar INFO em produção).
-      org.hibernate.type.descriptor.sql: TRACE  # Loga parâmetros das queries para depuração (usar WARN em produção).
+logging: # Configura o nível de log para queries SQL.
+  level:
+#      org.hibernate.SQL: DEBUG # Loga queries executadas (usar INFO em produção).
+#      org.hibernate.type.descriptor.sql: TRACE  # Loga parâmetros das queries para depuração (usar WARN em produção).
+    org:
+      hibernate:
+        sql: DEBUG # Loga queries executadas (usar INFO em produção).
+        type:
+          descriptor:
+            sql: TRACE # Loga parâmetros das queries para depuração (usar WARN em produção).
+      apache:
+        kafka: INFO # Para ambiente de estudo, pode se usar OFF para desligar os logs do kafka
 
 management: # Define ajustes para o Spring Boot Actuator, um módulo que fornece endpoints prontos para monitorar, gerenciar e obter métricas da aplicação.
   endpoints:
