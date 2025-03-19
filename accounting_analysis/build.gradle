@@ -1,6 +1,5 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.0'
+	id 'org.springframework.boot' version '3.4.0' apply false
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -9,68 +8,106 @@ group = 'com.nomad'
 version = '0.0.1-SNAPSHOT'
 
 allprojects {
-
 	repositories {
 		mavenCentral()
 	}
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
 
 	java {
 		toolchain {
 			languageVersion = JavaLanguageVersion.of(21)
 		}
 	}
-}
 
-subprojects {
+	// Dependências comuns a todos os módulos
+	dependencies {
+		compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+		annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.4.3'
+		annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
 
-	apply plugin: 'java'
-	apply plugin: 'org.springframework.boot'
-	apply plugin: 'io.spring.dependency-management'
+		// MapStruct
+		implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.6.3'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-	configurations {
-		compileOnly {
-			extendsFrom annotationProcessor
-		}
+		// Testes
+		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	}
 
+//	configurations {
+//		compileOnly {
+//			extendsFrom annotationProcessor
+//		}
+//	}
+
+	// Configuração de testes
 	tasks.named('test') {
 		useJUnitPlatform()
 	}
 }
 
+project(':web') {
+	apply plugin: 'org.springframework.boot' // Apenas o web precisa do Boot
+	dependencies {
+		implementation project(':services')
+	}
+}
+
+project(':services') {
+	dependencies {
+		implementation project(':data')
+	}
+}
+
+project(':data') {
+	dependencies {
+		implementation project(':integration')
+	}
+}
+
+project(':integration') {
+	// Sem dependências de outros módulos
+}
 
 // Manter temporariamente - descartar assim que possível
-dependencies {
-	// Spring Web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	// Processamento de anotações e configuração no Spring Boot - gera metadados de configuração
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-//	implementation 'org.springframework.boot:spring-boot-configuration-processor:3.4.2'
-
-	// Spring Webflux
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-	// Lombok
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	// Conversão MapStruct
-	implementation 'org.mapstruct:mapstruct:1.6.3'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
-	// Monitoramento e Observabilidade
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
-
-	// Resilience4j - CircuitBreaker, BulkHead, RateLimiter, Retry, Cache e TimeLimiter
-	implementation "io.github.resilience4j:resilience4j-spring-boot3:2.3.0"
-	implementation "org.springframework.boot:spring-boot-starter-aop"
-	implementation "io.github.resilience4j:resilience4j-reactor:2.3.0"
-
-	// Tests
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
+//dependencies {
+//	// Spring Web
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//
+//	// Processamento de anotações e configuração no Spring Boot - gera metadados de configuração
+//	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+////	implementation 'org.springframework.boot:spring-boot-configuration-processor:3.4.2'
+//
+//	// Spring Webflux
+//	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+//
+//	// Lombok
+//	compileOnly 'org.projectlombok:lombok'
+//	annotationProcessor 'org.projectlombok:lombok'
+//
+//	// Conversão MapStruct
+//	implementation 'org.mapstruct:mapstruct:1.6.3'
+//	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+//	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+//
+//	// Monitoramento e Observabilidade
+//	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//	implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
+//
+//	// Resilience4j - CircuitBreaker, BulkHead, RateLimiter, Retry, Cache e TimeLimiter
+//	implementation "io.github.resilience4j:resilience4j-spring-boot3:2.3.0"
+//	implementation "org.springframework.boot:spring-boot-starter-aop"
+//	implementation "io.github.resilience4j:resilience4j-reactor:2.3.0"
+//
+//	// Tests
+//	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.12.1'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//}
 
