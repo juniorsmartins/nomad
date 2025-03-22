@@ -1,8 +1,8 @@
 package com.nomad.accounting_analysis.controller;
 
-import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
-import com.nomad.accounting_analysis.application.port.input.DebitsCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
+import com.nomad.accounting_analysis.mapper.CashbookMapperWeb;
+import com.nomad.accounting_analysis.port.input.DebitsCashbookInputPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.Retry;
 import lombok.extern.slf4j.Slf4j;
@@ -27,17 +27,17 @@ public class DebitsCashbookController {
 
     private final DebitsCashbookInputPort debitsCashbookInputPort;
 
-    private final CashbookMapper cashbookMapper;
+    private final CashbookMapperWeb cashbookMapperWeb;
 
     private final Retry retry;
 
     public DebitsCashbookController(
             DebitsCashbookInputPort debitsCashbookInputPort,
-            CashbookMapper cashbookMapper,
+            CashbookMapperWeb cashbookMapperWeb,
             @Qualifier("retryDebits") Retry retry
     ) {
         this.debitsCashbookInputPort = debitsCashbookInputPort;
-        this.cashbookMapper = cashbookMapper;
+        this.cashbookMapperWeb = cashbookMapperWeb;
         this.retry = retry;
     }
 
@@ -50,7 +50,7 @@ public class DebitsCashbookController {
         Supplier<Object> supplier = Retry.decorateSupplier(retry, () -> {
             return Optional.of(cashbookId)
                     .map(debitsCashbookInputPort::debits)
-                    .map(cashbookMapper::toBalanceCashbookDtoResponse)
+                    .map(cashbookMapperWeb::toBalanceCashbookDtoResponse)
                     .orElseThrow();
         });
 

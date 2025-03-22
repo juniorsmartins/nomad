@@ -1,4 +1,4 @@
-package com.nomad.accounting_analysis.dto.in;
+package com.nomad.accounting_analysis.port.dto;
 
 import java.time.Year;
 import java.util.List;

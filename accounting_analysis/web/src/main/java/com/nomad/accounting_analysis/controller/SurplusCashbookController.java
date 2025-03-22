@@ -1,8 +1,8 @@
 package com.nomad.accounting_analysis.controller;
 
-import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
-import com.nomad.accounting_analysis.application.port.input.SurplusCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
+import com.nomad.accounting_analysis.mapper.CashbookMapperWeb;
+import com.nomad.accounting_analysis.port.input.SurplusCashbookInputPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.Retry;
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +27,13 @@ public class SurplusCashbookController {
 
     private final SurplusCashbookInputPort surplusCashbookInputPort;
 
-    private final CashbookMapper cashbookMapper;
+    private final CashbookMapperWeb cashbookMapper;
 
     private final Retry retry;
 
     public SurplusCashbookController(
             SurplusCashbookInputPort surplusCashbookInputPort,
-            CashbookMapper cashbookMapper,
+            CashbookMapperWeb cashbookMapper,
             @Qualifier("retrySurplus2") Retry retry
     ) {
         this.surplusCashbookInputPort = surplusCashbookInputPort;

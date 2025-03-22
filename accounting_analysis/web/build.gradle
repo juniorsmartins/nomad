@@ -1,13 +1,8 @@
 description = 'Sub-módulo responsável pela interface de acesso à API.'
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.4.3'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.4.4'
     implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
-    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.3.0'
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation 'io.github.resilience4j:resilience4j-reactor:2.3.0'
 }
 
 springBoot {

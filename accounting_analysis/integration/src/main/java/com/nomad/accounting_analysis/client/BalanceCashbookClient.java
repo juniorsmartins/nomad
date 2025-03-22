@@ -1,5 +1,8 @@
 package com.nomad.accounting_analysis.client;
 
+import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
+import com.nomad.accounting_analysis.port.dto.CashbookDtoResponse;
+import com.nomad.accounting_analysis.port.output.BalanceCashbookOutputPort;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

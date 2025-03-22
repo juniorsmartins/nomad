@@ -3,7 +3,7 @@ package com.nomad.accounting_analysis.core.domain.enums;
 import lombok.Getter;
 
 @Getter
-public enum CostCenter {
+public enum CostCenterEnum {
 
     BANKING("BANKING"),
     BARBERSHOP("BARBERSHOP"),
@@ -25,15 +25,11 @@ public enum CostCenter {
     SUPPLEMENTATION("SUPPLEMENTATION"),
     TELEPHONY("TELEPHONY"),
     TRANSPORT("TRANSPORT"),
-    WAGE("WAGE"),
-    CDB("CDB"),
-    POUPANCA("POUPANCA"),
-    BOLSA("BOLSA"),
-    DOLAR("DOLAR");
+    WAGE("WAGE");
 
     private final String value;
 
-    CostCenter(String value) {
+    CostCenterEnum(String value) {
         this.value = value;
     }
 }

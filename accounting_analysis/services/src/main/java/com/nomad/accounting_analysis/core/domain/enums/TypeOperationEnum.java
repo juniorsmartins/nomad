@@ -3,17 +3,15 @@ package com.nomad.accounting_analysis.core.domain.enums;
 import lombok.Getter;
 
 @Getter
-public enum TypeOperation {
+public enum TypeOperationEnum {
 
     INPUT("INPUT"),
     OUTPUT("OUTPUT"),
-    CHARGEBACK("CHARGEBACK"),
-    INVESTMENT("INVESTMENT"),
-    DISINVESTMENT("DISINVESTMENT");
+    CHARGEBACK("CHARGEBACK");
 
     private final String value;
 
-    TypeOperation(String value) {
+    TypeOperationEnum(String value) {
         this.value = value;
     }
 }

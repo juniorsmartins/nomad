@@ -1,10 +1,10 @@
 package com.nomad.accounting_analysis.core.usecase;
 
-import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
-import com.nomad.accounting_analysis.application.core.domain.BalanceCashbook;
-import com.nomad.accounting_analysis.application.core.domain.Cashbook;
-import com.nomad.accounting_analysis.application.port.input.SurplusCashbookInputPort;
-import com.nomad.accounting_analysis.application.port.output.BalanceCashbookOutputPort;
+import com.nomad.accounting_analysis.core.domain.BalanceCashbook;
+import com.nomad.accounting_analysis.core.domain.Cashbook;
+import com.nomad.accounting_analysis.core.mapper.CashbookMapperServices;
+import com.nomad.accounting_analysis.port.input.SurplusCashbookInputPort;
+import com.nomad.accounting_analysis.port.output.BalanceCashbookOutputPort;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class SurplusCashbookService implements SurplusCashbookInputPort {
 
     private final BalanceCashbookOutputPort balanceCashbookOutputPort;
 
-    private final CashbookMapper cashbookMapper;
+    private final CashbookMapperServices cashbookMapperServices;
 
     @Override
     public BalanceCashbook surplus(@NonNull final UUID id) {
@@ -27,7 +27,7 @@ public class SurplusCashbookService implements SurplusCashbookInputPort {
         log.info("Serviço Surplus iniciado: {}", id);
 
         var cashbookDtoResponse = balanceCashbookOutputPort.findById(id);
-        var cashbook = cashbookMapper.toCashbook(cashbookDtoResponse);
+        var cashbook = cashbookMapperServices.toCashbook(cashbookDtoResponse);
         var surplusCashbook = generateCashbookSurplus(cashbook);
 
         log.info("Serviço Surplus concluído: {}", surplusCashbook);

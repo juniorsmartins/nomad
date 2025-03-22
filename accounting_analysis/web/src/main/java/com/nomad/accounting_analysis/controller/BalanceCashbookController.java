@@ -1,8 +1,8 @@
 package com.nomad.accounting_analysis.controller;
 
-import com.nomad.accounting_analysis.adapter.mapper.CashbookMapper;
-import com.nomad.accounting_analysis.application.port.input.BalanceCashbookInputPort;
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
+import com.nomad.accounting_analysis.mapper.CashbookMapperWeb;
+import com.nomad.accounting_analysis.port.input.BalanceCashbookInputPort;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class BalanceCashbookController {
 
     private final BalanceCashbookInputPort balanceCashbookInputPort;
 
-    private final CashbookMapper cashbookMapper;
+    private final CashbookMapperWeb cashbookMapper;
 
     @GetMapping(path = "/{id}")
     @Retry(name = "default")

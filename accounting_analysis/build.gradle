@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '3.4.0' apply false
-	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.springframework.boot' version '3.4.4'
+	id 'io.spring.dependency-management' version '1.1.7'
 }
 
 description = 'Desenvolve análises de dados a partir do livro-caixa.'
@@ -25,18 +25,33 @@ subprojects {
 
 	// Dependências comuns a todos os módulos
 	dependencies {
+		// Spring Web
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.4.4'
+
+		// Spring Webflux
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.4.4'
+
+		// Lombok
 		compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
-		annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.4.3'
 		annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+
+		// Processamento de anotações e configuração no Spring Boot - gera metadados de configuração
+		implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.4.4'
+		annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.4.4'
 
 		// MapStruct
 		implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.6.3'
 		annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 		annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
+		// Resilience4j - CircuitBreaker, BulkHead, RateLimiter, Retry, Cache e TimeLimiter
+		implementation "io.github.resilience4j:resilience4j-spring-boot3:2.3.0"
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.4.4'
+		implementation "io.github.resilience4j:resilience4j-reactor:2.3.0"
+
 		// Testes
 		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
-		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '3.4.4'
 		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	}
 
@@ -60,19 +75,19 @@ project(':web') {
 }
 
 project(':services') {
-	dependencies {
-		implementation project(':data')
-	}
+
 }
 
 project(':data') {
 	dependencies {
-		implementation project(':integration')
+		implementation project(':services')
 	}
 }
 
 project(':integration') {
-	// Sem dependências de outros módulos
+	dependencies {
+		implementation project(':services')
+	}
 }
 
 // Manter temporariamente - descartar assim que possível

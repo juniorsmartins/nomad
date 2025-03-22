@@ -1,7 +1,7 @@
 description = 'Sub-módulo responsável pelo acesso a outras APIs.'
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.4.3'
+
 }
 
 //dependencies {

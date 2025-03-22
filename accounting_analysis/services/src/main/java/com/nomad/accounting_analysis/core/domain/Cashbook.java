@@ -1,7 +1,7 @@
 package com.nomad.accounting_analysis.core.domain;
 
-import com.nomad.accounting_analysis.application.core.domain.enums.CostCenter;
-import com.nomad.accounting_analysis.application.core.domain.enums.TypeOperation;
+import com.nomad.accounting_analysis.core.domain.enums.CostCenterEnum;
+import com.nomad.accounting_analysis.core.domain.enums.TypeOperationEnum;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -25,12 +25,12 @@ public final class Cashbook {
     private List<Registration> registrations;
 
     public BigDecimal annualSumCredits() {
-        return calculateAnnualSum(TypeOperation.INPUT);
+        return calculateAnnualSum(TypeOperationEnum.INPUT);
     }
 
     public BigDecimal annualSumDebits() {
-        var annualSumDebits = calculateAnnualSum(TypeOperation.OUTPUT);
-        var annualChargeback = calculateAnnualSum(TypeOperation.CHARGEBACK);
+        var annualSumDebits = calculateAnnualSum(TypeOperationEnum.OUTPUT);
+        var annualChargeback = calculateAnnualSum(TypeOperationEnum.CHARGEBACK);
 
         return annualSumDebits.subtract(annualChargeback);
     }
@@ -42,53 +42,37 @@ public final class Cashbook {
         return credits.subtract(debits);
     }
 
-    public BigDecimal annualSumInvestment() {
-        var annualSumInvestment = calculateAnnualSum(TypeOperation.INVESTMENT);
-        var annualSumDisinvestment = calculateAnnualSum(TypeOperation.DISINVESTMENT);
-
-        return annualSumInvestment.subtract(annualSumDisinvestment);
-    }
-
-    private BigDecimal calculateAnnualSum(@NonNull TypeOperation typeOperation) {
+    private BigDecimal calculateAnnualSum(@NonNull TypeOperationEnum typeOperation) {
         return this.registrations.stream()
-                .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
+                .filter(registration -> typeOperation.equals(registration.getTypeOperationEnum()))
                 .map(Registration::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 
-    public Map<CostCenter, BigDecimal> annualSumCreditsByCostCenter() {
-        var result = calculateAnnualSumByCostCenter(TypeOperation.INPUT);
+    public Map<CostCenterEnum, BigDecimal> annualSumCreditsByCostCenter() {
+        var result = calculateAnnualSumByCostCenter(TypeOperationEnum.INPUT);
 
         return filterZeroValues(result);
     }
 
-    public Map<CostCenter, BigDecimal> annualSumDebitsByCostCenter() {
-        var annualSumOutputByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.OUTPUT);
-        var annualSumChargebackByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.CHARGEBACK);
+    public Map<CostCenterEnum, BigDecimal> annualSumDebitsByCostCenter() {
+        var annualSumOutputByCostCenter = calculateAnnualSumByCostCenter(TypeOperationEnum.OUTPUT);
+        var annualSumChargebackByCostCenter = calculateAnnualSumByCostCenter(TypeOperationEnum.CHARGEBACK);
 
         var result = subtractCostCenterMaps(annualSumOutputByCostCenter, annualSumChargebackByCostCenter);
 
         return filterZeroValues(result);
     }
 
-    public Map<CostCenter, BigDecimal> annualSumInvestmentByCostCenter() {
-        var annualInvestmentByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.INVESTMENT);
-        var annualDisinvestmentByCostCenter = calculateAnnualSumByCostCenter(TypeOperation.DISINVESTMENT);
+    private Map<CostCenterEnum, BigDecimal> calculateAnnualSumByCostCenter(@NonNull final TypeOperationEnum typeOperation) {
 
-        var result = subtractCostCenterMaps(annualInvestmentByCostCenter, annualDisinvestmentByCostCenter);
+        Map<CostCenterEnum, BigDecimal> annualSumByCostCenter = new EnumMap<>(CostCenterEnum.class);
 
-        return filterZeroValues(result);
-    }
-
-    private Map<CostCenter, BigDecimal> calculateAnnualSumByCostCenter(@NonNull final TypeOperation typeOperation) {
-
-        Map<CostCenter, BigDecimal> annualSumByCostCenter = new EnumMap<>(CostCenter.class);
-
-        for (CostCenter costCenter : CostCenter.values()) {
+        for (CostCenterEnum costCenter : CostCenterEnum.values()) {
             var sum = this.registrations.parallelStream()
-                    .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
-                    .filter(registration -> costCenter.equals(registration.getCostCenter()))
+                    .filter(registration -> typeOperation.equals(registration.getTypeOperationEnum()))
+                    .filter(registration -> costCenter.equals(registration.getCostCenterEnum()))
                     .map(Registration::getAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             annualSumByCostCenter.put(costCenter, sum);
@@ -96,10 +80,12 @@ public final class Cashbook {
         return annualSumByCostCenter;
     }
 
-    private Map<CostCenter, BigDecimal> subtractCostCenterMaps(Map<CostCenter, BigDecimal> positiveMap, Map<CostCenter, BigDecimal> negativeMap) {
-        Map<CostCenter, BigDecimal> result = new EnumMap<>(CostCenter.class);
+    private Map<CostCenterEnum, BigDecimal> subtractCostCenterMaps(Map<CostCenterEnum, BigDecimal> positiveMap,
+                                                               Map<CostCenterEnum, BigDecimal> negativeMap) {
 
-        for (CostCenter costCenter : CostCenter.values()) {
+        Map<CostCenterEnum, BigDecimal> result = new EnumMap<>(CostCenterEnum.class);
+
+        for (CostCenterEnum costCenter : CostCenterEnum.values()) {
             var value1 = positiveMap.getOrDefault(costCenter, BigDecimal.ZERO);
             var value2 = negativeMap.getOrDefault(costCenter, BigDecimal.ZERO);
 
@@ -110,23 +96,23 @@ public final class Cashbook {
 
 
     public Map<Month, BigDecimal> monthlySumCredits() {
-        return calculateMonthlySum(TypeOperation.INPUT);
+        return calculateMonthlySum(TypeOperationEnum.INPUT);
     }
 
     public Map<Month, BigDecimal> monthlySumDebits() {
-        var monthlySumDebits = calculateMonthlySum(TypeOperation.OUTPUT);
-        var monthlyChargeback = calculateMonthlySum(TypeOperation.CHARGEBACK);
+        var monthlySumDebits = calculateMonthlySum(TypeOperationEnum.OUTPUT);
+        var monthlyChargeback = calculateMonthlySum(TypeOperationEnum.CHARGEBACK);
 
         return subtractMonthlyMaps(monthlySumDebits, monthlyChargeback);
     }
 
-    private Map<Month, BigDecimal> calculateMonthlySum(@NonNull final TypeOperation typeOperation) {
+    private Map<Month, BigDecimal> calculateMonthlySum(@NonNull final TypeOperationEnum typeOperation) {
         Map<Month, BigDecimal> monthlySum = new EnumMap<>(Month.class);
 
         for (Month month : Month.values()) {
             var sum = this.registrations.parallelStream()
                     .filter(registration -> month.equals(registration.getDateOperation().getMonth()))
-                    .filter(registration -> typeOperation.equals(registration.getTypeOperation()))
+                    .filter(registration -> typeOperation.equals(registration.getTypeOperationEnum()))
                     .map(Registration::getAmount)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             monthlySum.put(month, sum);
@@ -139,13 +125,6 @@ public final class Cashbook {
         Map<Month, BigDecimal> monthlySumDebits = monthlySumDebits();
 
         return subtractMonthlyMaps(monthlySumCredits, monthlySumDebits);
-    }
-
-    public Map<Month, BigDecimal> monthlyInvestment() {
-        var monthlyInvestment = calculateMonthlySum(TypeOperation.INVESTMENT);
-        var monthlyDisinvestment = calculateMonthlySum(TypeOperation.DISINVESTMENT);
-
-        return subtractMonthlyMaps(monthlyInvestment, monthlyDisinvestment);
     }
 
     private Map<Month, BigDecimal> subtractMonthlyMaps(Map<Month, BigDecimal> positiveMap, Map<Month, BigDecimal> negativeMap) {

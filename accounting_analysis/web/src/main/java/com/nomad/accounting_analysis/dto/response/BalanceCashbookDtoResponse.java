@@ -1,7 +1,7 @@
 package com.nomad.accounting_analysis.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nomad.accounting_analysis.application.core.domain.enums.CostCenter;
+import com.nomad.accounting_analysis.core.domain.enums.CostCenterEnum;
 
 import java.math.BigDecimal;
 import java.time.Month;
@@ -16,22 +16,16 @@ public record BalanceCashbookDtoResponse(
 
     BigDecimal annualBalance,
 
-    BigDecimal annualInvestment,
 
+    Map<CostCenterEnum, BigDecimal> annualSumCreditsByCostCenter,
 
-    Map<CostCenter, BigDecimal> annualSumCreditsByCostCenter,
-
-    Map<CostCenter, BigDecimal> annualSumDebitsByCostCenter,
-
-    Map<CostCenter, BigDecimal> annualSumInvestmentByCostCenter,
+    Map<CostCenterEnum, BigDecimal> annualSumDebitsByCostCenter,
 
 
     Map<Month, BigDecimal>monthlySumCredits,
 
     Map<Month, BigDecimal> monthlySumDebits,
 
-    Map<Month, BigDecimal> monthlyBalance,
-
-    Map<Month, BigDecimal> monthlyInvestment
+    Map<Month, BigDecimal> monthlyBalance
 ) { }
 
