@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/accounting.main.iml" filepath="$PROJECT_DIR$/.idea/modules/accounting.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/accounting_analysis.main.iml" filepath="$PROJECT_DIR$/.idea/modules/accounting_analysis.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/accounting_analysis.services.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/accounting_analysis.services.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web/accounting_analysis.web.main.iml" filepath="$PROJECT_DIR$/.idea/modules/web/accounting_analysis.web.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/nomad.iml" filepath="$PROJECT_DIR$/.idea/nomad.iml" />
     </modules>
   </component>

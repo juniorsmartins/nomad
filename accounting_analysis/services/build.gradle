@@ -1,35 +1,47 @@
+plugins {
+    id 'java'
+//    id 'org.springframework.boot'
+//    id 'io.spring.dependency-management'
+}
+
 description = 'Sub-módulo responsável pelos serviços de análise dos dados.'
+group = 'com.nomad'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
+    implementation project(':data')
+
+    // Spring WebFlux
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.4.4'
+
     // Spring Web
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    // Processamento de anotações e configuração no Spring Boot - gera metadados de configuração
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-    // Spring Webflux
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '3.4.4'
 
     // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
 
-    // Conversão MapStruct
-    implementation 'org.mapstruct:mapstruct:1.6.3'
+    // Processamento de anotações e configuração no Spring Boot - gera metadados de configuração
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.4.4'
+    annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '3.4.4'
+
+    // MapStruct
+    implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.6.3'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-    // Monitoramento e Observabilidade
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
-
     // Resilience4j - CircuitBreaker, BulkHead, RateLimiter, Retry, Cache e TimeLimiter
     implementation "io.github.resilience4j:resilience4j-spring-boot3:2.3.0"
-    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.4.4'
     implementation "io.github.resilience4j:resilience4j-reactor:2.3.0"
 
-    // Tests
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // Testes
+//		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '3.4.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
