@@ -8,6 +8,7 @@ class AccountingAnalysisApplicationTest {
 
     @Test
     void contextLoads() {
+
     }
 }
 

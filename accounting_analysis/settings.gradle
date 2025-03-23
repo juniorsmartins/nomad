@@ -1,3 +1,3 @@
 rootProject.name = 'accounting_analysis'
-include('web', 'services', 'data', 'integration')
+include('web', 'services', 'data')
 

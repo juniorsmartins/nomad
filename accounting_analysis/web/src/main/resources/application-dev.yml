@@ -59,7 +59,7 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
           - org.springframework.web.client.ResourceAccessException
           - java.net.SocketTimeoutException
         ignoreExceptions: # Lista de exceções ignoradas pelo Retry
-          - com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException
+          - com.nomad.accounting_analysis.client.CashbookNotFoundException
         metrics:
           enabled: true
       surplus2:
@@ -75,7 +75,7 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
           - org.springframework.web.client.ResourceAccessException
           - java.net.SocketTimeoutException
         ignoreExceptions: # Lista de exceções ignoradas pelo Retry
-          - com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException
+          - com.nomad.accounting_analysis.client.CashbookNotFoundException
         metrics:
           enabled: true
       debits:
@@ -91,7 +91,7 @@ resilience4j: # Raiz da configuração para todas as funcionalidades do Resilien
           - org.springframework.web.client.ResourceAccessException
           - java.net.SocketTimeoutException
         ignoreExceptions: # Lista de exceções ignoradas pelo Retry
-          - com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException
+          - com.nomad.accounting_analysis.client.CashbookNotFoundException
         metrics:
           enabled: true
 

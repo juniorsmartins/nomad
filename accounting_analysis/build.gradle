@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '3.4.4'
+	id 'org.springframework.boot' version '3.4.4' apply false
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -50,41 +50,47 @@ subprojects {
 		implementation "io.github.resilience4j:resilience4j-reactor:2.3.0"
 
 		// Testes
-		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
-		testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '3.4.4'
+//		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	}
 
-//	configurations {
-//		compileOnly {
-//			extendsFrom annotationProcessor
-//		}
-//	}
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
 
-	// Configuração de testes
 	tasks.named('test') {
 		useJUnitPlatform()
 	}
 }
 
 project(':web') {
-	apply plugin: 'org.springframework.boot' // Apenas o web precisa do Boot
+	description = 'Sub-módulo responsável pela interface de acesso à API.'
+
+	apply plugin: 'org.springframework.boot'
+
 	dependencies {
 		implementation project(':services')
+		implementation 'org.springframework.boot:spring-boot-starter-web:3.4.4'
+		implementation 'org.springframework.boot:spring-boot-starter-actuator:3.4.4'
+		implementation 'io.micrometer:micrometer-registry-prometheus:1.13.2'
+	}
+
+	springBoot {
+		mainClass = 'com.nomad.accounting_analysis.AccountingAnalysisApplication'
 	}
 }
 
 project(':services') {
+	description = 'Sub-módulo responsável pelos serviços de análise dos dados.'
 
 }
 
 project(':data') {
-	dependencies {
-		implementation project(':services')
-	}
-}
+	description = 'Sub-módulo responsável pelo acesso ao banco de dados.'
 
-project(':integration') {
 	dependencies {
 		implementation project(':services')
 	}

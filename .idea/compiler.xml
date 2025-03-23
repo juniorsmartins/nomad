@@ -10,13 +10,15 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.6.3/52e345c907fbf173b376586c7f8b131d53fa5867/mapstruct-processor-1.6.3.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok-mapstruct-binding/0.2.0/2f1cf9ced7b720ba4996c942b816669e63f0fa4f/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
+        <module name="accounting_analysis.data.main" />
         <module name="accounting_analysis.services.main" />
         <module name="accounting_analysis.web.main" />
-        <module name="accounting_analysis.data.main" />
-        <module name="accounting_analysis.integration.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="accounting_analysis.integration" target="21" />
+      <module name="accounting_analysis.integration.main" target="21" />
+      <module name="accounting_analysis.integration.test" target="21" />
       <module name="accounting_analysis.main" target="21" />
       <module name="accounting_analysis.test" target="21" />
     </bytecodeTargetLevel>

@@ -1,4 +1,4 @@
-package com.nomad.accounting_analysis.client;
+package com.nomad.accounting_analysis.port.client;
 
 import com.nomad.accounting_analysis.config.exception.http404.CashbookNotFoundException;
 import com.nomad.accounting_analysis.port.dto.CashbookDtoResponse;
