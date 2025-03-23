@@ -1,7 +1,5 @@
 plugins {
     id 'java'
-//    id 'org.springframework.boot'
-//    id 'io.spring.dependency-management'
 }
 
 description = 'Sub-módulo responsável pelo acesso ao banco de dados.'
@@ -36,7 +34,6 @@ dependencies {
     implementation "io.github.resilience4j:resilience4j-reactor:2.3.0"
 
     // Testes
-//		testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '3.4.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
