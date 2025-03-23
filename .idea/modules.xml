@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/accounting.main.iml" filepath="$PROJECT_DIR$/.idea/modules/accounting.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/accounting_analysis.data.main.iml" filepath="$PROJECT_DIR$/.idea/modules/data/accounting_analysis.data.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/data/accounting_analysis.data.test.iml" filepath="$PROJECT_DIR$/.idea/modules/data/accounting_analysis.data.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/accounting_analysis.services.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/accounting_analysis.services.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/accounting_analysis.services.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/accounting_analysis.services.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/web/accounting_analysis.web.main.iml" filepath="$PROJECT_DIR$/.idea/modules/web/accounting_analysis.web.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web/accounting_analysis.web.test.iml" filepath="$PROJECT_DIR$/.idea/modules/web/accounting_analysis.web.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/nomad.iml" filepath="$PROJECT_DIR$/.idea/nomad.iml" />
     </modules>
   </component>
