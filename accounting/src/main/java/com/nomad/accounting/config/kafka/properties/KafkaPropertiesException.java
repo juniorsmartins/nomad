@@ -5,3 +5,4 @@ public class KafkaPropertiesException extends RuntimeException {
         super(message);
     }
 }
+
