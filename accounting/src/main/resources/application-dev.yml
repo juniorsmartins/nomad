@@ -1,7 +1,7 @@
 spring:
 
   kafka:
-    bootstrap-servers: ${KAFKA_BROKER:kafka-cluster:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     topic:
       investment-create: investment-create
       investment-delete: investment-delete

@@ -7,19 +7,20 @@ services:
     container_name: kafka-cluster
     hostname: kafka-cluster
     ports:
-      - "2181:2181"                 # Zookeeper
-      - "3030:3030"                 # Landoop UI
-      - "8081-8083:8081-8083"       # Schema Registry, Kafka Connect, REST Proxy
-      - "9581-9585:9581-9585"      # JMX Ports
-      - "9092:9092"                 # Kafka Broker
+      - "2181:2181"            # ZooKeeper
+      - "3030:3030"            # Landoop UI
+      - "8081:8081"            # Schema Registry
+      - "8082:8082"            # REST Proxy
+      - "8083:8083"            # Kafka Connect
+      - "9092:9092"            # Kafka Broker
+      - "9581-9585:9581-9585"  # JMX Ports
     environment:
-      ADV_HOST: 127.0.0.1          # Endereço que será usado nos anúncios
-      RUNTESTS: 0                  # Desabilita testes na inicialização
-      RUNNING_SAMPLEDATA: 0        # Habilita dados de exemplo
-      SAMPLEDATA: 0                # Carrega tópicos de exemplo
-      FORWARDLOGS: 0               # Desabilita encaminhamento de logs
-      DEBUG: 0                     # Desabilita modo debug
-      CONNECT_HEAP: 512m           # Define tamanho de heap para o Kafka Connect
+      ADV_HOST: 127.0.0.1      # Define o endereço de host para 127.0.0.1 (localhost) - precisará ajustar isso para o IP do host ou o nome do serviço na rede Docker
+      RUNTESTS: 0              # Desativa testes iniciais para iniciar mais rápido
+      SAMPLEDATA: 0            # Desativa dados de exemplo
+      FORWARDLOGS: 0           # Desativa forwarding de logs
+      DEBUG: 0                 # Desabilita modo debug
+      CONNECT_HEAP: 512m       # Aloca heap para o Kafka Connect
       DISABLE: azure-documentdb,blockchain,bloomberg,cassandra,coap,druid,elastic,elastic5,ftp,hazelcast,hbase,influxdb,jms,kudu,mongodb,mqtt,redis,rethink,voltdb,yahoo,hdfs,jdbc,elasticsearch,s3,twitter
     healthcheck:
       test: [ "CMD", "netstat", "-ltn" ] # Verifica se os serviços estão ouvindo nas portas
